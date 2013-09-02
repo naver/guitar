@@ -1,0 +1,40 @@
+;--------------------------------------------------------------------------------------------------------------
+;# 스크립트 설명 : 이미지의 테두리 부분을 "투명" 색상으로 지정하여 배경에 관계없이 이미지 검색하는 예제
+;--------------------------------------------------------------------------------------------------------------
+
+IE 생성한다.
+
+; 각각의 지도검색결과 화면에서 A핀을 찾아 클릭 한다 (이미지 파일명에 "_투명" 이 추가된 경우 이미지 주변색상(예제에서는 빨강색)을 투명 처리하여 제외하고 이미지를 찾음)
+http://map.naver.com/?dlevel=11&lat=37.3834241&lng=127.1283413&query=66eb7KeR&menu=location&searchCoord=127.1323617%3B37.3836169&boundary=127.1199546%3B37.3779157%3B127.1367269%3B37.3889319&type=SITE_1&inBound=on&tab=1&mapMode=0&enc=b64 접속한다.
+지도검색결과핀(A)을 클릭한다. , ,
+현재화면을 캡쳐한다.
+
+http://map.naver.com/?dlevel=11&lat=37.3857455&lng=127.1213488&query=66eb7KeR&menu=location&boundary=127.113641%3B37.380596%3B127.1290556%3B37.3908945&type=SITE_1&inBound=on&stab=SITE_1%3B1&siteOrder=0&queryRank=1&mapMode=0&enc=b64 접속한다.
+지도검색결과핀(A)을 클릭한다. , ,
+현재화면을 캡쳐한다.
+
+http://map.naver.com/?dlevel=11&lat=37.366853&lng=127.1103988&query=66eb7KeR&menu=location&boundary=127.1026922%3B37.3617042%3B127.1181044%3B37.3720013&type=SITE_1&inBound=on&stab=SITE_1%3B1&siteOrder=0&queryRank=1&mapMode=0&enc=b64 접속한다.
+지도검색결과핀(A)을 클릭한다. , ,
+현재화면을 캡쳐한다.
+
+
+; 각각의 길찾기 결과에서 총소요 거리에 관계없이 "총거리 xxxx KM" 형태의 이미지가 있는지를 확인한다.  (파일명에 "_투명" 이 추가되어 있음)
+http://map.naver.com/?dlevel=5&lat=37.514595&lng=126.7580016&slng=127.0600272&slat=37.5141223&elng=126.450395&elat=37.4474554&pathType=0&dtPathType=2&menu=route&mapMode=0&sText=7L2U7JeR7Iqk7IKs6rGw66as&eText=7J247LKc6rWt7KCc6rO17ZWt&enc=b64 접속한다. , ,
+"길찾기요약(총거리제목), 길찾기요약(총거리KM)" 확인한다.
+현재화면을 캡쳐한다.
+
+http://map.naver.com/?dlevel=4&lat=37.4952465&lng=127.4529389&slng=126.9150674&slat=37.6714803&elng=127.7699105&elat=37.0495845&pathType=0&dtPathType=2&menu=route&mapMode=0&sText=7Y%2Bs64%2BE7JuQ64aN7JuQ&eText=7J6Q7Jew7LSM&enc=b64 접속한다. , ,
+"길찾기요약(총거리제목), 길찾기요약(총거리KM)" 확인한다.
+현재화면을 캡쳐한다.
+
+
+; 각각의 항공뷰 화면에서 배경에 관계 없이 백화점아이콘 이미지가 있는지를 확인한다.  (파일명에 "_투명" 이 추가되어 있음)
+http://map.naver.com/?dlevel=10&lat=37.3886912&lng=127.1230545&menu=route&mapMode=0&flight=on&street=off&ffov=60&fpoi=on&flat=37.3886909&flightid=tw8J2UG76%2F4NS9yYbSexaw%3D%3D&fsky=on&ftilt=-35.75&fpan=-178.55&flng=127.1230545&traffic=on&publicTransit=on&enc=b64 접속한다.
+항공뷰(백화점아이콘)을 확인한다.
+현재화면을 캡쳐한다.
+
+http://map.naver.com/index.nhn?dlevel=11&lat=37.3267284&lng=127.1105576&menu=location&mapMode=0&flight=on&street=off&fpoi=on&ftilt=-60.19&fsky=on&ffov=124&flat=37.3267288&fpan=-131.8&flng=127.1105576&flightid=KgkXBL43DpaW%2F0XRjCe9ew%3D%3D&enc=b64 접속한다.
+항공뷰(백화점아이콘)을 확인한다.
+현재화면을 캡쳐한다.
+
+현재 브라우저를 종료 한다. 

@@ -1,0 +1,10 @@
+$HOSTS파일=hosts_기본.txt 설정하고 HOSTS설정변경.txt을 실행한다.
+샘플서비스_STAGING환경설정.TXT 실행한다.
+
+FIREFOX를 생성한다.
+
+샘플서비스_SUS_010.txt 실행한다.
+샘플서비스_SUS_020.txt 실행한다.
+샘플서비스_SUS_030.txt 실행한다.
+
+현재 브라우저를 종료한다.

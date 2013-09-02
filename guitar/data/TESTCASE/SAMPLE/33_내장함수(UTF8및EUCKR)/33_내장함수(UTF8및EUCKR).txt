@@ -1,0 +1,43 @@
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;# 설명 : GUITAR 내장함수 예제 (UTF-8 및 EUC-KR 변환)
+;-----------------------------------------------------------------------------------------------------------------------------------------
+
+IE 생성한다.
+"$검색어=맛집" 설정한다.
+
+;-------------- EUC-KR ---------------------
+; _ANSIURLEncode($sText)
+; EUC-KR 문자열을 EUC-KR URL 형태 문자열로 변환
+"$검색어_ENCODE=_ANSIURLEncode('|$검색어|')" 계산한다.
+$검색URL=http://search.naver.com/search.naver?sm=tab_hty&where=nexearch&query=|$검색어_ENCODE 설정한다. 
+$검색URL로 접속한다. 
+검색결과탭제목(정렬)을 클릭하고 $검색어 내용확인한다.
+현재화면을 캡쳐한다.
+
+; _ANSIURLDecode($sText)
+; EUC-KR URL 형태의 문자열을 일반 EUC-KR 문자열을 변환
+"$검색어_DECODE=_ANSIURLDecode('|$검색어_ENCODE|')" 계산한다.
+$검색URL=http://search.naver.com/search.naver?sm=tab_hty&where=nexearch&query=|$검색어_DECODE 설정한다. 
+$검색URL로 접속한다. 
+검색결과탭제목(정렬)을 클릭하고 $검색어 내용확인한다.
+현재화면을 캡쳐한다.
+
+
+;-------------- UTF-8 ---------------------
+; _UnicodeURLEncode($sText)
+; EUC-KR 문자열을 UTF-8 URL 형태 문자열로 변환
+"$검색어_ENCODE=_UnicodeURLEncode('|$검색어|')" 계산한다.
+$검색URL=http://search.naver.com/search.naver?sm=tab_hty&where=nexearch&query=|$검색어_ENCODE 설정한다. 
+$검색URL로 접속한다. 
+검색결과탭제목(정렬)을 클릭하고 $검색어 내용확인한다.
+현재화면을 캡쳐한다.
+
+; _UnicodeURLDecode($sText)
+; UTF-8 URL 형태 문자열을 일반 EUC-KR  문자열로 변환
+"$검색어_DECODE=_UnicodeURLDecode('|$검색어_ENCODE|')" 계산한다.
+$검색URL=http://search.naver.com/search.naver?sm=tab_hty&where=nexearch&query=|$검색어_DECODE 설정한다. 
+$검색URL로 접속한다. 
+검색결과탭제목(정렬)을 클릭하고 $검색어 내용확인한다.
+현재화면을 캡쳐한다.
+
+현재 브라우저 종료한다.

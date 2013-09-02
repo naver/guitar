@@ -1,0 +1,52 @@
+;-----------------------------------------------------------------------------------------------------------------------------------------
+;# 설명 : DOM을 이용한 Input, CheckBox, DropDownBox의 값을 지정하고 읽는 예제
+;-----------------------------------------------------------------------------------------------------------------------------------------
+
+IE 생성한다.
+
+
+
+; 날씨페이지 접속
+http://weather.naver.com/ 접속한다.
+
+; DropDownBox의 현재 선택된 값을 읽어와 "서울특별시"와 같은지 비교 
+$지역TAG=[select:name=upperNaverRgnCd\option:selected=True:::text] 설정한다.
+;$지역TAG=[option:selected=True:::text] 설정한다.
+;$지역TAG=[select:name=upperNaverRgnCd\option::::selected] 설정한다.
+
+$현재지역=|$지역TAG| 속성읽기한다.
+$현재지역=서울특별시 같지않으면 실패한다.
+
+;DropDownBox의 선택 항목을 "강원도"로 변경 
+"[select:name=upperNaverRgnCd\option::강원도::selected]=true" 속성쓰기한다.
+$현재지역=|$지역TAG| 속성읽기한다.
+$현재지역=강원도 같지않으면 실패한다.
+
+현재화면을 캡쳐 한다.
+
+
+
+
+$네이버ID=username 설정한다.
+$네이버PW=userpw 설정한다. 
+
+; 네이버 로그인 페이지 접속
+http://nid.naver.com/nidlogin.logout?returl=http://www.naver.com 접속한다.
+
+; 보안1단계 클릭
+"[img:alt=보안1단계]"  클릭 한다. , 
+
+; InputBox 입력 (ID/PW 정보 입력)
+"[dd:class=uid\input:name=id:::value]=|$네이버ID" 속성쓰기 한다. 
+"[dd:class=upw\input:name=pw:::value]=|$네이버PW" 속성쓰기 한다. 
+
+; CheckBox 선택 (로그인상태유지)
+"[input:class=chk_me:::checked]=true" 속성쓰기 한다. 
+
+2초 대기한다.
+
+현재화면을 캡쳐한다.
+
+
+
+IE 종료 한다. 

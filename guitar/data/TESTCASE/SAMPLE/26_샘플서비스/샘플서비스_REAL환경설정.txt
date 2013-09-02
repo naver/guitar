@@ -1,0 +1,1 @@
+$샘플서비스메인URL=http://www.naver.com 설정한다.

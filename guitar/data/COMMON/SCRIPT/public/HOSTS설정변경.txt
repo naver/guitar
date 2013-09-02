@@ -1,0 +1,5 @@
+; HOSTSCOPT.EXE 를 실행하여 지정된 파일로 HOSTS 파일을 변경하고, 관련 브라우저 프로세스를 종료함
+; "$HOSTS파일=hosts_원본.txt"
+"$실행결과=RunWait(@scriptdir &'\etc\hostscopy.exe ' & @scriptdir & '\etc\|$HOSTS파일| iexplore.exe,safari.exe,firefox.exe,chrome.exe,opera.exe', @scriptdir)" 계산한다.
+1초 대기한다.
+
