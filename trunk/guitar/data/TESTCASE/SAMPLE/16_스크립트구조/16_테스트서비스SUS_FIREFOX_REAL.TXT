@@ -1,0 +1,8 @@
+;Real 서비스로 호스트 정보 파일을 변경 서비스 메인 URL을 사전에 설정 한다.
+$HOSTS파일=hosts_기본.txt 설정하고 HOSTS설정변경.txt을 실행한다.
+$테스트서비스메인URL=http://traffic.map.naver.com 설정한다.
+
+; 실제 TC를 수행
+FIREFOX를 생성한다.
+16_테스트서비스SUS.TXT 실행한다.
+현재 브라우저를 종료 한다.

@@ -1,0 +1,620 @@
+mnu_file	파일
+mnu_file_new	새로 만들기
+
+error_scriptnotfound	스크립트 파일을 찾을 수 없습니다. 
+error_scriptpathnotfound	공용 스크립트 경로를 찾을 수 없습니다. @crlf 프로그램설치 경로를 확인하시기 바랍니다.
+error_systemlock	시스템이 로그인 상태가 아닙니다.
+error_browserselectfail	테스트 대상 브라우저 선택 실패
+error_emailsend	Email 발송에 실패하였습니다. INI 설정파일에서 Email 관련설정 검점 필요 
+error_workpath	편집중인 파일이 작업폴더 내에 위치하지 않고 있습니다.
+error_reportlastpath	최근 테스트가 완료된 작업 폴더가 존재 하지 않습니다.
+error_usercommand	GUITAR.INI에 사용자정의명령이 설정되지 않았습니다.
+error_reportpath	리포트 경로를 찾을 수 없습니다.
+error_precheck	점검오류
+error_commandtargetnotfound	스크립트내 명령 및 대상이 없음
+error_commandtargetnotassign 	스크립트내 명령에 대한 대상이 지정되지 않음 
+error_usespchar	이미지명에 특수 문자를 사용 할 수 없습니다.
+error_scriptduple	2개 이상의 동일 스크립트가 존재 합니다.
+
+report_version	버전
+report_testtime	테스트 소요
+report_testserver	테스트 서버
+report_testscript	테스트 스크립트
+report_testrun	테스트 시작
+report_testend	테스트 종료
+report_testresult	테스트 결과
+report_testskip	테스트 제외
+report_detail	테스트 상세결과
+report_test	테스트
+report_result	결과
+report_pass	성공
+report_fail	실패
+report_run	실행
+report_notrun	미실행
+report_target	대상
+report_skip	제외
+report_imagenotfound	이미지를 찾을 수 없음
+report_capturereport	부분캡쳐 리포트
+report_create	테스트결과 리포트 파일 생성
+report_sendsms	테스트결과 리포트 SMS 발송
+report_sendemail	테스트결과 리포트 Email 발송
+report_detaillog	상세로그
+
+log_precheck	사전점검
+log_scriptanalysiserror	스크립트 분석중 오류 발생
+
+information_ok	확인
+information_info	정보
+information_browsersetting	테스트 대상 브라우저가 설정되지 않습니다.  @crlf @crlfIE 브라우저를 신규로 생성 하시고 테스트를 계속하시겠습니까?
+information_teststop	테스트 중단
+information_testpause	테스트 일지중지
+information_save	내용이 수정되었습니다. 저장 하시겠습니까?
+information_reset	브라우져 설정 정보를 초기화 하였습니다.
+information_cleartype	IE의 "항상 ClearType 사용" 옵션이 설정되어 있습니다. @crlf옵션이 설정된 경우 캡쳐된 글꼴 이미지가 미세하게 틀려질 수 있음으로 해제한 뒤 사용하시기 바랍니다.@crlf @crlf"IE > 도구 > 인터넷옵션 > 고급 > 멀티미디어 > ClearType 사용" 해제 @crlf
+information_uac	시스템에 "사용자 계정 컨트롤(UAC)" 설정이 되어 있습니다. @crlfUAC가 설정된 경우 테스트를 위한 IE 브라우저 생성 및 사용에 문제가 발생 될 수 있습니다. @crlf제어판 > 시스템 및 보안 > 관리 센터 > 사용자계정컨트롤 설정을 "최고 낮음"으로 설정하고 사용하는것을 권장합니다. (UAC 설정 후 반드시 재부팅 필요) @crlf @crlf프로그램 실행을 계속하시겠습니까?
+information_quicksearch	클립보드의 파일정보를 찾을 수 없습니다.  @crlf클립보드에는 저장되 내용중 다음과 3가지 유형을 지원합니다. @crlf  @crlf파일명 @crlf파일명 스크립트LINE @crlf 파일명 스크립트ID 스크립트LINE @crlf  @crlf 세번째 형태는 상세리포트 화면에서 쉽게 복사하여 사용 할 수 있습니다.
+
+tray_resumetest	스크립트가 다시 실행되었습니다.
+tray_pausetest	스크립트 실행이 일시중지 되었습니다. @crlfPause키를 누르면 다시 시작됩니다.
+tray_filefound	클립보드 파일 열기 (파일 찾는중...)
+tray_scriptname	스크립트명
+
+font_default	굴림체
+
+help_default	자세한 도움말은 별도로 제공되는 사용자 매뉴얼을 참고하시기 바랍니다.
+
+status_testing	테스트중
+status_ready	준비
+status_fail	실패
+status_success	성공
+status_opening	여는중
+status_open	열기
+status_scriptanalysis	스트립트 분석중
+status_scriptanalysisend	스트립트 분석완료
+
+cmdreciver_exists	이미 프로그램이 실행중입니다. 필요시 종료 후 재시작하시기 바랍니다.
+cmdreciver_filenotfound	실행파일을 찾을 수 없습니다.
+cmdreciver_scriptselect	실행 할 스크립트 파일이 지정되지 않았습니다.
+cmdreciver_scripterror	실행 할 스크립트명이 잘못되었습니다. 
+cmdreciver_scriptnotfound	스크립트 파일을 찾을 수 없습니다.
+cmdreciver_scriptstopreq1	테스트를 중지를 요청하였습니다.
+cmdreciver_scriptstopreq2	테스트가 이미 진행중 중입니다. 테스트 중지요청 합니다.
+cmdreciver_scriptendwait	테스트 중지 요청 후 1분 대기합니다.
+cmdreciver_scriptstop	테스트가 종료되지 않아 테스트 작업을 강제 종료 합니다.
+cmdreciver_scriptrun	테스트를 실행 하였습니다.
+cmdreciver_screencapture	화면 캡쳐를 수행하였습니다.
+cmdreciver_processkill	실행중인 모든 테스트관련 프로세스를 강제 종료하였습니다.
+
+testcase_file	스크립트파일명
+testcase_division	분류
+testcase_division1	대분류
+testcase_division2	중분류
+testcase_division3	소분류
+testcase_division4	기능
+testcase_priority	실행중요도
+testcase_condition	조건
+testcase_expectresult	기대결과
+testcase_comment	비고사항
+testcase_clipboardcheck	개의 Tab 구분된 항목들이 필요 합니다.  (기준보다 많은 항목이 존재 합니다.)
+testcase_clipboarderror1	TestCase 정보를 커맨트 형식으로 변환하기 위해서는 아래와 같은 순서로 Tab을 구분한 내용이 필요 합니다.
+testcase_importselect	TestCase로 변환하고자 하는 위치 혹은 파일 지정 (Report URL or 파일)
+testcase_selecterror	URL 또는 파일 위치가 지정되지 않았습니다.
+testcase_importreaderror	파일이나 URL에서 정보를 읽어 올 수 없습니다.
+testcase_importread	리포트 파일에서 TestCase 정보를 추출하고 있습니다.
+testcase_importcommenterror	TestCase Comment 정보를 읽어 올 수 없습니다. 
+testcase_importdone	TestCase 파일을 생성 하였습니다.
+
+ieobj_compatibility	브라우저에서 대상좌표 정보를 얻을 수 없습니다. IE호환성모드를 설정하시기 바랍니다.
+ieobj_objnotfound	브라우저에서 조건에 맞는 Object를 찾을 수 없습니다.
+
+imgsearch_search	검색
+imgsearch_chnagepath	경로변경
+imgsearch_imagepath	이미지 경로
+imgsearch_openexp	탐색기열기
+imgsearch_name	이름
+imgsearch_path	경로
+imgsearch_namecopy	이름복사
+imgsearch_edit	편집
+imgsearch_rename	이름변경
+imgsearch_move	이동
+imgsearch_delete	삭제
+imgsearch_close	닫기
+imgsearch_imgsearch	이미지 검색
+imgsearch_selectimg	선택 이미지
+imgsearch_selecterror	선택된 이미지가 없습니다.
+imgsearch_multiselect	1개 이상의 이미지가 선택되었습니다.
+imgsearch_imgnameinput	변경 할 이미지명 입력
+imgsearch_imgmoveconfirm	선택한 이미지를 아래 경로로 이동하시겠습니까?
+imgsearch_imgdeleteconfirm	선택된 이미지를 삭제하시겠습니까?
+imgsearch_imgpatherror	이동 할 경로가 지정되지 않았습니다. @crlf화면 상단의 "이미지 경로"를 이동 할 곳으로 지정하시기 바랍니다.
+
+update_check	업데이트 확인중
+update_updateconfirm	프로그램 업데이트가 있습니다. @crlf진행 하시겠습니까?
+update_run	업데이트 진행 중
+update_download	업데이트 다운로드 중
+update_faillist	업데이트 실패 목록
+update_done	업데이트 완료
+update_fail	업데이트 실패
+update_donecomment1	파일 업데이트를 완료 하였습니다. @crlf기존 파일들은 *.bak 파일로 보관되었습니다. 
+update_donecomment2	파일 업데이트를 실패 하였었습니다. @crlf필요시 수동으로 업데이트를 수행하시기 바랍니다.
+
+Command_Click	클릭|탭
+Command_Assert	확인
+Command_Include	실행
+Command_Set	설정
+Command_Sleep	대기
+Command_Comma	,
+CommandNavigate	접속
+Command_Attach	선택
+Command_Input	입력
+Command_BrowserRun	생성
+Command_BrowserEnd	종료
+Command_If	있으면
+Command_IfNot	없으면
+Command_TextAsert	내용확인
+Command_TextIf	내용이있으면
+Command_TextIfNot	내용이없으면
+Command_KeySend	누른
+Command_MouseMove	이동
+Command_MouseDrag	드래그
+Command_MouseDrop	드롭
+Command_RightClick	우클릭
+Command_Success	성공
+Command_Fail	실패
+Command_Capture	캡쳐
+Command_MouseHide	마우스숨김
+Command_MouseWheelUp	마우스휠업
+Command_MouseWheelDown	마우스휠다운
+Command_DoubleClick	더블클릭|더블탭
+Command_Excute	계산
+Command_ValueIfNot	같지않으면
+Command_ValueIf	같으면
+Command_Swipe	플리킹
+Command_GoHome	홈이동
+Command_BlockStart	{
+Command_BlockEnd	}
+Command_Loop	반복
+Command_FullScreenWork	전체대상작업
+Command_AreaCapture	부분캡쳐
+Command_VariableSet	참조설정
+Command_TagAttribGet	속성읽기
+Command_TagAttribSet	속성쓰기
+Command_AreaWork	부분대상작업
+Command_PartSet	부분설정
+Command_LogWrite	로그쓰기
+Command_SingleQuotationChange	작은따옴표변환
+Command_AU3Run	AU3실행
+Command_AU3VarRead	AU3변수읽기
+Command_AU3VarWrite	AU3변수쓰기
+Command_ProcessAttach	프로세스선택
+Command_LongTab	롱탭
+Command_LocationTab	위치탭
+Command_LocationLongTab	위치롱탭
+Command_LocationDoubleTab	위치더블탭
+Command_TargetCapture	대상캡쳐
+Command_TagCountGet	태그개수얻기
+Command_JSRun	JS실행
+Command_JSInsert	JS추가
+
+capture_tooltip0	* 캡쳐 방법
+capture_tooltip1	1. 캡쳐 시작 영역으로 마우스 이동
+capture_tooltip2	2. CTRL+SHIFT+X (SHIFT+ALT+X) 누름
+capture_tooltip3	3. 캡쳐 종료 영역으로 마우스 이동
+capture_tooltip4	4. CTRL+SHIFT+X (SHIFT+ALT+X) 누름
+Capture_Manager	캡쳐 관리
+capture_savePath	저장경로 :
+capture_changepath	경로변경
+capture_setpath	저장 경로 설정
+capture_openexptooltip	탐색기로 이미지 폴더 열기
+capture_bestlist	추천목록 :
+capture_filename	파일명
+capture_positionremove	좌표정보 제거
+capture_addtrans	투명옵션 추가
+capture_positioncreate	상대좌표 생성	
+capture_capture	캡쳐
+capture_save	저장
+capture_fromclipboard	클립보드에서
+capture_imagemanager	이미지관리	
+capture_close	종료
+capture_captureimage	종료
+capture_positionerror	활성화된 윈도우 기준으로 캡쳐 좌표 정보를 자동으로 가져 올 수 없습니다. @crlf다시 캡쳐 하시겠습니까?
+capture_sizeerror	캡쳐된 이미지가 너무 큽니다.
+capture_cancel	캡쳐 취소
+capture_done	캡쳐 완료
+capture_positioncopyerror	캡쳐한 이미지와의 상대좌표를 계산하기 위한 $GUITAR_최근X좌표, $GUITAR_최근Y좌표 값이 설정되지 않았습니다. @crlf  @crlf 상대좌표를 계산 하기 위해서는 메모리상에 최근 사용(확인, 클릭)된 정보가 있어야 합니다. "부분실행"등으로 상대좌표의 기준이 되는 이미지를 확인하거나 클릭하도록 한뒤 기능을 사용하시기 바랍니다.
+capture_positioncopy	상대좌표값 정보가 클립보드로 복사 되었습니다.
+capture_filenameerror	파일명이 지정되지 않았습니다.
+capture_filesave	저장중 :
+capture_deletlist	삭제될 파일 :
+capture_deleteconfirm	기존 이미지 파일들을 삭제하고 저장하시겠습니까?
+capture_deleteerror	파일 삭제에 실패하였습니다 :
+capture_existslist	동일 파일 :
+capture_existsconfirm	다른 폴더에도 동일한 이미지파일들이 존재 합니다. @crlf저장을 계속 하시겠습니까?
+capture_existsdeleteconfirm	동일 파일이 존재 합니다. 삭제하고 저장하시겠습니까?
+capture_existsdeleteerror	파일 삭제에 실패하였습니다 :
+capture_saveerror1	파일이 저장되지 않았습니다.
+capture_saveerror2	파일 저장에 실패하였습니다.
+capture_savedone	저장 완료 :
+capture_emptyerror	캡쳐된 내용이 없습니다.
+capture_exitconfirm	캡쳐된 이미지를 저장하지 않습니다. 창을 닫으시겠습니까?
+capture_clipboardopenerror	클립보드 열기에 실패 하였습니다.
+
+common_regwriteerror	레지스트리 쓰기에 실패하였습니다. 
+common_error	오류
+common_information	정보
+common_confirm	확인
+common_timehour	시간
+common_timeminute	분
+common_adminerror	프로그램의 정상적인 자동을 위해서 ""관리자 권한""으로 실행되어야 합니다.
+
+main_looptest	반복 실행
+main_looptesting	반복 테스트 수행중
+main_looptestingcount	반복 실행 횟 수
+main_looptestingresult	반복 테스트 결과
+main_savedeleteconfirm	기존 파일이 있습니다. 저장 하시겠습니까?
+main_alreadyopenerror 	같은 이름의 파일을 이미 편집하고 있습니다.
+main_open	열기
+main_save	저장
+main_saveas	다른 이름으로 저장
+main_commonscripterror	공용 스크립트 경로를 찾을 수 없습니다.
+main_commonimageerror	공용 이미지 기본경로를 찾을 수 없습니다.
+
+main_tcconvertdone	개의 TestCase 정보를 정상적으로 변환 하였습니다.
+main_tcconverterror	변환 하고자 하는 부분을 블럭으로 지정 한 뒤 실행하시기 바랍니다.
+
+main_quickmenurename	대상 이름변경
+main_quickmenudelete	대상 삭제
+
+
+sample_command	명령
+sample_sample	샘플
+sample_before	이전
+sample_next	다음
+sample_insert	예제 삽입
+
+
+_getLanguageMsg ("sample_command")
+
+
+sample_001c	생성
+sample_001s	브라우저 ^target:IE^를 ^command:생성^한다.
+sample_001d	타깃을 IE, FIREFOX, SAFARI, CHROME로 지정 할 수 있습니다. 
+
+sample_002c	종료
+sample_002s	현재 브라우저를 ^command:종료^한다.
+sample_002d	현재 사용중인 브라우저를 종료 합니다.
+
+sample_003c	접속
+sample_003s	^target:www.naver.com^으로 ^command:접속^한다.
+sample_003d	타깃 으로 지정된 URL을 엽니다.
+
+sample_004c	선택
+sample_004s	"^target:네이버메인^"창을 ^command:선택^한다.
+sample_004d	타깃 이미지가 존재하는 브라우저 윈도우를 작업대상 윈도우로 선택(활성화) 합니다.
+
+sample_005c	클릭
+sample_005s	^target:로그인버튼^을 ^command:클릭^한다. "^target:XXX, YYY^"를 ^command:클릭^한다.
+sample_005d	타깃 이미지를 찾아 클릭 합니다.
+
+sample_006c	클릭
+sample_006s	^target:[a;;도움말]^을 ^command:클릭^한다. "^target:[input;name=uid]^"를 ^command:클릭^한다.
+sample_006d	TAG방식으로 타깃을 찾아 클릭 합니다. (IE만 사용 가능)
+
+sample_007c	이동
+sample_007s	^target:네이버메인타이틀^로 ^command:이동^한다.
+sample_007d	타깃 이미지를 찾아 마우스 커서를 이동 합니다.
+
+sample_008c	드래그
+sample_008s	^target:출발지아이콘^을 ^command:드래그^하여 지도화면의 "^target:정자역^"에 ^command:드롭^한다.
+sample_008d	타깃 이미지를 찾아 클릭한 상태를 유지 합니다.
+
+sample_009c	드롭
+sample_009s	^target:출발지아이콘^을 ^command:드래그^하여 지도화면의 "^target:정자역^"에 ^command:드롭^한다.
+sample_009d	타깃 이미지를 찾아 마우스 이동 후 클릭상태를 해제 합니다.
+
+sample_010c	우클릭
+sample_010s	^target:출발지아이콘^을 ^command:우클릭^한다.
+sample_010d	타깃 이미지를 찾아 마우스 오른쪽 버튼을 클릭합니다.
+
+sample_011c	마우스숨김
+sample_011s	현재화면에서 ^command:마우스숨김^한다.
+sample_011d	마우스 커서를 브라우저 상단 제목표시줄로 이동 합니다.
+
+sample_012c	마우스휠업
+sample_012s	위로 스크롤 하기 위해 ^command:마우스휠업^한다.
+sample_012d	마우스 휠을 1회 위로 돌립니다."
+
+
+sample_013c	마우스휠다운
+sample_013s	아래로 스크롤 하기 위해 ^command:마우스휠다운^한다.
+sample_013d	마우스 휠을 1회 아래로 돌립니다.
+
+sample_014c	더블클릭
+sample_014s	^target:초기화버튼^을 ^command:더블클릭^한다.
+sample_014d	타깃 이미지를 찾아 더블클릭 합니다.
+
+
+sample_015c	입력
+sample_015s	TEXT상자에 "^target:테스트 글쓰기 제목^"을 ^command:입력^한다.
+sample_015d	현재 상태에서 문자열을 입력합니다.
+
+
+sample_016c	누른
+sample_016s	검색창에 "^target:정자동 맛집^"을 ^command:입력^하고, "^target:{ENTER}^"키를 ^command:누른^다.
+sample_016d	특수 키를 누릅니다. 
+
+
+
+sample_017c	있으면
+sample_017s	화면상에 ^target:로딩중아이콘^이 있으면 1초 ^command:대기^한다.
+sample_017d	타깃 이미지가 있을 경우 뒤 명령을 수행합니다.
+
+
+sample_018c	없으면
+sample_018s	로그인된 화면에 ^target:로그아웃버튼^이 ^command:없으면^ ^command:실패^한다.
+sample_018d	타깃 이미지가 없을 경우 뒤 명령을 수행합니다.
+
+
+sample_019c	내용이있으면
+sample_019s	현재 내용에 "^target:로딩중^" 글자 ^command:내용이있으면^ ^target:1초^ ^command:대기^한다.
+sample_019d	현재 화면에 지정된 문자열이 있으면 뒤 명령을 수행합니다.
+
+
+sample_020c	내용이없으면
+sample_020s	현재 화면에 "^target:성공^" 글자 ^command:내용이없으면^ ^command:실패^한다.
+sample_020d	현재 화면에 지정된 문자열이 없으면 뒤 명령을 수행합니다.
+
+
+sample_021c	같으면
+sample_021s	"^target:$테스트환경=STAGING^"과 ^command:같으면^ "^target:STAGING환경설정.TXT^"를 ^command:실행^한다.
+sample_021d	변수 값이 지정된 문자열과 동일한 경우 뒤 명령을 수행합니다.
+
+
+sample_022c	같지않으면
+sample_022s	"^target:$테스트환경=REAL^"과 ^command:같지않으면^ "^target:테스트환경처리.TXT^"를 ^command:실행^한다.
+sample_022d	변수 값이 지정된 문자열과 동일한 경우 뒤 명령을 수행합니다.
+
+
+sample_023c	확인
+sample_023s	^target:네이버타이틀^을 ^command:확인^한다. "^target:모자아이콘, 네이버타이틀^"을 ^command:확인^한다.
+sample_023d	타깃 이미지가 있는지 확인합니다. "," 를 사용하여 인접한 이미지들이 모두 존재 하는지 확인 할 수 있습니다.
+
+
+sample_024c	내용확인
+sample_024s	현재 화면에 "^target:접속성공^" 문자열이 있는지 ^command:내용확인^한다.
+sample_024d	현재 화면에 지정된 문자열이 포함되어 있는지 확인한다.
+
+
+sample_025c	대기
+sample_025s	^target:0.1^초 ^command:대기^한다. ^target:10^초 ^command:대기^한다.
+sample_025d	지정된 시간만큼 대기 합니다.
+
+
+sample_026c	,
+sample_026s	^target:로그인버튼^을 ^command:클릭^하고 , ^target:로그인상태^를 ^command:확인^한다.
+sample_026d	1초 대기합니다.
+
+
+sample_027c	성공
+sample_027s	현재 화면에 ^target:로그아웃버튼^이 ^command:없으면^ 테스트결과는 ^command:성공^한다.
+sample_027d	통상 다른 명령들과 같이 사용되어, 성공 상태를 기록합니다.
+
+
+sample_028c	실패
+sample_028s	현재 화면에 "^target:성공^" 글자 ^command:내용이없으면^ 테스트는^command:실패^한다.
+sample_028d	통상 다른 명령들과 같이 사용되며, 실패 상태를 기록합니다.
+
+
+sample_029c	설정
+sample_029s	"^target:$테스트환경=STAGING^"을 ^command:설정^한다.
+sample_029d	변수명에 값을 지정합니다.
+
+
+sample_030c	부분설정
+sample_030s	"^target:$생년월일=$연예인이름생년월일,2^"로 ^command:부분설정^한다.
+sample_030d	$연예인이름생년월일 변수에서 "," 나 TAB으로 구분하여 지정된 순번(2번째)의 값을 $생년월일에 저정합니다.
+
+
+sample_031c	참조설정
+sample_031s	"^target:$연예인정보=1^"로 ^command:참조설정^한다.
+sample_031d	테이블 변수 $연예인정보를 사용할 때 파일의 1 Line 부터 읽어와 사용 합니다.
+
+
+sample_032c	캡쳐
+sample_032s	현재 화면을 ^command:캡쳐^한다.
+sample_032d	작업중인 브라우저 화면을 마우스 커서를 포함하여 캡쳐합니다.
+
+
+sample_033c	부분캡쳐
+sample_033s	현재 화면에서 "^target:100,100,120,150^"을  ^command:부분캡쳐^한다.
+sample_033d	작업중인 브라우저를 대상으로 상대좌표 X1,Y1,X2,Y2 크기를 부분캡쳐한다.
+
+
+sample_034c	부분캡쳐
+sample_034s	현재 화면에서 "^target:100,100,120,150,검색영역^"을  ^command:부분캡쳐^한다.
+sample_034d	작업중인 브라우저를 대상으로 상대좌표 X1,Y1,X2,Y2 크기를 ""검색영역""이름으로 부분캡쳐한다.
+
+
+sample_035c	부분캡쳐
+sample_035s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentXYPos,샘플캡쳐^"로 ^command:부분캡쳐^ 한다.
+sample_035d	테스트 화면에서 최근에 확인된 네이버로고 좌표로 이미지를 캡쳐합니다. (화면상의 네이버로고 화면이 캡쳐됨)
+
+
+sample_036c	부분캡쳐
+sample_036s	전체화면 "^target:0,0,0,0,테스트01^" ^command:부분캡쳐^한다.
+sample_036d	테스트 중인 브라우저의 전체 화면을 "테스트01.png" 파일로 캡쳐 합니다.   @crlf   캡쳐 명령과 동일하지만, 파일을 명을 지정할 수 있습니다.
+
+
+sample_037c	부분캡쳐
+sample_037s	시스템 화면 "^target:-1,-1,-1,-1,테스트02^" ^command:부분캡쳐^한다.
+sample_037d	테스트 중인 시스템 전체 화면을 "테스트01.png" 파일로 캡쳐 합니다.
+
+
+sample_038c	대상캡쳐
+sample_038s	"^target:[div;class=lnb]^" ^command:대상캡쳐^한다.
+sample_038d	IE 브라우저에서 TAG 방식으로 지정된 대상을 캡쳐 합니다.
+
+
+sample_039c	로그쓰기
+sample_039s	"^target:i값은 |$i| 입니다.^"  ^command:로그쓰기^한다.
+sample_039d	결과 테스트 완료 후 리포트 화면에 "i값은 xx 입니다." 와 같은 로그가 기록됩니다.
+
+
+sample_040c	실행
+sample_040s	^target:지도통합TC001.TXT^를 ^command:실행^한다.
+sample_040d	지정된 스크립트 파일을 실행합니다.
+
+sample_041c	계산
+sample_041s	"^target:$계산값=3+(2*5)^"을 ^command:계산^한다. ^target:$최고값=_max(2,4)^을 ^command:계산^한다.
+sample_041d	지정된 autoit 내부 명령을 수행하여 변수에 저장합니다.
+
+sample_042c	작은따옴표변환
+sample_042s	"^target:$a=ABC"EFG^" ^command:설정^한다. ^target:$a^ ^command:작은따옴표변환^한다.
+sample_042d	문자열 중에 '를 찾아 ''로 변경하여 문자열 치환/변환 작업에 사용합니다.
+
+sample_043c	반복
+sample_043s	^target:$i=1^ ^command:설정^한다. ^target:$i=3^ ^command:반복^한다. ^command:{^  @crlf   ^target:$i^초 ^command:대기^한다. @crlf  ^command:}^
+sample_043d	변수값이 지정된 값이 될 때 까지 1씩 증가하며, 블럭으로 지정된 명령들을 반복 수행 할 수 있습니다.
+
+sample_044c	{ }
+sample_044s	^target:로그인버튼^이 ^command:없으면^ ^command:{^ @crlf  ^target:1^초 ^command:대기^한다. @crlf ^command:}^
+sample_044d	조건문이나 반복문과 함께 사용하여 블럭으로 지정된 여러 명령들을 실행 할 수 있습니다.
+
+sample_045c	전체대상작업
+sample_045s	^command:전체대상작업^으로, ^target:IE팝업상자(저장)^을 확인하고, "^target:확인버튼^"을 ^command:클릭^한다.
+sample_045d	다음에 나열된 명령들을  수행할 때 브라우저 윈도우가 아니 화면기준으로 확인/클릭 작업등을 수행합니다.
+
+sample_046c	부분대상작업
+sample_046s	"^target:100,100,200,200^" ^command:부분대상작업^으로, ^target:게시물삭제버튼^을 클릭한다.
+sample_046d	작업중인 브라우저를 대상으로 상대좌표 X1,Y1,X2,Y2 내에서만 이미지를 찾아 명령(클릭)을 수행합니다.
+
+sample_047c	속성읽기
+sample_047s	"^target:$검색어=[input;name=query;;;value]^"  ^command:속성읽기^ 한다.
+sample_047d	브라우저의 검색어창의 입력된 내용(Text)를 $검색어 변수에 읽어와 저장합니다.
+
+sample_048c	속성쓰기
+sample_048s	"^target:[dd;class=uid\input;name=id;;;value]=testid^" ^command:속성쓰기^ 한다.
+sample_048d	지정된 정보를 갖는 Input 항목에 'testid' 라는 문자열을 설정합니다.
+
+sample_049c	태그개수얻기
+sample_049s	"^target:$A태그개수=[a;;NHN]^" ^command:태그개수얻기^ 한다.
+sample_049d	브라우저내 링크정보중 NHN 문자열이 있는 태그개수를 반환합니다.
+
+sample_050c	AU3실행
+sample_050s	"^target:calc.au3^"  ^command:AU3실행^ 한다.
+sample_050d	현재 스크립트 폴더의 calc.au3 파일을 실행합니다.
+
+sample_051c	AU3변수쓰기
+sample_051s	"^target:searchtext=맛집^" ^command:AU3변수쓰기^ 한다.
+sample_051d	AU3변수정보로 searchtext라는 변수명에 "맛집" 정보를 설정합니다.  @crlf  AU3 스크립트에서  $var1 = _GUITAR_AU3VARRead ("searchtext") 와 같이 정보를 참조하여 사용 할 수 있습니다.
+
+sample_052c	AU3변수읽기
+sample_052s	"^target:$searchtxt=searchtext^" ^command:AU3변수읽기^ 한다. 
+sample_052d	AU3변수(searchtext)의 값을 $searchtxt에 저장합니다.
+
+sample_053c	프로세스선택
+sample_053s	"^target:VNC^" ^command:프로세스선택^을 한다.
+sample_053d	이미지가 아닌 INI에 설정된 AVD의 실행프로세스를 찾아 작업 대상으로 설정합니다.
+
+sample_054c	탭
+sample_054s	"^target:전화기아이콘^"을 ^command:탭^ 한다.
+sample_054d	"클릭"명령과 동일하게 작동합니다. (모바일에서 사용) 
+
+sample_055c	더블탭
+sample_055s	"^target:전화기아이콘^"을 ^command:더블탭^ 한다.
+sample_055d	"더블클릭"명령과 동일하게 작동합니다. (모바일에서 사용)
+
+sample_056c	롱탭
+sample_056s	"^target:전화기아이콘^"을 ^command:롱탭^ 한다.
+sample_056d	지정된 이미지를 찾아 오래동안(2초) 누릅니다.
+
+sample_057c	위치탭
+sample_057s	"^target:20%,80%^" ^command:위치탭^ 한다.
+sample_057d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 탭한다.
+
+sample_058c	위치롱탭
+sample_058s	"^target:20%,80%^" ^command:위치롱탭^ 한다.
+sample_058d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 롱탭한다.
+
+sample_059c	위치더블탭
+sample_059s	"^target:20%,80%^" ^command:위치더블탭^ 한다.
+sample_059d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 더블탭한다.
+
+sample_060c	플리킹
+sample_060s	"^target:90%,50%,10%,50%^" ^command:플리킹^ 한다.
+sample_060d	화면을 쓸어넘기기 합니다. 각 좌표값은 0~100 까지를 입력할 수 있습니다. & @crlf  X1, Y1 좌표로 부터 X2,Y2 좌표로 쓸어 넘기는 작동을 수행합니다. (0,0=왼쪽위, 100,100 오른쪽 아래)
+
+sample_061c	홈이동
+sample_061s	^command:홈이동^ 한다.
+sample_061d	모바일 테스트시 홈버튼을 누른것과 같은 효과가 발생됩니다. 사전에 시스템 변수 "$GUITAR_모바일OS" 이 설정되어 있어야 합니다.
+
+sample_062c	$GUITAR_CurrentBrowser
+sample_062s	"^target:$GUITAR_CurrentBrowser=IE^" ^command:같으면^ ^target:네이버로그인3단계.TXT^"를 ^command:실행^ 한다.
+sample_062d	현재 작업중인 브라우저 종류를 리턴합니다.($GUITAR_현재브라우저)
+
+sample_063c	$GUITAR_Random
+sample_063s	TEXT상자에 "^target:$GUITAR_Random^"을 ^command:입력^ 한다.
+sample_063d	임의 숫자 값을 리턴합니다. (예, 3454345432234) ($GUITAR_임의값)
+
+sample_064c	$GUITAR_CurrentDateTime
+sample_064s	TEXT상자에 "^target:$GUITAR_CurrentDateTime^"을 ^command:입력^ 한다.
+sample_064d	현재날짜와 시간을 문자열로 리턴합니다. (예, 2011년 10월 28일 15시 30분 06초) ($GUITAR_현재날짜와시간)
+
+sample_065c	$GUITAR_RecentXPos
+sample_065s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentXPos^"을 ^command:입력^ 한다.
+sample_065d	최근에 사용된(클릭, 확인) 이미지의 X좌표를 리턴합니다. 부분캡쳐시 상대좌표로 활용할 수 있습니다. ($GUITAR_최근X좌표)
+
+sample_066c	$GUITAR_RecentYPos
+sample_066s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentYPos^"을 ^command:입력^ 한다.
+sample_066d	최근에 사용된(클릭, 확인) 이미지의 Y좌표를 리턴합니다. 부분캡쳐시 상대좌표로 활용할 수 있습니다.($GUITAR_최근Y좌표)
+
+sample_067c	$GUITAR_RecentXYPos
+sample_067s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentXYPos,샘플캡쳐^"로 ^command:부분캡쳐^ 한다.
+sample_067d	최근에 사용된 이미지의 X1,Y1,X2,Y2형태로 리턴합니다. 부분캡쳐시 상대좌표로 활용 할 수 있습니다. ($GUITAR_최근전체좌표)
+
+sample_068c	$GUITAR_RrportPath
+sample_068s	"^target:$r=FileWriteLine(''|$GUITAR_RrportPath|\|$GUITAR_CurrentDateTime|.log'', ''a'')^" ^command:계산^ 
+sample_068d	작업중인 리포트 경로를 리턴합니다. 경로를 참조하여 추가적인 파일관련 작업을 수행 할 수 있습니다. ($GUITAR_리포트경로)
+
+sample_069c	$GUITAR_ScriptPath
+sample_069s	"^target:$r=FileWriteLine(''|$GUITAR_ScriptPath|\|$GUITAR_CurrentDateTime|.log'', ''a'')^" ^command:계산^ 
+sample_069d	실행중인 스크립트 경로를 리턴합니다. 경로값을 사용하여 파일저장등의 작업을 수행 할 수 있습니다. (누적로그 기록등...) ($GUITAR_스크립트경로)
+
+sample_070c	$GUITAR_WorkPath
+sample_070s	^target:"$GUITAR_WorkPath"^ ^command:로그쓰기^ 한다
+sample_070d	현재 사용중인 작업경로 (스크립트 최상위 폴더)를 리턴합니다. ($GUITAR_작업경로)
+
+sample_071c	$GUITAR_XMLPath
+sample_071s	^target:"$GUITAR_XMLPath"^ ^command:로그쓰기^ 한다
+sample_071d	XML 테스트 결과 파일이 저장될 폴더를 리턴합니다. ($GUITAR_XML경로)
+
+sample_072c	$GUITAR_AdjustXPos
+sample_072s	^target:$GUITAR_AdjustXPos=50^ ^command:설정^하고 ^target:국어사전질문이미지^를 ^command:클릭^한다.
+sample_072d	국어사전이미지를 찾고 해당 이미지의 오른쪽(X+50)을클릭합니다. (사용후 보정값은 자동으로는 0으로 초기화됩니다.) ($GUITAR_X좌표보정)
+
+sample_073c	$GUITAR_AdjustYPos
+sample_073s	^target:$GUITAR_AdjustYPos=-50^ ^command:설정^하고 ^target:국어사전질문이미지^를 ^command:클릭^한다.
+sample_073d	국어사전이미지를 찾고 해당 이미지의 위른쪽(Y-50)을클릭합니다. (사용후 보정값은 자동으로는 0으로 초기화됩니다.) ($GUITAR_Y좌표보정)
+
+sample_074c	$GUITAR_RecentLoadingTime
+sample_074s	^target:www.naver.com^ ^command:접속^하고, ^target:$GUITAR_RecentLoadingTime^ 을 ^command:로그쓰기^한다.
+sample_074d	최근 "접속" 명령으로 사용된 브라우저 로딩완료 소요시간(ms)을 가져옵니다. ($GUITAR_최근접속소요시간)
+
+sample_075c	$GUITAR_BrowserSize
+sample_075s	"^target:$GUITAR_BrowserSize=800,600^" ^command:설정^하고 ^target:IE^를 ^command:생성^한다.
+sample_075d	INI에 설정된 브라우저창 크기를 무시하고 800x600 변경하여 테스트를 진행합니다. ($GUITAR_브라우저창크기)
+
+sample_076c	$GUITAR_BrowserURL
+sample_076s	^target:$GUITAR_BrowserURL ^command:로그쓰기^한다.
+sample_076d	현재 표시되고 있는 브라우저의 URL 주소를 반환합니다. ($GUITAR_브라우저URL)
+
+sample_077c	$GUITAR_MobileOS
+sample_077s	"^target:$GUITAR_MobileOS=IOS^" ^command:설정^한다.
+sample_077d	테스트 대상 모바일 설정을 IOS로 합니다. IOS 외에 ANDROID값을 지정할 수 있습니다.  @crlf 일부 명령들은 $GUITAR_모바일OS 설정에 따라 다르게 작동됨으로 사전에 꼭 테스트할 OS를 지정해야 합니다. ($GUITAR_모바일OS)
+
+
+sample_078c	$GUITAR_InputType
+sample_078s	"^target:$GUITAR_InputType=ANSI^" ^command:설정^한다.
+sample_078d	"입력" 명령에서 키보드 입력 방식을 선택합니다. UNICODE, ANSI로 지정할 수 있습니다.  @crlf 기본 각 테스트 대상에 맞게 자동으로 설정되지만  @crlf 강제로 입력방식을 지정할 필요가 있을때 강제로 설정을 변경 할 수 있습니다. ($GUITAR_입력방식)
+
+

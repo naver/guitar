@@ -1,0 +1,5 @@
+http://map.naver.com/common2/insertMap.nhn 접속한다.
+1초 대기한다.
+
+
+

@@ -1,0 +1,14 @@
+;로그에 남기지 않도록 설정
+;HIDE=ON 
+
+; 검색어 URL로 접속
+$검색URL=http://search.naver.com/search.naver?sm=tab_hty&where=nexearch&query=|$검색어_ENCODE 설정한다. 
+;HIDE=OFF 
+$검색URL로 접속한다. 
+;HIDE=ON 
+
+"[div:class=people_info section]" 확인한다.
+
+$캡쳐파일명=|$검색어|_|$GUITAR_현재브라우저| 설정한다.
+마우스숨김한다.
+"$GUITAR_최근전체좌표 ,$캡쳐파일명" 부분캡쳐한다.

@@ -1,0 +1,8 @@
+;공통 변수 예제
+
+;hide=on
+$네이버메인URL=http://www.naver.com 설정
+
+
+;샘플서비스 URL 설정
+$샘플서비스메인URL=http://www.naver.com 설정한다.

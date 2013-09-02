@@ -1,0 +1,18 @@
+;ID=기능A_001
+;# AA 기능을 확인 확인한다.
+$테스트URL1=$테스트서비스메인URL|/Traffic_Browser/SubwayLine2/index.asp 설정한다.
+$테스트URL1에 접속한다.
+캡쳐한다.
+
+
+;# 스크립트 내에서 ID 전체 구간이 커맨트 처리되어 있는 경우 리포트화면에서 "미수행" 항목으로 수집되며, 노란색으로 표시됨
+;ID=기능A_002 
+;# BB 기능을 확인 확인한다.
+;# http://bts.nhncorp.com/nhnbts/browse/ALGOGARA-1000
+;1초 대기한다.
+
+;ID=기능A_003 
+;# CC 기능을 확인한다.
+1초 대기한다.
+
+

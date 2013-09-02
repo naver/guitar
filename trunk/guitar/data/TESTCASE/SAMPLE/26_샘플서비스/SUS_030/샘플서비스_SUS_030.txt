@@ -1,0 +1,4 @@
+;ID= 샘플SUS_TC005
+;# 카페에 접속하여 카페타이틀 확인한다.
+http://section.cafe.naver.com/ 접속한다.
+카페홈타이틀을 확인한다.

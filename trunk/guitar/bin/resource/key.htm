@@ -1,0 +1,1115 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:굴림;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+@font-face
+	{font-family:"\@굴림";
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:"\@맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"맑은 고딕";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"머리글 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"맑은 고딕";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"바닥글 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"맑은 고딕";}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:굴림;}
+span.Char
+	{mso-style-name:"머리글 Char";
+	mso-style-link:머리글;}
+span.Char0
+	{mso-style-name:"바닥글 Char";
+	mso-style-link:바닥글;}
+ /* Page Definitions */
+ @page Section1
+	{size:595.3pt 841.9pt;
+	margin:3.0cm 72.0pt 72.0pt 72.0pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+
+</head>
+
+<body lang=KO>
+
+<div class=Section1>
+
+
+'!' <br>
+This tells AutoIt to send an ALT keystroke, therefore Send("This is text!a") would send the keys "This is text" and then press "ALT+a".<br>
+<br>
+N.B. Some programs are very choosy about capital letters and ALT keys, i.e. "!A" is different to "!a". The first says ALT+SHIFT+A, the second is ALT+a. If in doubt, use lowercase!<br>
+<br>
+'+'<br>
+This tells AutoIt to send a SHIFT keystroke, therefore Send("Hell+o") would send the text "HellO". Send("!+a") would send "ALT+SHIFT+a".<br>
+<br>
+'^'<br>
+This tells AutoIt to send a CONTROL keystroke, therefore Send("^!a") would send "CTRL+ALT+a".<br>
+<br>
+N.B. Some programs are very choosy about capital letters and CTRL keys, i.e. "^A" is different to "^a". The first says CTRL+SHIFT+A, the second is CTRL+a. If in doubt, use lowercase!<br>
+<br>
+'#'<br>
+The hash now sends a Windows keystroke; therefore, Send("#r") would send Win+r which launches the Run dialog box.<br>
+<br>
+
+
+
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="100%"
+ style='width:100.0%;border:outset silver 1.0pt'>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{TAB}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Navigate to next control (button, checkbox, etc)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>+{TAB}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Navigate to previous control.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>^{TAB}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Navigate to next WindowTab (on a Tabbed dialog window)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>^+{TAB}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Navigate to previous WindowTab.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{SPACE}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Can be used to toggle a checkbox or click a button.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{+}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Usually checks a checkbox (if it's a &quot;real&quot; checkbox.)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{-}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Usually unchecks a checkbox.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NumPadMult}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Recursively expands folders in a SysTreeView32. </span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal align=left style='margin-bottom:12.0pt;text-align:left;
+text-autospace:ideograph-numeric ideograph-other;word-break:keep-all'><span
+lang=EN-US style='font-size:12.0pt;font-family:굴림'><br>
+Use Alt-key combos to access menu items.&nbsp; Also, open Notepad and try the
+following:</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="100%"
+ style='width:100.0%;border:outset silver 1.0pt'>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>!f</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Send Alt+f, the access key for Notepad's file menu. <i>Try other letters!</i></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{DOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Move down a menu.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{UP}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Move up a menu.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LEFT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Move leftward to new menu or expand a submenu.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{RIGHT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Move rightward to new menu or collapse a submenu.</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal align=left style='margin-bottom:12.0pt;text-align:left;
+text-autospace:ideograph-numeric ideograph-other;word-break:keep-all'><span
+lang=EN-US style='font-size:12.0pt;font-family:굴림'>&nbsp;</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="100%"
+ style='width:100.0%;border:outset silver 1.0pt'>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{!}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>!</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{#}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>#</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{+}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>+</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{^}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>^</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{{}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{}}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>}</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{SPACE}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>SPACE</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{ENTER}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>ENTER key on the main keyboard</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{ALT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>ALT</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BACKSPACE} or {BS}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>BACKSPACE</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{DELETE} or {DEL}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>DELETE</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{UP}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Up arrow</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{DOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Down arrow</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LEFT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Left arrow</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{RIGHT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Right arrow</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{HOME}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>HOME</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{END}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>END</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{ESCAPE} or {ESC}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>ESCAPE</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{INSERT} or {INS}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>INS</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{PGUP}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>PGUP</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{PGDN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>PGDN</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{F1} - {F12}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Function keys</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{TAB}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>TAB</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{PRINTSCREEN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>PRINTSCR</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LWIN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Left Windows key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{RWIN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Right Windows key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMLOCK}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>NUMLOCK</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BREAK}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>for Ctrl+Break processing</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{PAUSE}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>PAUSE</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{CAPSLOCK}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>CAPSLOCK</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMPAD0} - {NUMPAD9}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Numpad digits</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMPADMULT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Numpad Multiply</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMPADADD}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Numpad Add</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMPADSUB}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Numpad Subtract</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMPADDIV}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Numpad Divide</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMPADDOT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Numpad period</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{NUMPADENTER}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Enter key on the numpad</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{APPSKEY}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Windows App key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LALT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Left ALT key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{RALT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Right ALT key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LCTRL}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Left CTRL key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{RCTRL}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Right CTRL key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LSHIFT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Left Shift key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{RSHIFT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Right Shift key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{SLEEP}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Computer SLEEP key</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{ALTDOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Holds the ALT key down until {ALTUP} is sent</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{SHIFTDOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Holds the SHIFT key down until {SHIFTUP} is sent</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{CTRLDOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Holds the CTRL key down until {CTRLUP} is sent</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LWINDOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Holds the left Windows key down until {LWINUP} is sent</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{RWINDOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Holds the right Windows key down until {RWINUP} is sent</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{ASC nnnn}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>Send the ALT+nnnn key combination</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BROWSER_BACK}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select the browser &quot;back&quot; button</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BROWSER_FORWARD}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select the browser &quot;forward&quot; button</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BROWSER_REFRESH}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select the browser &quot;refresh&quot; button</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BROWSER_STOP}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select the browser &quot;stop&quot; button</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BROWSER_SEARCH}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select the browser &quot;search&quot; button</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BROWSER_FAVORITES}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select the browser &quot;favorites&quot; button</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{BROWSER_HOME}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Launch the browser and go to the home page</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{VOLUME_MUTE}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Mute the volume</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{VOLUME_DOWN}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Reduce the volume</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{VOLUME_UP}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Increase the volume</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{MEDIA_NEXT}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select next track in media player</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{MEDIA_PREV}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Select previous track in media player</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{MEDIA_STOP}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Stop media player</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{MEDIA_PLAY_PAUSE}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Play/pause media player</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LAUNCH_MAIL}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Launch the email application</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LAUNCH_MEDIA}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Launch media player</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LAUNCH_APP1}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Launch user app1</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>{LAUNCH_APP2}</span></p>
+  </td>
+  <td style='border:inset silver 1.0pt;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;font-family:
+  굴림'>2000/XP Only: Launch user app2</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
