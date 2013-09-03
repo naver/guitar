@@ -58,11 +58,16 @@ func main ()
 	local $sPreRun
 	local $sErrorMsg
 
+
+	_ScriptLogWrite("시작", True)
+
 	_IEErrorNotify(False)
 
 	$_runAlwaysFontsmoothing = ""
 
 	getCommandLineInfo ($scmdRunFile, $_sUserINIFile, $_runCmdRemote)
+
+	_ScriptLogWrite("cmdline 분석")
 
 	if _CheckSingleRun() = False then
 
@@ -81,6 +86,7 @@ func main ()
 	endif
 
 
+	_ScriptLogWrite("해상도 확인 완료")
 
 	if checkUACSetting() = False then _exit(1, True )
 
@@ -90,6 +96,8 @@ func main ()
 
 	TraySetState()
 	TraySetToolTip($_sProgramName)
+
+	_ScriptLogWrite("ADMIN 설정 확인 완료")
 
 	if $_sUserINIFile <> "" then
 
@@ -116,6 +124,8 @@ func main ()
 		$sScriptName = $scmdRunFile
 	endif
 
+	_ScriptLogWrite("사용자 INI 설정 확인 완료")
+
 	_setCommonVar()
 
 
@@ -141,6 +151,7 @@ func main ()
 	SelectHotKey("main")
 
 	writeDebugLog("HOTKEY 설정 완료")
+	_ScriptLogWrite("HOTKEY 설정 완료")
 
 	;디버깅(au3로 실행) 할 때는 fontsmoothigoff 하지 않을것
 	if _IsExeMode() = 0 then $_runAlwaysFontsmoothing = False
@@ -161,7 +172,11 @@ func main ()
 
 	writeDebugLog("Main 로딩 전")
 
+	_ScriptLogWrite("메인폼 로딩전")
+
 	_loadMainForm()
+
+	_ScriptLogWrite("메인폼 로딩완료")
 
 	writeDebugLog("Main 로딩 완료")
 
@@ -169,6 +184,8 @@ func main ()
 	setMenuMoveList ()
 
 	setToolbar("DISABLE")
+
+	_ScriptLogWrite("메뉴설정 완료")
 
 	_GUICtrlRichEdit_SetReadOnly($_gEditScript, True)
 
@@ -184,7 +201,7 @@ func main ()
 
 	sleep(10)
 
-
+	_ScriptLogWrite("윈도우 위치조정 완료")
 
 	if $scmdRunFile <> "" then
 		onClickNew()
@@ -217,7 +234,7 @@ func main ()
 		onClickNew()
 	endif
 
-
+	_ScriptLogWrite("초기 로딩완료")
 	writeDebugLog("초기 로딩 완료")
 
 	setToolbar("DEFAULT")
@@ -251,6 +268,8 @@ func main ()
 	if $_runCmdRemote = False then checkIEUseClearType()
 
 	writeDebugLog("전체 로딩 완료")
+
+	_ScriptLogWrite("", True)
 
 	While 1
 		_waitFormMain()
