@@ -24,9 +24,9 @@ func openAboutWindow()
 
 	local $picLogo = GUICtrlCreatePic (@ScriptDir & "\guitarlogo.jpg", 80, 20, 0,0)
 
-	local $lbAbout = GUICtrlCreateLabel("GUITR v" & FileGetVersion(@ScriptDir & "\" & _GetScriptName() & ".exe") & @crlf &  @crlf & "Copyright (c) 2010-2012 NHN Corp." & @crlf &  @crlf  , 20, 110, 300, 70)
+	local $lbAbout = GUICtrlCreateLabel("GUITR v" & FileGetVersion(@ScriptDir & "\" & _GetScriptName() & ".exe") & @crlf &  @crlf & "Copyright (c) 2010-2013 NAVER Corp." & @crlf &  @crlf  , 20, 110, 300, 70)
 
-	local $lbHomepage = GUICtrlCreateLabel('http://devcode.nhncorp.com/projects/guitar', 20, 180, 300, 15)
+	local $lbHomepage = GUICtrlCreateLabel('http://dev.naver.com/projects/guitar', 20, 180, 300, 15)
 
 	local $btnOk = GUICtrlCreateButton(_getLanguageMsg("information_ok"), 105, 230, 90, 30, $BS_DEFPUSHBUTTON)
 
