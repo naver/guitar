@@ -88,16 +88,10 @@ func main ()
 
 	_ScriptLogWrite("해상도 확인 완료")
 
-	if checkUACSetting() = False then _exit(1, True )
-
-	;********************************************************************************
-	checkAdminRun()
-	;********************************************************************************
 
 	TraySetState()
 	TraySetToolTip($_sProgramName)
 
-	_ScriptLogWrite("ADMIN 설정 확인 완료")
 
 	if $_sUserINIFile <> "" then
 
@@ -131,6 +125,15 @@ func main ()
 
 	setupDebugLogFile ($_sDebugLogFile)
 	writeDebugLog("공용변수 로딩완료")
+
+
+	if checkUACSetting() = False then _exit(1, True )
+
+	;********************************************************************************
+	checkAdminRun()
+	;********************************************************************************
+	_ScriptLogWrite("ADMIN 설정 확인 완료")
+
 	;exit
 
 	if _isWorksatationLocked() then
