@@ -1,5 +1,5 @@
 #AutoIt3Wrapper_Icon=GUITAR.ico
-#AutoIt3Wrapper_Res_Fileversion=1.5.2.107
+#AutoIt3Wrapper_Res_Fileversion=1.5.3.1
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 ;#RequireAdmin
@@ -2379,7 +2379,9 @@ Func viewHelp()
 
 	$sMsg = $sMsg & " " & @crlf
 
-	_ProgramInformation($sMsg)
+	;_ProgramInformation($sMsg)
+
+	ShellExecute("http://dev.naver.com/projects/guitar/download/note/5078")
 
 endfunc
 
