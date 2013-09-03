@@ -17,4 +17,4 @@ http://www.naver.com 접속한다.
 http://www.lct5579.com.ne.kr/tag/java014.html 접속한다.
 "[input:value=버튼을:::scrollWin();]" JS실행 한다. , , , , , ,
 
-현재 브라우저를 종료한ㄷ.
+현재 브라우저를 종료한다
