@@ -7,6 +7,6 @@ http://search.naver.com/search.naver?where=nexearch&query=NHN&sm=top_hty&fbm=1&i
 "$다음태그개수=[a::다음]" 태그개수얻기 한다.
 "$NHN태그개수=[a::NHN]" 태그개수얻기 한다.
 
-; 50개 미만 링크일 경우 실패 하도록 설정
-"$비교=(|$NHN태그개수| > 50)" 계산하고, $비교=False 같으면 실패한다. 
+; 40개 미만 링크일 경우 실패 하도록 설정
+"$비교=(|$NHN태그개수| > 40)" 계산하고, $비교=False 같으면 실패한다. 
 IE 종료한다.

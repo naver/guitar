@@ -4,8 +4,6 @@
 
 IE 생성한다.
 
-
-
 ; 날씨페이지 접속
 http://weather.naver.com/ 접속한다.
 
@@ -25,28 +23,3 @@ $현재지역=강원도 같지않으면 실패한다.
 현재화면을 캡쳐 한다.
 
 
-
-
-$네이버ID=username 설정한다.
-$네이버PW=userpw 설정한다. 
-
-; 네이버 로그인 페이지 접속
-http://nid.naver.com/nidlogin.logout?returl=http://www.naver.com 접속한다.
-
-; 보안1단계 클릭
-"[img:alt=보안1단계]"  클릭 한다. , 
-
-; InputBox 입력 (ID/PW 정보 입력)
-"[dd:class=uid\input:name=id:::value]=|$네이버ID" 속성쓰기 한다. 
-"[dd:class=upw\input:name=pw:::value]=|$네이버PW" 속성쓰기 한다. 
-
-; CheckBox 선택 (로그인상태유지)
-"[input:class=chk_me:::checked]=true" 속성쓰기 한다. 
-
-2초 대기한다.
-
-현재화면을 캡쳐한다.
-
-
-
-IE 종료 한다. 
