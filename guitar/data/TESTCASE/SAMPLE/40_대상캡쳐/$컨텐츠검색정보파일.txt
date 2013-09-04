@@ -1,5 +1,5 @@
 http://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=
 베스트셀러 순위,div:class=content_search section,컨텐츠검색^집계기간
-음성 및 화상 플러그인,div:class=dbplus db_cols section,음성 및 화상 플러그인^표기내용과 다를 수 있습니다
+음성 및 화상 플러그인,div:class=sp_mobile section,음성 및 화상 플러그인^표기내용과 다를 수 있습니다
 영화 순위,div:class=content_search section,한국 박스오피스 순위^집계기간^누적관객
 END
