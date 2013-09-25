@@ -1,11 +1,10 @@
 #AutoIt3Wrapper_Icon=GUITARCmdReceiver.ico
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.38
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.40
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 #include-once
 #include <Process.au3>
 #Include <ScreenCapture.au3>
-
 
 #include "UIACommon.au3"
 #include ".\_include_nhn\_file.au3"
@@ -213,7 +212,7 @@ func ControlerRun($sMainProgram, $sProgramPath, $sScriptPath , $sScriptFile, $sO
 
 	if ProcessExists($sMainProgram) <> 0  then
 
-		writeRmoteLog(_getLanguageMsg("cmdreciver_scriptstopreq"))
+		writeRmoteLog(_getLanguageMsg("cmdreciver_scriptstopreq2"))
 		writeRmoteLog(_getLanguageMsg("cmdreciver_scriptendwait"))
 
 		ControlerStop($sMainProgramFullPath)
