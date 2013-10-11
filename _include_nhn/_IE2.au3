@@ -137,7 +137,7 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 
 
 			; IE6 및 이후 버전인경우에만 지원
-			if $o_Window.Name() <> "Windows Internet Explorer" and $o_Window.Name() <> "Microsoft Internet Explorer" then $f_isBrowser = False
+			if $o_Window.Name() <> "Internet Explorer" and $o_Window.Name() <> "Windows Internet Explorer" and $o_Window.Name() <> "Microsoft Internet Explorer" then $f_isBrowser = False
 			;_debug($f_isBrowser)
 
 			$s_tmp =" "
