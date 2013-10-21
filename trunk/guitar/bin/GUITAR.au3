@@ -1,5 +1,5 @@
 #AutoIt3Wrapper_Icon=GUITAR.ico
-#AutoIt3Wrapper_Res_Fileversion=1.5.3.1
+#AutoIt3Wrapper_Res_Fileversion=1.5.3.2
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 ;#RequireAdmin
@@ -2371,7 +2371,7 @@ func runPreRunShell($bFormCheck = True )
 
 	if $bFormCheck and WinActive($_gForm) = 0 then return
 
-	;_msg($_runPreRun)
+	;msg($_runPreRun)
 
 	if $_runPreRun <> "" then RunWait ($_runPreRun,"",@SW_SHOWDEFAULT)
 
