@@ -726,7 +726,7 @@ func onClickSave($bSaveOnly = False, $bNewSave = False)
 		$iEncodingType = FileGetEncoding ($sFileName)
 	Else
 		if getIniBoolean(getReadINI("Environment","SaveUTF8")) = True then $iEncodingType = 128
-		_msg(getReadINI("Environment","SaveUTF8"))
+		;msg(getReadINI("Environment","SaveUTF8"))
 	endif
 
 

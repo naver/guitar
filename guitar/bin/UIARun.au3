@@ -4458,18 +4458,17 @@ endfunc
 func getMultiImagePos(byref $aSearchResult, $aImageRoad, byref  $x,byref  $y, $sPositionImage, byref $aRetPos)
 
 	local $i
-	local $iMaxLeft = 100000
-	local $iMaxTop =  100000
-	local $iMaxRight = -1
-	local $iMaxBottom = -1
+	local $iMaxLeft = 100000000
+	local $iMaxTop =  100000000
+	local $iMaxRight = -100000000
+	local $iMaxBottom = -10000000
 	local $aImagePos[5]
+
 	for $i = 1 to ubound($aImageRoad) -1
 		;debug($aSearchResult[$i][$aImageRoad[$i]][5], $aSearchResult[$i][$aImageRoad[$i]][1], $aSearchResult[$i][$aImageRoad[$i]][2])
 
 		if  $aSearchResult[$i][$aImageRoad[$i]][5] = $sPositionImage then
-
 			;msg($sPositionImage)
-
 			if $aSearchResult[$i][$aImageRoad[$i]][1] < $iMaxLeft then $iMaxLeft = $aSearchResult[$i][$aImageRoad[$i]][1]
 			if $aSearchResult[$i][$aImageRoad[$i]][2] < $iMaxTop then $iMaxTop = $aSearchResult[$i][$aImageRoad[$i]][2]
 
