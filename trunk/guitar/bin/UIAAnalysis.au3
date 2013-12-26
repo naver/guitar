@@ -122,6 +122,7 @@ func _setCommonVar()
 
 	; 시스템 언어 리소스 읽기
 	_loadLanguageResource(_loadLanguageFile(getReadINI("Environment","Language")))
+	_loadTestCaseHeaderText()
 
 
 	_setCommonPathVar()

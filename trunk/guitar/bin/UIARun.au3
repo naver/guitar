@@ -1077,6 +1077,7 @@ func commandProcessAttach($sScriptTarget)
 		$_hBrowser = $aPlist [1]
 
 		;debug($_runBrowser, $_hBrowser)
+		;msg($aPlist )
 
 		_setCurrentBrowserInfo()
 
@@ -3289,7 +3290,7 @@ func getBrowserAdressPos($sScriptTarget, byref $x, byref $y)
 		Switch $sScriptTarget
 
 			case $_sBrowserFF
-				$x -= 50
+				$x -= 110
 
 			case $_sBrowserSA
 				$x -= 100

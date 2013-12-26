@@ -1,5 +1,5 @@
-#AutoIt3Wrapper_Icon=GUITAR.ico
-#AutoIt3Wrapper_Res_Fileversion=1.5.3.2
+ï»¿#AutoIt3Wrapper_Icon=GUITAR.ico
+#AutoIt3Wrapper_Res_Fileversion=1.5.3.4
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 ;#RequireAdmin
@@ -49,7 +49,7 @@
 main()
 
 func main ()
-;¸ŞÀÎ
+;ë©”ì¸
 
 	Local $sScriptName = ""
 	Local $aRecentFileList = _getRecentFileList()
@@ -58,8 +58,7 @@ func main ()
 	local $sPreRun
 	local $sErrorMsg
 
-
-	_ScriptLogWrite("½ÃÀÛ", True)
+	_ScriptLogWrite("ì‹œì‘", True)
 
 	_IEErrorNotify(False)
 
@@ -67,7 +66,7 @@ func main ()
 
 	getCommandLineInfo ($scmdRunFile, $_sUserINIFile, $_runCmdRemote)
 
-	_ScriptLogWrite("cmdline ºĞ¼®")
+	_ScriptLogWrite("cmdline ë¶„ì„")
 
 	if _CheckSingleRun() = False then
 
@@ -86,7 +85,7 @@ func main ()
 	endif
 
 
-	_ScriptLogWrite("ÇØ»óµµ È®ÀÎ ¿Ï·á")
+	_ScriptLogWrite("í•´ìƒë„ í™•ì¸ ì™„ë£Œ")
 
 
 	TraySetState()
@@ -100,7 +99,7 @@ func main ()
 		endif
 
 	Else
-		; debug ¿ë ¼³Á¤ÆÄÀÏÀ» ¿ì¼± Ã£°í, ¾øÀ» °æ¿ì ±âº» ini ·Î ¼³Á¤ÇÏµµ·Ï ÇÔ
+		; debug ìš© ì„¤ì •íŒŒì¼ì„ ìš°ì„  ì°¾ê³ , ì—†ì„ ê²½ìš° ê¸°ë³¸ ini ë¡œ ì„¤ì •í•˜ë„ë¡ í•¨
 		$_sUserINIFile = @ScriptDir & "\guitar_debug.ini"
 		if FileExists($_sUserINIFile) = 0 then  $_sUserINIFile = @ScriptDir & "\guitar.ini"
 	endif
@@ -118,13 +117,13 @@ func main ()
 		$sScriptName = $scmdRunFile
 	endif
 
-	_ScriptLogWrite("»ç¿ëÀÚ INI ¼³Á¤ È®ÀÎ ¿Ï·á")
+	_ScriptLogWrite("ì‚¬ìš©ì INI ì„¤ì • í™•ì¸ ì™„ë£Œ")
 
 	_setCommonVar()
 
 
 	setupDebugLogFile ($_sDebugLogFile)
-	writeDebugLog("°ø¿ëº¯¼ö ·Îµù¿Ï·á")
+	writeDebugLog("ê³µìš©ë³€ìˆ˜ ë¡œë”©ì™„ë£Œ")
 
 
 	if checkUACSetting() = False then _exit(1, True )
@@ -132,7 +131,7 @@ func main ()
 	;********************************************************************************
 	checkAdminRun()
 	;********************************************************************************
-	_ScriptLogWrite("ADMIN ¼³Á¤ È®ÀÎ ¿Ï·á")
+	_ScriptLogWrite("ADMIN ì„¤ì • í™•ì¸ ì™„ë£Œ")
 
 	;exit
 
@@ -153,13 +152,13 @@ func main ()
 
 	SelectHotKey("main")
 
-	writeDebugLog("HOTKEY ¼³Á¤ ¿Ï·á")
-	_ScriptLogWrite("HOTKEY ¼³Á¤ ¿Ï·á")
+	writeDebugLog("HOTKEY ì„¤ì • ì™„ë£Œ")
+	_ScriptLogWrite("HOTKEY ì„¤ì • ì™„ë£Œ")
 
-	;µğ¹ö±ë(au3·Î ½ÇÇà) ÇÒ ¶§´Â fontsmoothigoff ÇÏÁö ¾ÊÀ»°Í
+	;ë””ë²„ê¹…(au3ë¡œ ì‹¤í–‰) í•  ë•ŒëŠ” fontsmoothigoff í•˜ì§€ ì•Šì„ê²ƒ
 	if _IsExeMode() = 0 then $_runAlwaysFontsmoothing = False
 
-	; Ã¹¹ø¤Š ÃÖ±Ù ¿¬ ÆÄÀÏÀ» ±âº» ÆÄÀÏ·Î ÀĞÀ½
+	; ì²«ë²ˆì¨° ìµœê·¼ ì—° íŒŒì¼ì„ ê¸°ë³¸ íŒŒì¼ë¡œ ì½ìŒ
 	if $_runAlwaysFontsmoothing == "" then $_runAlwaysFontsmoothing = getIniBoolean(getReadINI("Environment","AlwaysfontsmoothingOff"))
 	if $_runAlwaysFontsmoothing = True then setWindowsFontSmoothing(False,False )
 
@@ -167,28 +166,28 @@ func main ()
 
 	if $scmdRunFile <> "" then $_runCmdRunning = True
 
-	; IE°¡ ¾Æ´Ñ  °æ¿ì °­Á¦·Î ¿­·ÁÁø ºê¶ó¿ìÁ®¸¦ ¸ğµÎ Á¾·á, Ä¿¸Çµå ¸ğµå½Ã¿¡µµ ¸ğµÎ Á¾·á ÇÏµµ·Ï ÇÔ
+	; IEê°€ ì•„ë‹Œ  ê²½ìš° ê°•ì œë¡œ ì—´ë ¤ì§„ ë¸Œë¼ìš°ì ¸ë¥¼ ëª¨ë‘ ì¢…ë£Œ, ì»¤ë§¨ë“œ ëª¨ë“œì‹œì—ë„ ëª¨ë‘ ì¢…ë£Œ í•˜ë„ë¡ í•¨
 	if $_runCmdRunning = True and getIniBoolean(getReadINI("Environment","CloseAllBrowser")) then
 		CloseAllBrowser()
 	endif
 
 
-	writeDebugLog("Main ·Îµù Àü")
+	writeDebugLog("Main ë¡œë”© ì „")
 
-	_ScriptLogWrite("¸ŞÀÎÆû ·ÎµùÀü")
+	_ScriptLogWrite("ë©”ì¸í¼ ë¡œë”©ì „")
 
 	_loadMainForm()
 
-	_ScriptLogWrite("¸ŞÀÎÆû ·Îµù¿Ï·á")
+	_ScriptLogWrite("ë©”ì¸í¼ ë¡œë”©ì™„ë£Œ")
 
-	writeDebugLog("Main ·Îµù ¿Ï·á")
+	writeDebugLog("Main ë¡œë”© ì™„ë£Œ")
 
-	; ÀÌÀü ÀÌ¹ÌÁö¸®½ºÆ®¸¦ ¸ñ·ÏÀ» °¡Á®¿À±â À§ÇÑ ÀÛ¾÷
+	; ì´ì „ ì´ë¯¸ì§€ë¦¬ìŠ¤íŠ¸ë¥¼ ëª©ë¡ì„ ê°€ì ¸ì˜¤ê¸° ìœ„í•œ ì‘ì—…
 	setMenuMoveList ()
 
 	setToolbar("DISABLE")
 
-	_ScriptLogWrite("¸Ş´º¼³Á¤ ¿Ï·á")
+	_ScriptLogWrite("ë©”ë‰´ì„¤ì • ì™„ë£Œ")
 
 	_GUICtrlRichEdit_SetReadOnly($_gEditScript, True)
 
@@ -198,13 +197,13 @@ func main ()
 	sleep(1)
 	;debug(WinActivate($_gForm))
 
-	writeDebugLog("À©µµ¿ì À§Ä¡ ÀÌµ¿Àü")
+	writeDebugLog("ìœˆë„ìš° ìœ„ì¹˜ ì´ë™ì „")
 
 	_MoveWindowtoWorkArea($_gForm)
 
 	sleep(10)
 
-	_ScriptLogWrite("À©µµ¿ì À§Ä¡Á¶Á¤ ¿Ï·á")
+	_ScriptLogWrite("ìœˆë„ìš° ìœ„ì¹˜ì¡°ì • ì™„ë£Œ")
 
 	if $scmdRunFile <> "" then
 		onClickNew()
@@ -237,13 +236,13 @@ func main ()
 		onClickNew()
 	endif
 
-	_ScriptLogWrite("ÃÊ±â ·Îµù¿Ï·á")
-	writeDebugLog("ÃÊ±â ·Îµù ¿Ï·á")
+	_ScriptLogWrite("ì´ˆê¸° ë¡œë”©ì™„ë£Œ")
+	writeDebugLog("ì´ˆê¸° ë¡œë”© ì™„ë£Œ")
 
 	setToolbar("DEFAULT")
 
 
-	; rich¸¦ ´Ù½Ã È°¼ºÈ­ ÇÔ
+	; richë¥¼ ë‹¤ì‹œ í™œì„±í™” í•¨
 	_GUICtrlRichEdit_SetReadOnly($_gEditScript, False)
 
 
@@ -270,7 +269,7 @@ func main ()
 
 	if $_runCmdRemote = False then checkIEUseClearType()
 
-	writeDebugLog("ÀüÃ¼ ·Îµù ¿Ï·á")
+	writeDebugLog("ì „ì²´ ë¡œë”© ì™„ë£Œ")
 
 	_ScriptLogWrite("", True)
 
@@ -361,7 +360,7 @@ endfunc
 
 
 func _waitFormMain()
-; ´ë±â, »ó´Ü Åø¹Ù Å¬¸¯¿¡ µû¸¥ ÀÛµ¿
+; ëŒ€ê¸°, ìƒë‹¨ íˆ´ë°” í´ë¦­ì— ë”°ë¥¸ ì‘ë™
 
 	local $msg, $i
 	local $hFindReplaceForm = ""
@@ -385,7 +384,7 @@ func _waitFormMain()
 	if _TimerDiff($_sRealTimeTargetLast[0]) > 100  and $_gEditScript = _WinAPI_GetFocus () and ($_bScriptRunning = False) then
 		;GUICtrlSetState($GUI_FOCUS, $_gEditScript)
 		;GUICtrlSetState ($_gObjEmbeddedIEImageViwer,$GUI_DISABLE)
-		;debug("¿Ô¾î " & _now())
+		;debug("ì™”ì–´ " & _now())
 		$_gEditScript = _WinAPI_GetFocus ()
 		$_sRealTimeTargetLast[0] = _TimerInit()
 		RealTimeTargetCheck(False, $iStartPost, $iEndPos)
@@ -420,7 +419,7 @@ func _waitFormMain()
 
 	Switch $msg
 
-		; ÆÄÀÏ
+		; íŒŒì¼
 
 		Case $_GMFile_NewFile
 			onClickNew()
@@ -453,7 +452,7 @@ func _waitFormMain()
 			_exit()
 
 
-		; ÆíÁı
+		; í¸ì§‘
 		case $_GMEdit_Undo
 			_GUICtrlRichEdit_Undo($_gEditScript)
 
@@ -494,7 +493,7 @@ func _waitFormMain()
 			onImportTC()
 
 
-		;½ÇÇà
+		;ì‹¤í–‰
 		case $_GMRum_Run
 			onClickRun()
 
@@ -520,7 +519,7 @@ func _waitFormMain()
 			onRunImageSearch()
 
 
-		; ¸®Æ÷Æ®
+		; ë¦¬í¬íŠ¸
 		case $_GMReport_Report
 			onClickOpenReport()
 
@@ -530,7 +529,7 @@ func _waitFormMain()
 		case $_GMReport_OpenRemoteManager
 			onClickOpenRemoteManager()
 
-		; µµ±¸
+		; ë„êµ¬
 		Case $_GMTool_PreRun
 			runPreRunShell()
 			_UpdateFolderFileInfo(True)
@@ -565,7 +564,7 @@ func _waitFormMain()
 			ShellExecute(@ScriptDir & "\GUITARExportTC.exe")
 
 
-		; µµ¿ò¸»
+		; ë„ì›€ë§
 		Case $_GMHelp_Help
 
 			viewHelp()
@@ -589,10 +588,10 @@ func _waitFormMain()
 
 endfunc
 
-; ------------------------------------ ½ÇÇà Àü¹İÀûÀÎ °áÁ¤ --------------------------------------------
+; ------------------------------------ ì‹¤í–‰ ì „ë°˜ì ì¸ ê²°ì • --------------------------------------------
 
 func _exit($iReturn = 0, $bLoadingError = False)
-; ¸ŞÀÎÁ¾·á
+; ë©”ì¸ì¢…ë£Œ
 
 	local $aWinPos
 	local $iTabCount = _GTCountTabItem() -1
@@ -604,7 +603,7 @@ func _exit($iReturn = 0, $bLoadingError = False)
 
 	if $bLoadingError = False then
 
-		; ÅÇÁß¿¡ ÀúÀåÀÌ ¾ÈµÈ°Í È®ÀÎÇÒ°Í
+		; íƒ­ì¤‘ì— ì €ì¥ì´ ì•ˆëœê²ƒ í™•ì¸í• ê²ƒ
 		for $i= 0 to $iTabCount
 
 			if _GTCheckSaveFile($i) = False then
@@ -642,10 +641,10 @@ func _exit($iReturn = 0, $bLoadingError = False)
 
 
 		if  BitAnd(WinGetState($_gForm), 16) = 16 then
-			;MIN ÀÎ °æ¿ì ¾Æ¹«°Íµµ ÀúÀåÇÏÁö ¾ÊÀ½
+			;MIN ì¸ ê²½ìš° ì•„ë¬´ê²ƒë„ ì €ì¥í•˜ì§€ ì•ŠìŒ
 
 		elseif  BitAnd(WinGetState($_gForm), 32) = 32 then
-			; MAX ÀÌ¸é ÁÂ¿ì ÂÊÀ¸·Î °ªÀ» Ãß°¡ÇÔ. Width ¿¡´Â -1
+			; MAX ì´ë©´ ì¢Œìš° ìª½ìœ¼ë¡œ ê°’ì„ ì¶”ê°€í•¨. Width ì—ëŠ” -1
 			;$iLastFormX += 10
 			;$iLastFormX += 10
 
@@ -684,7 +683,7 @@ func _exit($iReturn = 0, $bLoadingError = False)
 
 	;_SetFontSmoothing(1)
 
-	; ±Û²Ã ³¡ ´Ùµë±â °­Á¦ ¼³Á¤
+	; ê¸€ê¼´ ë ë‹¤ë“¬ê¸° ê°•ì œ ì„¤ì •
 
 	if FileExists($_sProgramUpdater & "_new") then
 		FileDelete(_GetFileName($_sProgramUpdater) & ".bak")
@@ -724,10 +723,10 @@ func _exit($iReturn = 0, $bLoadingError = False)
 endfunc
 
 
-; ----------------------------------------------- ½ºÅ©¸³Æ® ½ÇÇà -----------------------------------------------
+; ----------------------------------------------- ìŠ¤í¬ë¦½íŠ¸ ì‹¤í–‰ -----------------------------------------------
 
 func runRichScript($bIsRetry, $bAutoSave = False)
-; ½ºÅ©¸³Æ® ¸ŞÀÎ ½ÇÇà
+; ìŠ¤í¬ë¦½íŠ¸ ë©”ì¸ ì‹¤í–‰
 
 	local $aRowScript
 	local $aPreLoadRowScript
@@ -788,7 +787,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 	do
 
-	; Å×½ºÆ® ÁøÇàÁßÀÏ¶§ ·Î±×Ã¢ ¹è°æ»öÀ» ¹Ù²Ş
+	; í…ŒìŠ¤íŠ¸ ì§„í–‰ì¤‘ì¼ë•Œ ë¡œê·¸ì°½ ë°°ê²½ìƒ‰ì„ ë°”ê¿ˆ
 	changeLoglistBGColor (True)
 	$_bScriptRunPaused = False
 	$_aLastNavigateTime = 0
@@ -799,7 +798,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 	$_runErrorImageTarget = ""
 	$sTestStartTime = _NowCalc()
 
-	; ÃÖ¿ì¼±À¸·Î /BUILDID·Î µé¾î¿Â °ªÀ» »ç¿ëÇÏµµ·Ï ÇÔ
+	; ìµœìš°ì„ ìœ¼ë¡œ /BUILDIDë¡œ ë“¤ì–´ì˜¨ ê°’ì„ ì‚¬ìš©í•˜ë„ë¡ í•¨
 
 	if $_runBUILDID <> "" then  $_runBUILDID = HudsonDateTimeConvert($_runBUILDID)
 
@@ -813,13 +812,13 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 	$_runWorkReportPath = $sReportPath
 
-	;debug("¼³Á¤ : " & $_runWorkReportPath)
+	;debug("ì„¤ì • : " & $_runWorkReportPath)
 
 	$_runUserCapturePath = $sReportPath & "\" & $sUserCaptureSubPath
 	$_runScreenCapturePreName = "\capture_"  & _GetFileName($sReportPath) & "_"
 
 
-	; XML ÆÄÀÏÀÌ »ı¼ºµÉ À§Ä¡
+	; XML íŒŒì¼ì´ ìƒì„±ë  ìœ„ì¹˜
 	if $_runXMLCommandLinePath <> "" Then
 		$_runXMLPath = $_runXMLCommandLinePath
 		$_runXMLReport = True
@@ -881,14 +880,14 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 		;debug($aScript)
 
 		if $bIsRetry then
-			; Áß°£½ÇÇà
+			; ì¤‘ê°„ì‹¤í–‰
 			$_runContinueTest = False
 			$_runRetryRun =  True
 			$_runWaitTimeOut = getReadINI("environment","DebugTimeOut")
 
 			_getLastBrowserInfo ()
 
-			; ÇÁ·Î¼¼½º°¡ Á¸ÀçÇÒ °æ¿ì ºê¶ó¿ìÀú ÀÌ¸§ÀÌ  µ¿ÀÏÇÑÁö È®ÀÎ
+			; í”„ë¡œì„¸ìŠ¤ê°€ ì¡´ì¬í•  ê²½ìš° ë¸Œë¼ìš°ì € ì´ë¦„ì´  ë™ì¼í•œì§€ í™•ì¸
 			if WinExists($_hBrowser) <> 0 then
 				if getBrowserExe($_runBrowser) <> _ProcessGetName(WinGetProcess($_hBrowser, ""))  then
 					$_runBrowser = ""
@@ -919,7 +918,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 				endif
 			endif
 
-			;msg("¼±ÅÃ ºê¶ó¿ìÀú Á¤º¸ : " & $_runBrowser & ", Handle:" & $_hBrowser)
+			;msg("ì„ íƒ ë¸Œë¼ìš°ì € ì •ë³´ : " & $_runBrowser & ", Handle:" & $_hBrowser)
 			_setCurrentBrowserInfo()
 
 			;if $_runBrowser = $_sBrowserIE then
@@ -936,7 +935,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 
 		Else
-			; ÀüÃ¼ »õ·Î ½ÇÇà
+			; ì „ì²´ ìƒˆë¡œ ì‹¤í–‰
 			if $_runErrorResume = "TEST" then
 				$_runContinueTest = False
 			else
@@ -1018,7 +1017,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 			$bOldTrayToolTip = $_runTrayToolTip
 			$_runTrayToolTip  = False
-			; ½ºÅ©¸³Æ® ÆÄÀÏÀÌ ÀÖÀ¸¸é¼­, ºÎºĞ½ÇÇàÀÌ ÃÖÃÊÀÎ °æ¿ì¿¡¸¸ ½ÇÇàÇÒ°Í
+			; ìŠ¤í¬ë¦½íŠ¸ íŒŒì¼ì´ ìˆìœ¼ë©´ì„œ, ë¶€ë¶„ì‹¤í–‰ì´ ìµœì´ˆì¸ ê²½ìš°ì—ë§Œ ì‹¤í–‰í• ê²ƒ
 			if $sPreloadScript <> "" and ($bIsRetry = False or $_runPreScriptRunned = False) then
 				$bResult  = runScript($sPreloadScript, $aPreloadScript, 0,0, $aRunCountInfo)
 				$_runPreScriptRunned = True
@@ -1065,7 +1064,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 		_ArrayAdd($aTestLogInfo, _getLanguageMsg("report_testrun") & " : " & $sTestStartTime)
 
-		;$sTestingTime = _DateDiff("n", $sTestStartTime, _NowCalc()) + 1 & " ºĞ"
+		;$sTestingTime = _DateDiff("n", $sTestStartTime, _NowCalc()) + 1 & " ë¶„"
 
 		$sTestingTime = minute2hour(_DateDiff("n", $sTestStartTime, $sTestEndTime) + 1)
 
@@ -1074,14 +1073,14 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 		setTestStatusBox(_iif($bResult,_getLanguageMsg("report_pass"),_getLanguageMsg("report_fail")))
 
-		writeDebugTimeLog("Å×½ºÆ® ¿Ï·á ")
+		writeDebugTimeLog("í…ŒìŠ¤íŠ¸ ì™„ë£Œ ")
 
 		if $bIsRetry = False then
 
-			; ºÎºĞÄ¸ÃÄ°¡ ½ÇÇàµÈ °æ¿ì º°µµ ¸®Æ÷Æ® ÆÄÀÏ »ı¼ºÇÒ°Í
+			; ë¶€ë¶„ìº¡ì³ê°€ ì‹¤í–‰ëœ ê²½ìš° ë³„ë„ ë¦¬í¬íŠ¸ íŒŒì¼ ìƒì„±í• ê²ƒ
 			if $_runAreaCpatureExists then
 
-				if getReadINI("REPORT", "AreaCaptureView") <> "°¡·Î" then
+				if getReadINI("REPORT", "AreaCaptureView") <> "ê°€ë¡œ" then
 					$sAreaCaptureViewType = "H"
 				else
 					$sAreaCaptureViewType = "V"
@@ -1093,7 +1092,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 			$sReportFile = $sReportPath & "\report.htm"
 
-			; À©°İ¼­¹ö ´ë½Ãº¸µå URL ¼³Á¤
+			; ìœˆê²©ì„œë²„ ëŒ€ì‹œë³´ë“œ URL ì„¤ì •
 			$sDashBoardReport = _Trim(getReadINI("REPORT", "DashboardHost"))
 
 			if $sDashBoardReport <> "" then
@@ -1103,11 +1102,11 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 			endif
 
-			;debug("ÀÓ½Ã ¸®Æ÷Æ® : " & $_sRunningLogFile, $sReportFile )
+			;debug("ì„ì‹œ ë¦¬í¬íŠ¸ : " & $_sRunningLogFile, $sReportFile )
 
-			writeDebugTimeLog("report ÆÄÀÏ »ı¼º Àü ")
+			writeDebugTimeLog("report íŒŒì¼ ìƒì„± ì „ ")
 			_createHtmlReport($sReportFile , FileRead($_sReportLogFile),_GetFileName($sScriptName) & " " & _getLanguageMsg("report_detail") ,$aTestLogInfo, $sReportPath, _GetFileName($sScriptName), $_aRunReportInfo[$_sResultSkipList], $_aRunReportInfo[$_sResultNorRunList], $_runXMLReport , $sXML, $sDashBoardReport)
-			writeDebugTimeLog("report ÆÄÀÏ »ı¼º ÈÄ ")
+			writeDebugTimeLog("report íŒŒì¼ ìƒì„± í›„ ")
 			if $_runXMLReport then
 
 				$sXML = GR_XmlAddTestSuite (GR_XmlMakeInfo("failures",$_aRunReportInfo[$_iResultFail]) & GR_XmlMakeInfo("time",_DateDiff("s", $sTestStartTime,$sTestEndTime)) & GR_XmlMakeInfo("errors",0) & GR_XmlMakeInfo("skipped",$_aRunReportInfo[$_iResultSkip] + $_aRunReportInfo[$_iResultNotRun]) & GR_XmlMakeInfo("tests",$_aRunReportInfo[$_iResultAll]) & GR_XmlMakeInfo("name",_GetFileName($sScriptName)) , $sXML)
@@ -1119,22 +1118,22 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 				if FileExists($sXMLOutputFile) then FileDelete($sXMLOutputFile)
 
-				;writeRunLog("Å×½ºÆ®°á°ú XML ÆÄÀÏ »ı¼º : " & $_runXMLOutput & " , " & _iif (FileWrite($_runXMLOutput,$sXML) = 1 ,"¼º°ø" ,"½ÇÆĞ"))
+				;writeRunLog("í…ŒìŠ¤íŠ¸ê²°ê³¼ XML íŒŒì¼ ìƒì„± : " & $_runXMLOutput & " , " & _iif (FileWrite($_runXMLOutput,$sXML) = 1 ,"ì„±ê³µ" ,"ì‹¤íŒ¨"))
 				_FileWriteLarge($sXMLOutputFile,$sXML)
-				writeRunLog("Å×½ºÆ®°á°ú XML ÆÄÀÏ »ı¼º : " & $sXMLOutputFile)
+				writeRunLog("í…ŒìŠ¤íŠ¸ê²°ê³¼ XML íŒŒì¼ ìƒì„± : " & $sXMLOutputFile)
 
 			endif
 
-			;SaveResultMHT("Å×½ºÆ®°á°ú : " & _GetFileName($sScriptName) , $aTestLogInfo, getLogFileName($sScriptName))
+			;SaveResultMHT("í…ŒìŠ¤íŠ¸ê²°ê³¼ : " & _GetFileName($sScriptName) , $aTestLogInfo, getLogFileName($sScriptName))
 
 
 			writeRunLog(_getLanguageMsg("report_create") & " : " & $sReportFile)
-			writeDebugTimeLog("report ÆÄÀÏ ¿­±â ")
+			writeDebugTimeLog("report íŒŒì¼ ì—´ê¸° ")
 
 
 			if getIniBoolean(getReadINI("Report","OpenReport")) and $_runCmdRemote = False then
 				if getIniBoolean(getReadINI("Report","OpenDashboardReport")) and $sDashBoardReport <> "" then
-					; ´ë½Ãº¸µå URL·Î ¿ÀÇÂ
+					; ëŒ€ì‹œë³´ë“œ URLë¡œ ì˜¤í”ˆ
 					;ShellExecute($sDashBoardReport )
 
 					if FileExists($siexplore) then
@@ -1156,12 +1155,12 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 				endif
 			endif
 
-			writeDebugTimeLog("report ÀúÀå Àü ")
+			writeDebugTimeLog("report ì €ì¥ ì „ ")
 			saveTotalReport($sSummryReportFile, _GetFileName($sScriptName), $sReportDateTimeFolder, $sTestStartTime, $sTestingTime, $bResult, $aRunCountInfo[1], $aRunCountInfo[2], $aRunCountInfo[3], stringreplace(stringreplace($sReportFile, $_runReportPath & "\",""), "\","/" ), $_aRunReportInfo, False)
 			saveTotalReport($_runReportPath & "\" & _GetFileName(FileGetLongName(_GetPathName($sReportPath))) & "\report.htm", _GetFileName($sScriptName), $sReportDateTimeFolder,  $sTestStartTime, $sTestingTime, $bResult, $aRunCountInfo[1], $aRunCountInfo[2], $aRunCountInfo[3], stringreplace(stringreplace($sReportFile, $_runReportPath & "\",""), "\","/" ), $_aRunReportInfo, True)
-			writeDebugTimeLog("report ÀúÀå °æ·Î : " & $_runReportPath & "\" & _GetFileName(FileGetLongName(_GetPathName($sReportPath))) & "\report.htm")
+			writeDebugTimeLog("report ì €ì¥ ê²½ë¡œ : " & $_runReportPath & "\" & _GetFileName(FileGetLongName(_GetPathName($sReportPath))) & "\report.htm")
 
-			; ½ºÅ©¸³Æ® Æú´õ¿¡ º°µµ·Î report.htm ÆÄÀÏ º¹»ç
+			; ìŠ¤í¬ë¦½íŠ¸ í´ë”ì— ë³„ë„ë¡œ report.htm íŒŒì¼ ë³µì‚¬
 			;filecopy($_runReportPath & "\" & StringLower(_GetFileName($sScriptName) & ".htm"), $_runReportPath & "\" & StringLower(_GetFileName($sScriptName) & "\report.htm"))
 
 			;$sTempFileRead = FileRead($_runReportPath & "\" & StringLower(_GetFileName($sScriptName) & ".htm"))
@@ -1170,25 +1169,25 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 			;FileWrite($_runReportPath & "\" & StringLower(_GetFileName($sScriptName) & "\report.htm"), $sTempFileRead)
 
 
-			writeDebugTimeLog("report ÀúÀå ÈÄ ")
+			writeDebugTimeLog("report ì €ì¥ í›„ ")
 
 			;saveTotalReport($iTSScriptName, $iTSDate, $iTSResult, $iTSAllCount, $iTSErrorCount, $iTSLink )
 
-			;SMS ¹ß¼Û
+			;SMS ë°œì†¡
 			if getIniBoolean(getReadINI("ALARM","SMS")) and ($_runCmdRunning = True or ($_runCmdRunning = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False )) then
 				writeRunLog(_getLanguageMsg("report_sendsms"))
 				if $bResult = False then sendTestReportSMS(_GetFileName($sScriptName), $bResult)
 			endif
 
-			;Email ¹ß¼Û
-			;debug ("¸ŞÀÏº¸³»±â :" & $_runCmdRemote & " " &  ($_runCmdRemote = True or ($_runCmdRemote = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False )))
+			;Email ë°œì†¡
+			;debug ("ë©”ì¼ë³´ë‚´ê¸° :" & $_runCmdRemote & " " &  ($_runCmdRemote = True or ($_runCmdRemote = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False )))
 			if getIniBoolean(getReadINI("ALARM","EMAIL")) and ($_runCmdRunning = True or ($_runCmdRunning = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False ))  then
 				writeRunLog(_getLanguageMsg("report_sendemail"))
-				writeDebugTimeLog("email ¹ß¼Û Àü ")
+				writeDebugTimeLog("email ë°œì†¡ ì „ ")
 				if sendTestReportEmail(_GetFileName($sScriptName), $bResult ,$sReportFile, $sReportPath, $sDashBoardReport) = False then
 					writeRunLog($_sLogText_PreError & _getLanguageMsg("error_emailsend"))
 				endif
-				writeDebugTimeLog("email ¹ß¼Û ÈÄ ")
+				writeDebugTimeLog("email ë°œì†¡ í›„ ")
 			endif
 
 		endif
@@ -1199,15 +1198,15 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 
 	$_bScriptRunning = False
-	; Å×½ºÆ® Á¾·áÈÄ ·Î±×Ã¢ ¹è°æ»öÀ» ¹Ù²Ş
+	; í…ŒìŠ¤íŠ¸ ì¢…ë£Œí›„ ë¡œê·¸ì°½ ë°°ê²½ìƒ‰ì„ ë°”ê¿ˆ
 	changeLoglistBGColor (False)
 
-	writeDebugTimeLog("Å×½ºÆ® ÀüÃ¼ Á¾·á ")
+	writeDebugTimeLog("í…ŒìŠ¤íŠ¸ ì „ì²´ ì¢…ë£Œ ")
 
 	setStatusText(_getLanguageMsg("report_testend") & " (" & _iif($bResult,_getLanguageMsg("report_pass"),_getLanguageMsg("report_fail")) & ")")
 
 
-	; Æú´õ°¡ ºó °æ¿ì »èÁ¦ (µğ¹ö±×¿ëÀ¸·Î ½ÇÇà½Ã)
+	; í´ë”ê°€ ë¹ˆ ê²½ìš° ì‚­ì œ (ë””ë²„ê·¸ìš©ìœ¼ë¡œ ì‹¤í–‰ì‹œ)
 	if DirGetSize($sReportPath) <= 0  then DirRemove($sReportPath)
 
 	if $_runCmdRemote then writeRmoteLog(_getLanguageMsg("report_testend") & " (" & _getLanguageMsg("report_result") & ":" & _iif($bResult,_getLanguageMsg("report_pass"),_getLanguageMsg("report_fail")) & ") : " & $sScriptName )
@@ -1228,7 +1227,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 	_viewLastUseedImage()
 
 ;~ 	if $_runAVICapOn then
-;~ 		;debug("AVI Ä¸ÃÄ Á¤Áö¿äÃ»")
+;~ 		;debug("AVI ìº¡ì³ ì •ì§€ìš”ì²­")
 ;~ 		_stopAVICapture()
 ;~ 	endif
 
@@ -1239,7 +1238,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 	_GUICtrlRichEdit_SetReadOnly($_gEditScript, False)
 
-	; ¿¡·¯°¡ ¹ß»ıµÉ °÷À¸·Î ÀÌµ¿ ÇÒ °Í
+	; ì—ëŸ¬ê°€ ë°œìƒë  ê³³ìœ¼ë¡œ ì´ë™ í•  ê²ƒ
 	if ($_runFirstErrorLine <> 0)  and ($_runErrorLineSelect = True) then
 
 		_gotoRichEditLine($_runFirstErrorLine, True, False)
@@ -1396,7 +1395,7 @@ EndFunc
 ; -----------------------------------------------------------------------------------------
 
 func loadScript($sFileName, $bScroll=True, $bNewTab = True)
-; ½Å±Ô½ºÅ©¸³Æ® ·Îµå
+; ì‹ ê·œìŠ¤í¬ë¦½íŠ¸ ë¡œë“œ
 
 	local $aLastEditPost
 	local $iScrollPos
@@ -1409,22 +1408,22 @@ func loadScript($sFileName, $bScroll=True, $bNewTab = True)
 
 	$iExistTabIndex =  _GTGetFileNameIndex($sFileName)
 
-	; ÀÌ¹Ì ¿­·ÁÁø ÆÄÀÏÀÌ ÀÖÀ»°æ¿ì ÇØ´ç ÅÇÀ» ´Ù½Ã º¸¿©ÁÜ
-	; ½Å±Ô ¿ÀÇÂÀ» ÇÏ·Á°í ÇÏ´Âµ¥, ±âÁ¸¿¡ ÀÌ¹Ì ¿­·ÁÁø ÅÇÀÎ °æ¿ì Á¦¿Ü
+	; ì´ë¯¸ ì—´ë ¤ì§„ íŒŒì¼ì´ ìˆì„ê²½ìš° í•´ë‹¹ íƒ­ì„ ë‹¤ì‹œ ë³´ì—¬ì¤Œ
+	; ì‹ ê·œ ì˜¤í”ˆì„ í•˜ë ¤ê³  í•˜ëŠ”ë°, ê¸°ì¡´ì— ì´ë¯¸ ì—´ë ¤ì§„ íƒ­ì¸ ê²½ìš° ì œì™¸
 	if $iExistTabIndex <> -1  and $bNewTab = True then
 		_GTSelectTab($iExistTabIndex)
 		$bRet = True
-		;debug("loadScript : " & "±âÁ¸ÅÇ ÀÖÀ½ : " & $iExistTabIndex, $sFileName)
+		;debug("loadScript : " & "ê¸°ì¡´íƒ­ ìˆìŒ : " & $iExistTabIndex, $sFileName)
 		return $bRet
 	endif
 
 
-	; ÇöÀç »óÅÂ°¡ º¯°æµÇÁö ¾ÊÀº "Á¦¸ñ¾øÀ½"ÀÏ °æ¿ì »õ·Î¿îÃ¢ ¿­±â¶óµµ ÇöÀç Ã¢¿¡¼­ ¿­µµ·Ï ÇÔ.
+	; í˜„ì¬ ìƒíƒœê°€ ë³€ê²½ë˜ì§€ ì•Šì€ "ì œëª©ì—†ìŒ"ì¼ ê²½ìš° ìƒˆë¡œìš´ì°½ ì—´ê¸°ë¼ë„ í˜„ì¬ ì°½ì—ì„œ ì—´ë„ë¡ í•¨.
 
 	$iTabIndex = _GTGetCurrentIndex()
 	if _GTGetTitle($iTabIndex) = $_sUntitledName then $bNewTab = False
 
-	; ½Å±Ô ÅÇÀÎµ¥ ÃÖ´ë °¹¼ö¸¦ ÃÊ°ú µÈ °æ¿ì
+	; ì‹ ê·œ íƒ­ì¸ë° ìµœëŒ€ ê°¯ìˆ˜ë¥¼ ì´ˆê³¼ ëœ ê²½ìš°
 	if $bNewTab = True then
 		$iTabIndex = _GTAddTabItem(_GetFileNameAndExt($sFileName))
 
@@ -1438,7 +1437,7 @@ func loadScript($sFileName, $bScroll=True, $bNewTab = True)
 
 	_GTLoadFile($iTabIndex,  $sFileName)
 
-	writeConsoleDebug("·Îµå ½ÃÀÛ")
+	writeConsoleDebug("ë¡œë“œ ì‹œì‘")
 
 	setTestStatusBox(_getLanguageMsg("status_ready"))
 
@@ -1455,7 +1454,7 @@ func loadScript($sFileName, $bScroll=True, $bNewTab = True)
 
 	setScriptFileName ($sFileName)
 	_setRecentFileList ($sFileName)
-	; ÃÊ±âÈ­
+	; ì´ˆê¸°í™”
 
 	_GuiCtrlRichEdit_SetText ($_gEditScript, FileRead($sFileName))
 	;_GuiCtrlRichEdit_SetSel ($_gEditScript, 1, -1)
@@ -1494,11 +1493,11 @@ func loadScript($sFileName, $bScroll=True, $bNewTab = True)
 
 	saveScriptEditInfo($iTabIndex)
 
-	writeConsoleDebug("·Îµå Á¾·á")
+	writeConsoleDebug("ë¡œë“œ ì¢…ë£Œ")
 
 	_GTTabEnable (True)
 
-	; ÀÛ¾÷Æú´õ³»¿¡ ÆÄÀÏÀÌ Á¸Àç ÇÏ´ÂÁö È®ÀÎ, ¾øÀ» °æ¿ì °æ·ÎÃ¢À¸·Î Ç¥½ÃµÊ
+	; ì‘ì—…í´ë”ë‚´ì— íŒŒì¼ì´ ì¡´ì¬ í•˜ëŠ”ì§€ í™•ì¸, ì—†ì„ ê²½ìš° ê²½ë¡œì°½ìœ¼ë¡œ í‘œì‹œë¨
 	checkLoadFolder($sFileName)
 
 	$bRet = True
@@ -1510,7 +1509,7 @@ endfunc
 
 func saveScriptEditInfo($iIndex)
 
-	; ÇöÀç ÅÇ º¯¼ö Á¤º¸¸¦ ÀúÀå
+	; í˜„ì¬ íƒ­ ë³€ìˆ˜ ì •ë³´ë¥¼ ì €ì¥
 
 	$_ETabInfo[$iIndex][$_ETab_CDataSaved] = True
 	$_ETabInfo[$iIndex][$_ETab_CData1] = $_aRunImagePathList
@@ -1526,14 +1525,14 @@ func saveScriptEditInfo($iIndex)
 	$_ETabInfo[$iIndex][$_ETab_CData11] = $_aPreAllImageTarget
 
 
-	;debug("ÅÇÀÌµ¿ ÆÄÀÏÁ¤º¸ÀúÀå : ", $iIndex, $_sImageForderFileList)
+	;debug("íƒ­ì´ë™ íŒŒì¼ì •ë³´ì €ì¥ : ", $iIndex, $_sImageForderFileList)
 
 EndFunc
 
 
 func loadScriptEditInfo($iIndex)
 
-	; ÀÌµ¿ ÇÒ ÅÇÀÇ °ü·Ã Á¤º¸¸¦ ºÒ·¯¿È
+	; ì´ë™ í•  íƒ­ì˜ ê´€ë ¨ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜´
 
 	if $_ETabInfo[$iIndex][$_ETab_CDataSaved] = True then
 
@@ -1553,17 +1552,17 @@ func loadScriptEditInfo($iIndex)
 
 		;msg($_aRunScriptPathList)
 
-		;debug("ÀĞ±â : ", $iIndex, $_runScriptName)
+		;debug("ì½ê¸° : ", $iIndex, $_runScriptName)
 	endif
 
-	; ÆÄÀÏ¸í º¯°æ
+	; íŒŒì¼ëª… ë³€ê²½
 	setScriptFileName ($_runScriptName)
 
 EndFunc
 
 
 func SaveResultMHT($sTitle, $aInfo, $sMHTFile)
-; ÆÄÀÏÀ» HTML ·Î ÀúÀåÇÑµÚ ´Ù½Ã mht ÆÄÀÏ·Î º¯°æ, ÆÄÀÏÀúÀåµÚ ¹Ù·Î »èÁ¦¾ÈµÇ´Â ¹®Á¦ ÀÖÀ½
+; íŒŒì¼ì„ HTML ë¡œ ì €ì¥í•œë’¤ ë‹¤ì‹œ mht íŒŒì¼ë¡œ ë³€ê²½, íŒŒì¼ì €ì¥ë’¤ ë°”ë¡œ ì‚­ì œì•ˆë˜ëŠ” ë¬¸ì œ ìˆìŒ
 
 	local $sTempHtmlPre = @TempDir & "\" & $_sProgramName & "_report_"
 	local $sTempHtml = $sTempHtmlPre & random() & ".htm"
@@ -1577,9 +1576,9 @@ func SaveResultMHT($sTitle, $aInfo, $sMHTFile)
 endfunc
 
 
-;------------------------------- RICHTEXT °ü·Ã ------------------------------------
+;------------------------------- RICHTEXT ê´€ë ¨ ------------------------------------
 func UpdateRichText($oRichText, $bImageCheck, $bIncludeCheck, $aScritAnalysisInfo, $iScriptStartLine, $iScriptEndLine, $iDefaultPosLine = -1)
-; ½ºÅ©¸³Æ® ³»¿ë¿¡ ´ëÇÑ °ËÁõÀ» ¼öÇà
+; ìŠ¤í¬ë¦½íŠ¸ ë‚´ìš©ì— ëŒ€í•œ ê²€ì¦ì„ ìˆ˜í–‰
 
 	local $aRichEditPos
 	local $sTempRichData
@@ -1595,13 +1594,13 @@ func UpdateRichText($oRichText, $bImageCheck, $bIncludeCheck, $aScritAnalysisInf
 
 	setStatusText (_getLanguageMsg("status_scriptanalysis") & "...")
 
-	writeConsoleDebug("Æú´õ Á¤º¸ ¾÷µ¥ÀÌÆ®")
+	writeConsoleDebug("í´ë” ì •ë³´ ì—…ë°ì´íŠ¸")
 	_UpdateFolderFileInfo(False)
-	writeConsoleDebug("Æú´õ Á¤º¸ ¾÷µ¥ÀÌÆ® ¿Ï·á")
+	writeConsoleDebug("í´ë” ì •ë³´ ì—…ë°ì´íŠ¸ ì™„ë£Œ")
 
-	; ÀÓ½Ã·Î richtext ·Î ÀÌµ¿ÇÏ¿© ÇØ´ç°÷¿¡¼­ ÀÛ¾÷¿Ï·áÈÄ ÇÑ¹ø¿¡ º¸¿©Áö´Â °÷À¸·Î º¯°æ
+	; ì„ì‹œë¡œ richtext ë¡œ ì´ë™í•˜ì—¬ í•´ë‹¹ê³³ì—ì„œ ì‘ì—…ì™„ë£Œí›„ í•œë²ˆì— ë³´ì—¬ì§€ëŠ” ê³³ìœ¼ë¡œ ë³€ê²½
 
-	;writeConsoleDebug("ÆÄÀÏ ¹®¼® ½ÃÀÛ")
+	;writeConsoleDebug("íŒŒì¼ ë¬¸ì„ ì‹œì‘")
 
 	setToolbar("DISABLE")
 	sleep (10)
@@ -1635,11 +1634,11 @@ func UpdateRichText($oRichText, $bImageCheck, $bIncludeCheck, $aScritAnalysisInf
 	_GUICtrlRichEdit_SetSel($_gHideScript, $sTempPos[0] - 1,$sTempPos[0], True)
 	_GUICtrlRichEdit_ReplaceText($_gHideScript, "",False)
 
-	writeConsoleDebug("ÆÄÀÏ ºĞ¼® º¯È¯Àü")
+	writeConsoleDebug("íŒŒì¼ ë¶„ì„ ë³€í™˜ì „")
 
 	$bSuccess = ConvertRichText($_gHideScript, $bImageCheck, $bIncludeCheck,  $aScritAnalysisInfo, $iScriptStartLine, $iScriptEndLine)
 
-	writeConsoleDebug("ÆÄÀÏ ºĞ¼® º¯È¯ÈÄ")
+	writeConsoleDebug("íŒŒì¼ ë¶„ì„ ë³€í™˜í›„")
 
 	;_GUICtrlRichEdit_Deselect($_gHideScript)
 	_GUICtrlRichEdit_SetSel($_gHideScript,0,-1,True)
@@ -1659,7 +1658,7 @@ func UpdateRichText($oRichText, $bImageCheck, $bIncludeCheck, $aScritAnalysisInf
 	_GUICtrlRichEdit_SetSel($oRichText, $sTempPos[0] - 1,$sTempPos[0], True)
 	_GUICtrlRichEdit_ReplaceText($oRichText, "",False)
 
-	;¿ø·¡ È¯°æ º¹¿ø º¯È¯
+	;ì›ë˜ í™˜ê²½ ë³µì› ë³€í™˜
 	_GUICtrlRichEdit_HideSelection($oRichText,False)
 
 	if $iDefaultPosLine <> -1 then
@@ -1684,7 +1683,7 @@ func UpdateRichText($oRichText, $bImageCheck, $bIncludeCheck, $aScritAnalysisInf
 
 	setToolbar("DEFAULT")
 
-	;writeConsoleDebug("ÆÄÀÏ ºĞ¼® Á¾·á")
+	;writeConsoleDebug("íŒŒì¼ ë¶„ì„ ì¢…ë£Œ")
 
 	;msg($_aPreAllScriptFile)
 
@@ -1717,7 +1716,7 @@ func RichTextFocusCenter($oRichText, $iFirstVisibleLine= 0)
 	endif
 
 
-	;debug("½ºÅ©·Ñ : " & $iCurrentVisibleLine & ", " & $iCurrentLine & ", " & $iNewScrollLine)
+	;debug("ìŠ¤í¬ë¡¤ : " & $iCurrentVisibleLine & ", " & $iCurrentLine & ", " & $iNewScrollLine)
 
 	_GUICtrlRichEdit_ScrollLines ($oRichText, $iNewScrollLine)
 
@@ -1737,7 +1736,7 @@ func RichTextStreamSwap($oRichTextSrc, $oRichTextTgr)
 
 	$iMaxLenghtSrc = _GUICtrlRichEdit_GetTextLength($oRichTextSrc)
 
-	;debug("src ¿øº» ÀüÃ¼ Å©±â :" & _GUICtrlRichEdit_GetTextLength($oRichTextSrc))
+	;debug("src ì›ë³¸ ì „ì²´ í¬ê¸° :" & _GUICtrlRichEdit_GetTextLength($oRichTextSrc))
 
 	do
 
@@ -1768,14 +1767,14 @@ func RichTextStreamSwap($oRichTextSrc, $oRichTextTgr)
 
 	until $iEnd = -1
 
-	;debug("trg ¿øº» ÀüÃ¼ Å©±â :" & _GUICtrlRichEdit_GetTextLength($oRichTextTgr))
+	;debug("trg ì›ë³¸ ì „ì²´ í¬ê¸° :" & _GUICtrlRichEdit_GetTextLength($oRichTextTgr))
 
 
 endfunc
 
 
 func ConvertRichText($oRichText, $bImageCheck, $bIncludeCheck,  $aScritAnalysisInfo, $iScriptStartLine, $iScriptEndLine )
-; ½ºÅ©¸³Æ® °ËÁõ °á°ú¸¦ ±â¹İÀ¸·Î RichText ³»ÀÇ ±Û¾¾»ö±òÀ» º¯°æ (¸ŞÀÎ)
+; ìŠ¤í¬ë¦½íŠ¸ ê²€ì¦ ê²°ê³¼ë¥¼ ê¸°ë°˜ìœ¼ë¡œ RichText ë‚´ì˜ ê¸€ì”¨ìƒ‰ê¹”ì„ ë³€ê²½ (ë©”ì¸)
 
 	local $aRichScript
 	local $sRichScript
@@ -1811,9 +1810,9 @@ func ConvertRichText($oRichText, $bImageCheck, $bIncludeCheck,  $aScritAnalysisI
 	$aRichScript = StringSplit(_GuiCtrlRichEdit_getText  ($oRichText), @crlf)
 	$aRichEditPos  = _GuiCtrlRichEdit_GetSel($oRichText)
 
-	writeConsoleDebug("¹İº¹ Àü")
+	writeConsoleDebug("ë°˜ë³µ ì „")
 
-	; ºñ±³
+	; ë¹„êµ
 	for $i= 1 to ubound($aRichScript) -1
 
 		if $bImageCheck then
@@ -1838,13 +1837,13 @@ func ConvertRichText($oRichText, $bImageCheck, $bIncludeCheck,  $aScritAnalysisI
 
 			_GuiCtrlRichEdit_SetSel($oRichText, $aScriptPos[0], $aScriptPos[1])
 
-			writeConsoleDebug("´ÜÀ§ " & $i & " " & _GuiCtrlRichEdit_GetSelText  ($oRichText))
+			writeConsoleDebug("ë‹¨ìœ„ " & $i & " " & _GuiCtrlRichEdit_GetSelText  ($oRichText))
 
 			if $aScritAnalysisInfo = "" then
 
-				writeConsoleDebug("¸í·É¶óÀÎ ºĞ¼® ½ÃÀÛ")
+				writeConsoleDebug("ëª…ë ¹ë¼ì¸ ë¶„ì„ ì‹œì‘")
 				$iCheckScript = getScriptLine($sRichScript,  $sNewCommandAll, $sNewCommandStartPosAll , $sNewPrimeCommandAll, $sNewTargetAll, $sNewTargetStartPosAll , $sNewCheckCodeAll,  $sCheckMessage, $bImageCheckLine, $bIncludeCheck, True, $i)
-				writeConsoleDebug("¸í·É¶óÀÎ ºĞ¼® Á¾·á")
+				writeConsoleDebug("ëª…ë ¹ë¼ì¸ ë¶„ì„ ì¢…ë£Œ")
 			Else
 				$iCheckScript = $aScritAnalysisInfo[$i][$_iScriptCheck]
 				$sNewCommandAll = $aScritAnalysisInfo[$i][$_iScriptCommand]
@@ -1857,22 +1856,22 @@ func ConvertRichText($oRichText, $bImageCheck, $bIncludeCheck,  $aScritAnalysisI
 			endif
 
 			;if $sCheckMessage = "" then
-			writeConsoleDebug("°Ë»ç")
+			writeConsoleDebug("ê²€ì‚¬")
 
 			if $iCheckScript = $_iScriptAllCheckComment Then
-				writeConsoleDebug("Ä¿¸ÇÆ®»öÄ¥ ½ÃÀÛ")
+				writeConsoleDebug("ì»¤ë§¨íŠ¸ìƒ‰ì¹  ì‹œì‘")
 				;msg($sRichScript)
 				_GuiCtrlRichEdit_SetCharColor($oRichText, $_iColorComment )
 				_GUICtrlRichEdit_SetCharAttributes($oRichText, "+bo", True )
-				writeConsoleDebug("Ä¿¸ÇÆ®»öÄ¥ Á¾·á")
+				writeConsoleDebug("ì»¤ë§¨íŠ¸ìƒ‰ì¹  ì¢…ë£Œ")
 			else
-				writeConsoleDebug("Á¤»ó¸í·É »öÄ¥ ½ÃÀÛ ")
+				writeConsoleDebug("ì •ìƒëª…ë ¹ ìƒ‰ì¹  ì‹œì‘ ")
 				ChangeRichText($oRichText, $sRichScript, $sNewCommandAll, $sNewCommandStartPosAll, $sNewTargetAll, $sNewTargetStartPosAll, $sNewCheckCodeAll,  $aScriptPos[0])
 			endif
 
 			if $sCheckMessage <> "" then
 				$bSuccess = False
-				writeConsoleDebug("¿À·ù¸í·É »öÄ¥ ½ÃÀÛ ")
+				writeConsoleDebug("ì˜¤ë¥˜ëª…ë ¹ ìƒ‰ì¹  ì‹œì‘ ")
 				addPreErrorImageList($sCheckMessage)
 				;msg($aScriptPos)
 
@@ -1882,14 +1881,14 @@ func ConvertRichText($oRichText, $bImageCheck, $bIncludeCheck,  $aScritAnalysisI
 				_GUICtrlRichEdit_SetCharBkColor($oRichText, $_iColorError)
 				;_GuiCtrlRichEdit_SetCharColor($oRichText, $_iColorError)
 
-				writeConsoleDebug("¿À·ù¸í·É »öÄ¥ Á¾·á ")
+				writeConsoleDebug("ì˜¤ë¥˜ëª…ë ¹ ìƒ‰ì¹  ì¢…ë£Œ ")
 
 			endif
 
 		endif
 	next
 
-	writeConsoleDebug("¹İº¹ ÈÄ")
+	writeConsoleDebug("ë°˜ë³µ í›„")
 
 	$_aPreAllScriptFile = _ArrayUnique($_aPreAllScriptFile , 1,1)
 
@@ -1901,7 +1900,7 @@ endfunc
 
 
 Func ChangeRichText($oRichText, $sRichScript, $sNewCommandAll, $sNewCommandStartPosAll, $sNewTargetAll, $sNewTargetStartPosAll, $sNewCheckCodeAll,  $iSearchStart)
-; ¶óÀÎº°  RichText ³»ÀÇ ±Û¾¾»ö±òÀ» º¯°æ
+; ë¼ì¸ë³„  RichText ë‚´ì˜ ê¸€ì”¨ìƒ‰ê¹”ì„ ë³€ê²½
 
 	local $aScriptPos
 	local $aCommandPos
@@ -1958,7 +1957,7 @@ endfunc
 
 
 func _checkRichTextModified()
-; ½ºÅ©¸³Æ® ÆíÁıÃ¢ÀÌ º¯°æµÇ¾ú´ÂÁö È®ÀÎ
+; ìŠ¤í¬ë¦½íŠ¸ í¸ì§‘ì°½ì´ ë³€ê²½ë˜ì—ˆëŠ”ì§€ í™•ì¸
 
 	local $bResult
 
@@ -1968,8 +1967,8 @@ func _checkRichTextModified()
 		$bResult = False
 	Else
 
-		;debug ("¿øº» " & _GTGetCurrentIndex(), $_runScriptName, $_sRichTextModified)
-		;debug ("¼öÁ¤ " & _GTGetCurrentIndex(), $_runScriptName ,_GuiCtrlRichEdit_getText  ($_gEditScript, False))
+		;debug ("ì›ë³¸ " & _GTGetCurrentIndex(), $_runScriptName, $_sRichTextModified)
+		;debug ("ìˆ˜ì • " & _GTGetCurrentIndex(), $_runScriptName ,_GuiCtrlRichEdit_getText  ($_gEditScript, False))
 
 		$bResult = True
 	endif
@@ -1980,7 +1979,7 @@ endfunc
 
 
 func getScriptSelectRange(byref $iStart,byref  $iEnd, $bFullSelect)
-; ºÎºĞ ½ÇÇàÀ» À§ÇØ ºí·°ÀÌ ¼³Á¤µÈ ¹üÀ§¸¦ ÆÄ¾ÇÇÏ¿© ½ÃÀÛ°ú ³¡À» ¸®ÅÏ
+; ë¶€ë¶„ ì‹¤í–‰ì„ ìœ„í•´ ë¸”ëŸ­ì´ ì„¤ì •ëœ ë²”ìœ„ë¥¼ íŒŒì•…í•˜ì—¬ ì‹œì‘ê³¼ ëì„ ë¦¬í„´
 
 	local $sTempRichText
 	local $aSelTextPos
@@ -2020,10 +2019,10 @@ func getScriptSelectRange(byref $iStart,byref  $iEnd, $bFullSelect)
 endfunc
 
 
-; ------------------------------------  È­¸é Ä¸ÃÄ ½ÇÇà ÁØºñ ----------------------------------------
+; ------------------------------------  í™”ë©´ ìº¡ì³ ì‹¤í–‰ ì¤€ë¹„ ----------------------------------------
 
 func getDefaultCaptureFilename()
-; Ä¸ÃÄ½Ã ±âº» »ç¿ëÇÒ ÆÄÀÏ¸íÀ» ÀúÀå
+; ìº¡ì³ì‹œ ê¸°ë³¸ ì‚¬ìš©í•  íŒŒì¼ëª…ì„ ì €ì¥
 
 	local $i, $j
 	local $aDefaultCaptureFileList[1][3]
@@ -2031,7 +2030,7 @@ func getDefaultCaptureFilename()
 	local $aImageFile
 	local $iAddCount = 0
 	local $iStartPos, $iEndPos
-	;ÀÌ¹ÌÁö°¡ ¾ø´Â ÆÄÀÏ ¸ñ·Ï (¿¡·¯¿¡¼­ °É¸°°Íµé)
+	;ì´ë¯¸ì§€ê°€ ì—†ëŠ” íŒŒì¼ ëª©ë¡ (ì—ëŸ¬ì—ì„œ ê±¸ë¦°ê²ƒë“¤)
 	;msg($_aPreErrorImageTarget)
 
 	$sCursorTarget = getTargetFormRichEdit($_gEditScript, "CURSOR", False, $iStartPos, $iEndPos)
@@ -2068,7 +2067,7 @@ func getDefaultCaptureFilename()
 
 	;msg($aDefaultCaptureFileList)
 	;msg($_aPreAllImageTarget)
-	;´Ù½Ã ÀÌ¹ÌÁö ÀüÃ¼¸ñ·Ï Ãß°¡
+	;ë‹¤ì‹œ ì´ë¯¸ì§€ ì „ì²´ëª©ë¡ ì¶”ê°€
 	;for $i=1 to ubound($_aPreAllImageTarget) -1
 	;	_ArrayAdd($aDefaultCaptureFileList,$_aPreAllImageTarget[$i])
 	;next
@@ -2103,7 +2102,7 @@ endfunc
 
 
 func addPreErrorImageList($sCheckMessage)
-; ¿¡·¯ ¹ß»ıµÈ ÀÌ¹ÌÁö¸¦ ¹è¿­·Î ÀúÀå
+; ì—ëŸ¬ ë°œìƒëœ ì´ë¯¸ì§€ë¥¼ ë°°ì—´ë¡œ ì €ì¥
 
 	local $aErrorMsg
 	local $i
@@ -2127,7 +2126,7 @@ endfunc
 
 
 func checkBrforeSave($sType = "", $bSaveOnly = False)
-; ÆÄÀÏ ÀúÀå¿©ºÎ È®ÀÎ ÇÏ¿© ÇÊ¿ä½Ã ÀúÀå ¼öÇà
+; íŒŒì¼ ì €ì¥ì—¬ë¶€ í™•ì¸ í•˜ì—¬ í•„ìš”ì‹œ ì €ì¥ ìˆ˜í–‰
 	local $bRet = ""
 	local $sFileName = $_runScriptFileName
 	local $sNewName = "(" & $_sUntitledName & ")"
@@ -2174,7 +2173,7 @@ endfunc
 
 
 Func _viewLastUseedImage()
-; ÃÖ±Ù »ç¿ëµÈ ÀÌ¹ÌÁö Á¤º¸¸¦ È­¸é ÇÏ´Ü¿¡ Ç¥½ÃÇÔ.
+; ìµœê·¼ ì‚¬ìš©ëœ ì´ë¯¸ì§€ ì •ë³´ë¥¼ í™”ë©´ í•˜ë‹¨ì— í‘œì‹œí•¨.
 
 	;return true
 
@@ -2190,10 +2189,10 @@ Func _viewLastUseedImage()
 	;_EmbeddedIEImageView($_gEmbeddedIEImageViwer, $_runLastImageArray, $sTitle)
 
 
-	;debug("ÀÌ¹ÌÁö Ç¥½Ã")
+	;debug("ì´ë¯¸ì§€ í‘œì‹œ")
 	;debug($_runLastImageArray)
-	; ÀÌ¹ÌÁö Áß¿¡ »èÁ¦µÈ °ÍÀÌ ÀÖÀ» °æ¿ì listview°¡ Á¦´ë·Î »èÁ¦µÇÁö ¾Ê¾Æ ¿ÀºêÁ§Æ® ÀÚÃ¼¸¦ »èÁ¦ÇÏ°í »ı¼º
-	;msg("¿Ô¾î")
+	; ì´ë¯¸ì§€ ì¤‘ì— ì‚­ì œëœ ê²ƒì´ ìˆì„ ê²½ìš° listviewê°€ ì œëŒ€ë¡œ ì‚­ì œë˜ì§€ ì•Šì•„ ì˜¤ë¸Œì íŠ¸ ìì²´ë¥¼ ì‚­ì œí•˜ê³  ìƒì„±
+	;msg("ì™”ì–´")
 	CreateNewImageViwer()
 
 	_ListViewImageLoad($_gListViewImage, $_gListViewPic, $_runLastImageArray, $_hListViewImage, $_iListViewImageWidth, $_iListViewImageHeight )
@@ -2203,7 +2202,7 @@ EndFunc
 
 
 func clearLog()
-; È­¸é Á¤¸®
+; í™”ë©´ ì •ë¦¬
 
 	ClearLoglist()
 
@@ -2240,10 +2239,10 @@ endfunc
 
 
 func WriteLoglist($sText)
-	; ·Î±×Ã¢¿¡ ·Î±× ³²±â±â
+	; ë¡œê·¸ì°½ì— ë¡œê·¸ ë‚¨ê¸°ê¸°
 	local $aRichPos, $iColor
 
-	; ¿¡·¯ÀÎ °æ¿ì »¡°£»öÀ¸·Î Ç¥½Ã
+	; ì—ëŸ¬ì¸ ê²½ìš° ë¹¨ê°„ìƒ‰ìœ¼ë¡œ í‘œì‹œ
 
 	_GUICtrlRichEdit_SetFont ($_gRichLog, 9, _getLanguageMsg("font_default"))
 	_GUICtrlRichEdit_AppendText($_gRichLog, $sText)
@@ -2466,7 +2465,7 @@ endfunc
 
 func runUserFunction5()
 	runUserFunctionAll("5")
-	;_ViewSplashText("ÇÑ±Û ÀÔ´Ï´Ù.")
+	;_ViewSplashText("í•œê¸€ ì…ë‹ˆë‹¤.")
 endfunc
 
 
@@ -2499,7 +2498,7 @@ func getTargetFormRichEdit($oRichEdit, $sCheckType , $bPosCheck, byref $iStartPo
 	;GUICtrlSetData  ($_gLineStatus, ControlCommand($_gForm, "", $_gEditScript, "GetCurrentLine", ""))
 
 
-	; ÀÏ½ÃÀûÀ¸·Î °ªÀ» ÀĞ¾î¿ÀÁö ¸øÇÒ°æ¿ì ¿¹¿ÜÃ³¸®
+	; ì¼ì‹œì ìœ¼ë¡œ ê°’ì„ ì½ì–´ì˜¤ì§€ ëª»í• ê²½ìš° ì˜ˆì™¸ì²˜ë¦¬
 	if IsArray($sBlockPos) = 0 then return  ""
 
 
@@ -2536,7 +2535,7 @@ func getTargetFormRichEdit($oRichEdit, $sCheckType , $bPosCheck, byref $iStartPo
 		;	_GUICtrlRichEdit_SetSel($oRichEdit, $sBlockPos[0], $sBlockPos[0])
 		;	_GUICtrlRichEdit_HideSelection($oRichEdit, False)
 		;endif
-		;debug(" ¿Ô¾î Æ÷Ä¿½º°¡ ÀÖÀ» °æ¿ì¿¡¸¸ °Ë»çÇÒ°Í " )
+		;debug(" ì™”ì–´ í¬ì»¤ìŠ¤ê°€ ìˆì„ ê²½ìš°ì—ë§Œ ê²€ì‚¬í• ê²ƒ " )
 
 		$iColor = _GuiCtrlRichEdit_GetCharColor($oRichEdit)
 		_GUICtrlRichEdit_HideSelection($oRichEdit, False)
@@ -2645,14 +2644,14 @@ func RealTimeTargetCheck($bForceCheck, byref $iStartPos, byref $iEndPos)
 
 	;debug($sNewTarget)
 
-	;ºí·° Æ÷ÀÎÅÍ°¡ 1ÃÊ ÀÌ»ó µ¿ÀÏÇÑ °÷¿¡ ÀÖÀ» °æ¿ì ½ÇÇà
+	;ë¸”ëŸ­ í¬ì¸í„°ê°€ 1ì´ˆ ì´ìƒ ë™ì¼í•œ ê³³ì— ìˆì„ ê²½ìš° ì‹¤í–‰
 
-	; Å¸°ÙÀÌ ÀÌ¹ÌÁöÀÎ °æ¿ì
+	; íƒ€ê²Ÿì´ ì´ë¯¸ì§€ì¸ ê²½ìš°
 	if $sNewTarget <> "" then
 		if $sNewTarget  = $_sRealTimeTargetLast[1] then
 			if (_TimerDiff($_sRealTimeTargetLast[2]) > 1000 and $_sRealTimeTargetLast[3] = False) or $bForceCheck = True then
 				$_sRealTimeTargetLast[3] = True
-				;debug("ÀÌ¹ÌÁö ÀüÃ¼ °¹¼ö : " & $_sImageForderFileList)
+				;debug("ì´ë¯¸ì§€ ì „ì²´ ê°¯ìˆ˜ : " & $_sImageForderFileList)
 				if getCommnadImage($_sRealTimeTargetLast[1],  $aImageFile, False) = True then
 					;debug($_sRealTimeTargetLast[1])
 					;debug($aImageFile)
@@ -2662,7 +2661,7 @@ func RealTimeTargetCheck($bForceCheck, byref $iStartPos, byref $iEndPos)
 					$_runLastImageArray [0] = $_sRealTimeTargetLast[1]
 
 				Else
-					;debug("ÀÌ¹ÌÁö Ã£Áö ¸øÇÔ Target = " & $_sRealTimeTargetLast[1])
+					;debug("ì´ë¯¸ì§€ ì°¾ì§€ ëª»í•¨ Target = " & $_sRealTimeTargetLast[1])
 					redim $aImageFile[1]
 					$_runLastImageArray = $aImageFile
 					$_runLastImageArray [0] = ""
@@ -2728,9 +2727,9 @@ Func ScriptRunPause()
 
 	local $iTimer = _TimerInit()
 
-	;debug("¿Ô¾î")
+	;debug("ì™”ì–´")
 
-	; Å×½ºÆ®°¡ ½ÇÇàÁßÀÌÁö ¾ÊÀ» ¶§¿¡´Â ¹«½ÃÇÏ°í ³Ñ¾î°¨
+	; í…ŒìŠ¤íŠ¸ê°€ ì‹¤í–‰ì¤‘ì´ì§€ ì•Šì„ ë•Œì—ëŠ” ë¬´ì‹œí•˜ê³  ë„˜ì–´ê°
 	if $_bScriptRunning = False then return
 
 	$_bScriptRunPaused = not $_bScriptRunPaused
@@ -2818,13 +2817,13 @@ func onClipboardOpen()
 	if $sScript <> "" then
 
 		;debug($sScript, $sLine)
-		; Å¬¸³º¸µå¿¡ Àß¸øµÈ ÇüÅÂ·Î Á¸Àç ÇÒ °æ¿ì
+		; í´ë¦½ë³´ë“œì— ì˜ëª»ëœ í˜•íƒœë¡œ ì¡´ì¬ í•  ê²½ìš°
 		_ViewSplashText(_getLanguageMsg("tray_filefound") & @crlf & @crlf & _getLanguageMsg("tray_scriptname") & " : " & $sScript & _iif($sLine <> "", ", Line : " & $sLine, ""))
 
 
 		GUISetState (@SW_DISABLE,$_gForm)
 		;GUISetState (@SW_LOCK,$_gForm)
-		;TrayTip($_sProgramName, "Å¬¸³º¸µå ÆÄÀÏ ¿­±â, ÆÄÀÏ Ã£´Â Áß... : " & $sClip,10)
+		;TrayTip($_sProgramName, "í´ë¦½ë³´ë“œ íŒŒì¼ ì—´ê¸°, íŒŒì¼ ì°¾ëŠ” ì¤‘... : " & $sClip,10)
 
 		if stringright($sScript,4) =  $_cScriptExt then
 			$sScript = StringTrimright($sScript, 4)
