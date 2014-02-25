@@ -1489,9 +1489,12 @@ func commandTagAttribGet($sScriptTarget, byref $sCommentMsg)
 	local $sNewName
 	local $sNewValue
 	local $bTargetError = False
+	local $battributeError = False
 	local $sTempSplit
 	local $Object
 	local $i
+	local $oMyError
+	local $bSpecified
 
 	if getVarNameValue($sScriptTarget,  $sNewName, $sNewValue) = False then $bTargetError = True
 
@@ -1535,21 +1538,34 @@ func commandTagAttribGet($sScriptTarget, byref $sCommentMsg)
 
 				;$sTagAttribValue = Execute("$Object.attributes." & _Trim($sTagAttribName) & ".nodevalue()")
 
+
 				for $i=0 to $Object.attributes.length -1
-					if $Object.attributes($i).specified then
-						if $Object.attributes($i).nodeName = _Trim($sTagAttribName) then $sTagAttribValue = $Object.attributes($i).nodeValue
+					$oMyError = ObjEvent("AutoIt.Error","UIAIE_NullError")
+					$bSpecified = $Object.attributes($i).specified
+					if @error <> 0 then $battributeError = True
+					if $bSpecified then
+
+						if $Object.attributes($i).nodeName = _Trim($sTagAttribName) then
+							$sTagAttribValue = $Object.attributes($i).nodeValue
+						endif
 					endif
+					$oMyError = ObjEvent("AutoIt.Error")
 				next
+
 
 			endif
 		Else
 			$sTagAttribValue = Execute("$Object.style.cssText")
+
 		endif
 
 		if @error <> 0 then
 			$bResult = False
 			;msg("오류")
 			_StringAddNewLine ( $_runErrorMsg , "대상을 찾았으나, 속성 정보 읽기에 실패 하였습니다. " & $sTagAttribName )
+		elseif $battributeError = True  then
+			$bResult = False
+			_StringAddNewLine ( $_runErrorMsg , "속성 정보 읽기에 실패 하였습니다. " & $sTagAttribName )
 		else
 			;msg($sTagAttribName & " " &  $sTagAttribValue)
 			; 저장시 특수 문자는 html 형태로 encoding 할 것
@@ -1951,6 +1967,9 @@ Func commandExcute($sScriptTarget, byref $sCommentMsg)
 		;debug($sScriptTarget,  $sNewName, $sNewValue)
 		Return False
 	endif
+
+	convertHtmlChar ($sNewValue)
+
 
 	$sExcuteReturn = Execute($sNewValue)
 

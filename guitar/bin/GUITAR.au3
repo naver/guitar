@@ -1,5 +1,5 @@
 ﻿#AutoIt3Wrapper_Icon=GUITAR.ico
-#AutoIt3Wrapper_Res_Fileversion=1.5.3.4
+#AutoIt3Wrapper_Res_Fileversion=1.5.3.8
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 ;#RequireAdmin
@@ -18,6 +18,7 @@
 #Include <Misc.au3>
 #Include <Array.au3>
 #include <Excel.au3>
+#include <Sound.au3>
 
 
 #include ".\_include_nhn\_util.au3"
@@ -1126,7 +1127,9 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 			;SaveResultMHT("테스트결과 : " & _GetFileName($sScriptName) , $aTestLogInfo, getLogFileName($sScriptName))
 
-
+			writeDebugTimeLog("report 파일 생성 후2 ")
+			writeDebugTimeLog("report 파일 생성 후2 " & $sReportFile)
+			writeDebugTimeLog("report 파일 생성 후2 " & _getLanguageMsg("report_create"))
 			writeRunLog(_getLanguageMsg("report_create") & " : " & $sReportFile)
 			writeDebugTimeLog("report 파일 열기 ")
 
