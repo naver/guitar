@@ -325,7 +325,6 @@ endfunc
 
 Func _INetGetMHT( $url, $file )
 
-	_IEErrorHandlerRegister()
 
     Local $msg = ObjCreate("CDO.Message")
     If @error Then Return False

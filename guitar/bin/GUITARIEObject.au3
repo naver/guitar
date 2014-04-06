@@ -135,7 +135,7 @@ func IEObjectGetAllInnerHtml_old($oIE)
 	local $oItems, $oItem
 
 	local $oMyError = ObjEvent("AutoIt.Error","UIAIE_NavigateError")
-	_IEErrorHandlerRegister("_IEErrorHandlerRegister")
+
 
 	;debug($iFrameCnt)
 	;debug(_IEPropertyGet ($oIE, "outertext"))
@@ -174,7 +174,7 @@ func IEObjectGetAllInnerHtml_old($oIE)
 
 	;debug("왔어1")
 
-	_IEErrorHandlerDeRegister()
+
 	$oMyError = ObjEvent("AutoIt.Error")
 
 	return $sInnerHtml
@@ -206,7 +206,7 @@ func IEObjectSearchFromObject($oIE, $sCondition, $bCountCheck)
 	local $aCondition[1][5]
 
 	local $oMyError = ObjEvent("AutoIt.Error","UIAIE_NavigateError")
-	_IEErrorHandlerRegister("_IEErrorHandlerRegister")
+
 
 	;debug("찾는조건 : " & $sCondition)
 
@@ -274,8 +274,6 @@ func IEObjectSearchFromObject($oIE, $sCondition, $bCountCheck)
 	next
 
 
-
-	_IEErrorHandlerDeRegister()
 	$oMyError = ObjEvent("AutoIt.Error")
 
 	return $aRetObject
