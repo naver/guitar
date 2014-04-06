@@ -195,6 +195,8 @@ Command_TargetCapture	대상캡쳐
 Command_TagCountGet	태그개수얻기
 Command_JSRun	JS실행
 Command_JSInsert	JS추가
+Command_WDSessionCreate	세션생성
+Command_WDSessionDelete	세션종료
 
 capture_tooltip0	* 캡쳐 방법
 capture_tooltip1	1. 캡쳐 시작 영역으로 마우스 이동

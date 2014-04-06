@@ -1,5 +1,5 @@
 ﻿#AutoIt3Wrapper_Icon=GUITAR.ico
-#AutoIt3Wrapper_Res_Fileversion=1.5.3.8
+#AutoIt3Wrapper_Res_Fileversion=1.5.3.18
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 ;#RequireAdmin
@@ -20,7 +20,6 @@
 #include <Excel.au3>
 #include <Sound.au3>
 
-
 #include ".\_include_nhn\_util.au3"
 #include ".\_include_nhn\_file.au3"
 #include ".\_include_nhn\_http.au3"
@@ -29,7 +28,6 @@
 #include ".\_include_nhn\_font.au3"
 #include ".\_include_nhn\_ie2.au3"
 #include ".\_include_nhn\_statusbar.au3"
-
 
 #include "UIACommon.au3"
 #include "UIAFormMain.au3"
@@ -45,7 +43,6 @@
 #include "GUITARARecord.au3"
 #include "GUITARAImageList.au3"
 #include "GUITARLanguage.au3"
-
 
 main()
 
@@ -84,7 +81,6 @@ func main ()
 		_exit(1, True )
 
 	endif
-
 
 	_ScriptLogWrite("해상도 확인 완료")
 
@@ -135,6 +131,9 @@ func main ()
 	_ScriptLogWrite("ADMIN 설정 확인 완료")
 
 	;exit
+
+	; 언어 리소스를 캐싱함
+	_writeLanguageMsgcache ()
 
 	if _isWorksatationLocked() then
 		_RemoteProgrammError(_getLanguageMsg("error_systemlock"))
@@ -888,6 +887,20 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 			_getLastBrowserInfo ()
 
+			; 최근 수행한 웹드라이버 세션이 있을 경우 수행
+			if $_webdriver_connection_host <> "" and $_runWebdriver = False then
+				$sNewBrowserCreate = _ProgramQuestionYN(("이전 사용한 웹드라이버 세션을 사용하시겠습니까?" & @crlf & @crlf & $_webdriver_connection_host))
+				if $sNewBrowserCreate ="Y" then
+					$_runWebdriver = True
+					$_runBrowser = ""
+					$_hBrowser = ""
+				else
+					$_runWebdriver = False
+					$_webdriver_current_sessionid = ""
+					$_webdriver_connection_host = ""
+				endif
+			endif
+
 			; 프로세스가 존재할 경우 브라우저 이름이  동일한지 확인
 			if WinExists($_hBrowser) <> 0 then
 				if getBrowserExe($_runBrowser) <> _ProcessGetName(WinGetProcess($_hBrowser, ""))  then
@@ -896,7 +909,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 				endif
 			endif
 
-			if $_runBrowser = "" or WinExists($_hBrowser) = 0  Then
+			if ($_runBrowser = "" or WinExists($_hBrowser) = 0) and $_runWebdriver = False  Then
 
 				$sNewBrowserCreate = _ProgramQuestionYNC(_getLanguageMsg("information_browsersetting"))
 
@@ -912,15 +925,16 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 				if $sNewBrowserType <> "" Then
 					$_runBrowser = $sNewBrowserType
 					$_hBrowser = $hNewBrowser
-				Else
-					$bResult = False
-					writeRunLog($_sLogText_PreError & _getLanguageMsg("error_browserselectfail"))
-					exitloop
+				;Else
+				;	$bResult = False
+				;	writeRunLog($_sLogText_PreError & _getLanguageMsg("error_browserselectfail"))
+				;	exitloop
 				endif
 			endif
 
 			;msg("선택 브라우저 정보 : " & $_runBrowser & ", Handle:" & $_hBrowser)
 			_setCurrentBrowserInfo()
+
 
 			;if $_runBrowser = $_sBrowserIE then
 			;	$_oBrowser = _IEAttach($_hBrowser,"HWND")
@@ -931,7 +945,6 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 					_setBrowserWindowsSize($_hBrowser, False)
 				case else
 					_setBrowserWindowsSize($_hBrowser, True )
-
 			EndSwitch
 
 
@@ -1125,11 +1138,14 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 			endif
 
+
+			; 장시간 테스트후 리소스가 초기화 되는 경우가 발생하여 오브젝트 재 로딩
+			_loadLanguageResource(_loadLanguageFile(getReadINI("Environment","Language")))
 			;SaveResultMHT("테스트결과 : " & _GetFileName($sScriptName) , $aTestLogInfo, getLogFileName($sScriptName))
 
 			writeDebugTimeLog("report 파일 생성 후2 ")
-			writeDebugTimeLog("report 파일 생성 후2 " & $sReportFile)
 			writeDebugTimeLog("report 파일 생성 후2 " & _getLanguageMsg("report_create"))
+			writeDebugTimeLog("report 파일 생성 후2 " & $sReportFile)
 			writeRunLog(_getLanguageMsg("report_create") & " : " & $sReportFile)
 			writeDebugTimeLog("report 파일 열기 ")
 
@@ -2868,6 +2884,7 @@ func onClipboardOpen()
 endfunc
 
 
+
 func HudsonDateTimeConvert($sDate)
 
 	local $aSplit = StringSplit($sDate, "_")
@@ -2966,6 +2983,3 @@ func _ScriptCommentSet()
 	_GUICtrlRichEdit_Setsel($_gEditScript, $iCharStart, $iCharEnd)
 
 endfunc
-
-
-

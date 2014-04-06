@@ -70,7 +70,8 @@ Global Const $_sCommandTargetCapture = "TargetCapture"
 Global Const $_sCommandTagCountGet = "TagCountGet"
 Global Const $_sCommandJSRun = "JSRun"
 Global Const $_sCommandJSInsert = "JSInsert"
-
+Global Const $_sCommandWDSessionCreate = "WDSessionCreate"
+Global Const $_sCommandWDSessionDelete = "WDSessionDelete"
 
 Global Const $_sScriptFileExt = ".txt"
 
@@ -297,6 +298,9 @@ func getCommandText()
 	addCommandList($iCommandCount, $_sCommandJSRun  , $aCommandList, _getLanguageMsg("Command_JSRun"))
 	addCommandList($iCommandCount, $_sCommandJSInsert   , $aCommandList, _getLanguageMsg("Command_JSInsert"))
 
+	addCommandList($iCommandCount, $_sCommandWDSessionCreate   , $aCommandList, _getLanguageMsg("Command_WDSessionCreate"))
+	addCommandList($iCommandCount, $_sCommandWDSessionDelete   , $aCommandList, _getLanguageMsg("Command_WDSessionDelete"))
+
 
 	redim $aCommandList[$iCommandCount + 1][$_iCommandEnd]
 
@@ -351,7 +355,6 @@ func addCommandList(byref $iCommandCount, $sCommand, byref $aCommandList, $sDefa
 			$aCommandList[$iCommandCount][$_iCommandText] = $aCommandText[$i]
 		endif
 	next
-
 
 endfunc
 
@@ -900,19 +903,22 @@ Func checkTartgetImageExists($sPrimeCommand, $sScriptTarget, byref $aImageList, 
 	local $bCheckResult
 	local $bCheckCache
 	local const $sCacheSplit = "|"
-	local $aReservedWord[3]
+	local $aReservedWord[5]
 	local $sCacheImageName
 
 
 	$aReservedWord[1] = "["
 	$aReservedWord[2] = "]"
+	$aReservedWord[3] = "{"
+	$aReservedWord[4] = "}"
 
 	;msg("왔어")
 
+	; 이미지 방식이 아닌 경우 (웹드라이버, TAG 방식) 바로 OK
+	if getImageType($sScriptTarget) = False then return True
+
 	$aImageListMulti = StringSplit($sScriptTarget,",")
 	$bResult = True
-
-
 
 	for $i=1 to ubound($aImageListMulti) -1
 
@@ -1119,6 +1125,9 @@ func getImageType($sScriptTarget)
 
 	$bRet = getVarType($sScriptTarget)
 	if $bRet = False then $bRet = getIEObjectType($sScriptTarget)
+	if $bRet = False then $bRet = isWebdriverParam($sScriptTarget)
+
+	;debug(isWebdriverParam($sScriptTarget), $sScriptTarget)
 
 	return not($bRet)
 
@@ -1196,8 +1205,6 @@ func getVarNameValue($sScriptTarget, byref $sNewName, byref $sNewValue, $sConver
 		;ConvertVarFull (_trim($sVarValue), $sNewValue, $bVarAddInfo, $sConvertType, $bExtractCheck)
 
 		ConvertVarFull ($sVarValue, $sNewValue, $bVarAddInfo, $sConvertType, $bExtractCheck)
-
-
 
 		$bReturn = True
 	Else
@@ -1480,7 +1487,7 @@ func checkSimpleCommand($sCommand)
 
 	Switch  $sCommand
 
-		case $_sCommandSuccess, $_sCommandFail, $_sCommandCapture, $_sCommandBrowserEnd, $_sCommandMouseHide, $_sCommandMouseWheelUp , $_sCommandMouseWheelDown, $_sCommandComma, $_sCommandGoHome, $_sCommandBlockStart, $_sCommandBlockEnd, $_sCommandFullScreenWork
+		case $_sCommandSuccess, $_sCommandFail, $_sCommandCapture, $_sCommandBrowserEnd, $_sCommandMouseHide, $_sCommandMouseWheelUp , $_sCommandMouseWheelDown, $_sCommandComma, $_sCommandGoHome, $_sCommandBlockStart, $_sCommandBlockEnd, $_sCommandFullScreenWork, $_sCommandWDSessionDelete
 
 			$bResult = True
 

@@ -38,6 +38,7 @@ Global $_oBrowser
 Global $_runWaitTimeOut
 Global $_runCommandSleep
 
+Global $_runWebdriver = False
 Global $_runMobileOS
 Global $_runInputType
 Global $_runXMLCommandLinePath
@@ -155,7 +156,6 @@ Global $_sReceiverLogFile = @ScriptDir & "\receiver.log"
 
 Global $_tDebugTimeDiff
 Global $_tDebugMainTimeDiff
-
 
 
 Global Enum $_ETab_Hwnd, $_ETab_Title, $_ETab_Filename, $_ETab_RichLineHwnd, $_ETab_RichEditHwnd, $_ETab_CDataSaved, $_ETab_CData1, $_ETab_CData2, $_ETab_CData3, $_ETab_CData4, $_ETab_CData5, $_ETab_CData6, $_ETab_CData7, $_ETab_CData8,  $_ETab_CData9, $_ETab_CData10,$_ETab_CData11,$_ETab_End
@@ -421,7 +421,7 @@ endfunc
 
 
 ;_writeRecentImageFolder("555")
-;_msg(_getRecentImageFolder())
+;msg(_getRecentImageFolder())
 
 Func _writeRecentImageFolder($sFolder)
 
@@ -505,7 +505,7 @@ endfunc
 
 func checkAdminRun()
 
-		;_msg (RunWait (@ComSpec & " /c" & @ScriptDir & "\1.exe"))
+		;msg (RunWait (@ComSpec & " /c" & @ScriptDir & "\1.exe"))
 		If IsAdmin() = 0 Then
 			_ProgramError(_getLanguageMsg ("common_adminerror"))
 			exit(1)
