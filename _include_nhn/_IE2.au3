@@ -34,7 +34,7 @@
 ; $s_htmlFor, $s_event 가 없을 경우 아예 값을 넣지 않음
 Func _IEHeadInsertEventScript2(ByRef $o_object, $s_htmlFor, $s_event, $s_script)
 	If Not IsObj($o_object) Then
-		__IEErrorNotify("Error", "_IEHeadInsertEventScript", "$_IEStatus_InvalidDataType")
+		__IEConsoleWriteError("Error", "_IEHeadInsertEventScript", "$_IEStatus_InvalidDataType")
 		Return SetError($_IEStatus_InvalidDataType, 1, 0)
 	EndIf
 
@@ -61,7 +61,7 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 
 	$i_instance = Int($i_instance)
 	If $i_instance < 1 Then
-		__IEErrorNotify("Error", "_IEAttach", "$_IEStatus_InvalidValue", "$i_instance < 1")
+		__IEConsoleWriteError("Error", "_IEAttach", "$_IEStatus_InvalidValue", "$i_instance < 1")
 		Return SetError($_IEStatus_InvalidValue, 3, 0)
 	EndIf
 
@@ -70,14 +70,14 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 		If $s_mode = "dialogbox" And $i_instance > 1 Then
 			If IsHWnd($s_string) Then
 				$i_instance = 1
-				__IEErrorNotify("Warning", "_IEAttach", "$_IEStatus_GeneralError", "$i_instance > 1 invalid with HWnd and DialogBox.  Setting to 1.")
+				__IEConsoleWriteError("Warning", "_IEAttach", "$_IEStatus_GeneralError", "$i_instance > 1 invalid with HWnd and DialogBox.  Setting to 1.")
 			Else
 				Local $a_winlist = WinList($s_string, "")
 				If $i_instance <= $a_winlist[0][0] Then
 					$s_string = $a_winlist[$i_instance][1]
 					$i_instance = 1
 				Else
-					__IEErrorNotify("Warning", "_IEAttach", "$_IEStatus_NoMatch 1")
+					__IEConsoleWriteError("Warning", "_IEAttach", "$_IEStatus_NoMatch 1")
 					Opt("WinTitleMatchMode", $iWinTitleMatchMode)
 					Return SetError($_IEStatus_NoMatch, 1, 0)
 				EndIf
@@ -89,7 +89,7 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 		If IsObj($oResult) Then
 			Return SetError($_IEStatus_Success, 0, $oResult)
 		Else
-			__IEErrorNotify("Warning", "_IEAttach", "$_IEStatus_NoMatch 2")
+			__IEConsoleWriteError("Warning", "_IEAttach", "$_IEStatus_NoMatch 2")
 			Return SetError($_IEStatus_NoMatch, 1, 0)
 		EndIf
 	EndIf
@@ -108,8 +108,8 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 		;
 		$f_isBrowser = True
 		; Trap COM errors and turn off error notification
-		$status = __IEInternalErrorHandlerRegister()
-		If Not $status Then __IEErrorNotify("Warning", "_IEAttach", _
+
+		If Not $status Then __IEConsoleWriteError("Warning", "_IEAttach", _
 				"Cannot register internal error handler, cannot trap COM errors", _
 				"Use _IEErrorHandlerRegister() to register a user error handler")
 		$f_NotifyStatus = _IEErrorNotify() ; save current error notify status
@@ -155,7 +155,7 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 
 		; restore error notify and error handler status
 		_IEErrorNotify($f_NotifyStatus) ; restore notification status
-		__IEInternalErrorHandlerDeRegister()
+
 		;------------------------------------------------------------------------------------------
 
 		If $f_isBrowser Then
@@ -217,19 +217,19 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 				Case "hwnd"
 					If $i_instance > 1 Then
 						$i_instance = 1
-						__IEErrorNotify("Warning", "_IEAttach", "$_IEStatus_GeneralError", "$i_instance > 1 invalid with HWnd.  Setting to 1.")
+						__IEConsoleWriteError("Warning", "_IEAttach", "$_IEStatus_GeneralError", "$i_instance > 1 invalid with HWnd.  Setting to 1.")
 					EndIf
 					If _IEPropertyGet2($o_window, "hwnd") = $s_string Then
 						Return SetError($_IEStatus_Success, 0, $o_window)
 					EndIf
 				Case Else
 					; Invalid Mode
-					__IEErrorNotify("Error", "_IEAttach", "$_IEStatus_InvalidValue", "Invalid Mode Specified")
+					__IEConsoleWriteError("Error", "_IEAttach", "$_IEStatus_InvalidValue", "Invalid Mode Specified")
 					Return SetError($_IEStatus_InvalidValue, 2, 0)
 			EndSwitch
 		EndIf
 	Next
-	__IEErrorNotify("Warning", "_IEAttach", "$_IEStatus_NoMatch 3")
+	__IEConsoleWriteError("Warning", "_IEAttach", "$_IEStatus_NoMatch 3")
 	Return SetError($_IEStatus_NoMatch, 1, 0)
 EndFunc   ;==>_IEAttach
 
@@ -251,11 +251,11 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 
 	local $sTempHwnd,$OEvent
 	If Not IsObj($o_object) Then
-		__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidDataType")
+		__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidDataType")
 		Return SetError($_IEStatus_InvalidDataType, 1, 0)
 	EndIf
 	If Not __IEIsObjType($o_object, "browserdom") Then
-		__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+		__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 		Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 	EndIf
 	;
@@ -264,7 +264,7 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 	Select
 		Case $s_property = "browserx"
 			If __IEIsObjType($o_object, "browsercontainer") Or __IEIsObjType($o_object, "document") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			$oTemp = $o_object
@@ -276,7 +276,7 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 			Return SetError($_IEStatus_Success, 0, $iTemp)
 		Case $s_property = "browsery"
 			If __IEIsObjType($o_object, "browsercontainer") Or __IEIsObjType($o_object, "document") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			$oTemp = $o_object
@@ -288,7 +288,7 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 			Return SetError($_IEStatus_Success, 0, $iTemp)
 		Case $s_property = "screenx"
 			If __IEIsObjType($o_object, "window") Or __IEIsObjType($o_object, "document") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			If __IEIsObjType($o_object, "browser") Then
@@ -305,7 +305,7 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 						$iTemp + $o_object.document.parentWindow.screenLeft)
 		Case $s_property = "screeny"
 			If __IEIsObjType($o_object, "window") Or __IEIsObjType($o_object, "document") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			If __IEIsObjType($o_object, "browser") Then
@@ -322,7 +322,7 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 						$iTemp + $o_object.document.parentWindow.screenTop)
 		Case $s_property = "height"
 			If __IEIsObjType($o_object, "window") Or __IEIsObjType($o_object, "document") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			If __IEIsObjType($o_object, "browser") Then
@@ -332,7 +332,7 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 			EndIf
 		Case $s_property = "width"
 			If __IEIsObjType($o_object, "window") Or __IEIsObjType($o_object, "document") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			If __IEIsObjType($o_object, "browser") Then
@@ -344,38 +344,38 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 			Return SetError($_IEStatus_Success, 0, $o_object.isDisabled())
 		Case $s_property = "addressbar"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.AddressBar())
 		Case $s_property = "busy"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.Busy())
 		Case $s_property = "fullscreen"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.fullScreen())
 		Case $s_property = "hwnd"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			$sTempHwnd = HWnd($o_object.HWnd())
 			Return SetError($_IEStatus_Success, 0, $sTempHwnd)
 		Case $s_property = "left"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.Left())
 		Case $s_property = "locationname"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.LocationName())
@@ -392,55 +392,55 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 			Return SetError($_IEStatus_Success, 0, $o_object.document.parentwindow.location.href())
 		Case $s_property = "menubar"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.MenuBar())
 		Case $s_property = "offline"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.OffLine())
 		Case $s_property = "readystate"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success,0, $o_object.ReadyState())
 		Case $s_property = "resizable"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.Resizable())
 		Case $s_property = "silent"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.Silent())
 		Case $s_property = "statusbar"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.StatusBar())
 		Case $s_property = "statustext"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.StatusText())
 		Case $s_property = "top"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.Top())
 		Case $s_property = "visible"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.Visible())
@@ -509,13 +509,13 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 			Return SetError($_IEStatus_Success, 0, $o_object.document.referrer)
 		Case $s_property = "theatermode"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.TheaterMode)
 		Case $s_property = "toolbar"
 			If Not __IEIsObjType($o_object, "browser") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			EndIf
 			Return SetError($_IEStatus_Success, 0, $o_object.ToolBar)
@@ -558,14 +558,14 @@ Func _IEPropertyGet2(ByRef $o_object, $s_property)
 			Return SetError($_IEStatus_Success, 0, $o_object.document.title)
 		Case $s_property = "uniqueid"
 			If __IEIsObjType($o_object, "window") Then
-				__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
+				__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidObjectType")
 				Return SetError($_IEStatus_InvalidObjectType, 1, 0)
 			Else
 				Return SetError($_IEStatus_Success, 0, $o_object.uniqueID)
 			EndIf
 		Case Else
 			; Unsupported Property
-			__IEErrorNotify("Error", "_IEPropertyGet2", "$_IEStatus_InvalidValue", "Invalid Property")
+			__IEConsoleWriteError("Error", "_IEPropertyGet2", "$_IEStatus_InvalidValue", "Invalid Property")
 			Return SetError($_IEStatus_InvalidValue, 2, 0)
 	EndSelect
 EndFunc   ;==>_IEPropertyGet
@@ -621,7 +621,7 @@ endfunc
 
 Func _IEGetObjByLinkText(ByRef $o_object, $s_linkText, $i_index = 0, $f_wait = 1)
 	If Not IsObj($o_object) Then
-		__IEErrorNotify("Error", "_IELinkClickByText", "$_IEStatus_InvalidDataType")
+		__IEConsoleWriteError("Error", "_IELinkClickByText", "$_IEStatus_InvalidDataType")
 		Return SetError($_IEStatus_InvalidDataType, 1, 0)
 	EndIf
 	;
@@ -636,6 +636,6 @@ Func _IEGetObjByLinkText(ByRef $o_object, $s_linkText, $i_index = 0, $f_wait = 1
 			$found = $found + 1
 		EndIf
 	Next
-	__IEErrorNotify("Warning", "_IELinkClickByText", "$_IEStatus_NoMatch")
+	__IEConsoleWriteError("Warning", "_IELinkClickByText", "$_IEStatus_NoMatch")
 	Return SetError($_IEStatus_NoMatch, 0, 0) ; Could be caused by parameter 2, 3 or both
 EndFunc   ;==>_IELinkClickByText
