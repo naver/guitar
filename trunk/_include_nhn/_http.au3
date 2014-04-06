@@ -9,6 +9,8 @@ AutoItSetOption("MustDeclareVars", 1)
 Global $_bWinhttpRequestError
 
 Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $sHeader = "Content-Type:text/html; charset=utf-8")
+	; form header
+	; application/x-www-form-urlencoded
 
 	local $i
 	local $oHTTP
@@ -16,6 +18,8 @@ Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $
 	local $sHeaderSplit
 	local $sHeaderSplitItem
 	local $sRet
+	local $sHTTPStatus
+	local $sHTTPStatusText
 
 	$_bWinhttpRequestError = 0
 
@@ -27,7 +31,7 @@ Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $
 
 		.SetTimeouts($iTimeout,$iTimeout,$iTimeout,$iTimeout)
 
-		if  $sMethod <> "GET" then
+		if $sMethod <> "GET" then
 			.Open($sMethod, $sURL,0)
 		Else
 			.Open($sMethod, $sURL & _iif($sParam<> "" , "?"& $sParam, ""),0)
@@ -49,10 +53,18 @@ Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $
 		endif
 
 		.WaitForResponse($iTimeout)
+		$sHTTPStatus = .status
+
 		$sRet = BinaryToString(.ResponseBody,4)
+
+		$sHTTPStatusText = .statustext
+
 	EndWith
 
-	if $_bWinhttpRequestError Then Return SetError(1, 0, "")
+	;debug($sHTTPStatus)
+
+	if ($_bWinhttpRequestError) or ($sHTTPStatus = 404)Then Return SetError(1, $sHTTPStatus, "")
+	;if ($_bWinhttpRequestError) Then Return SetError(1, 0, "")
 
 	return $sRet
 

@@ -334,7 +334,7 @@ func _Boolean($sStr)
 	local $bRet
 
 	Switch  StringStripWS(StringLower($sStr),3)
-		case "t", "true", "1"
+		case "t", "true", "1", "o"
 			$bRet = True
 		case Else
 			$bRet = False
@@ -497,7 +497,7 @@ EndFunc
 
 
 Func _GetMidString($strall , $strFirst, $strLast, $Start = 1)
-	;_msg(_GetMidString("11123456","1","6",3))
+	;msg(_GetMidString("11123456","1","6",3))
 
     local $i
     local $j
@@ -565,7 +565,7 @@ func _arraySortByLen(byref $aArray, $bOrder = True)
 				$aArray[$j] = $sTemp
 			endif
 		next
-		;_msg($aArray)
+		;msg($aArray)
 	next
 
 endfunc

@@ -1,10 +1,6 @@
 #include-once
 #include ".\_include_nhn\_util.au3"
 
-Global Const $MONITOR_DEFAULTTONULL     = 0x00000000
-Global Const $MONITOR_DEFAULTTOPRIMARY  = 0x00000001
-Global Const $MONITOR_DEFAULTTONEAREST  = 0x00000002
-
 Global Const $CCHDEVICENAME             = 32
 Global Const $MONITORINFOF_PRIMARY      = 0x00000001
 
@@ -151,8 +147,6 @@ func _MoveWindowtoWorkArea($hWIn)
 
 	; MAX 인 경우 제외
 	if Bitand(WinGetState($hWIn), 32  ) = 32 then return
-
-
 
 	if $hMonitor <> 0 then
 		If GetMonitorInfos($hMonitor, $arMonitorInfos) Then
