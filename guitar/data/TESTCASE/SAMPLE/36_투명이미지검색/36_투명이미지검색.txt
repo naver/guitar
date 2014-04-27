@@ -5,7 +5,7 @@
 IE 생성한다.
 
 ; 각각의 지도검색결과 화면에서 A핀을 찾아 클릭 한다 (이미지 파일명에 "_투명" 이 추가된 경우 이미지 주변색상(예제에서는 빨강색)을 투명 처리하여 제외하고 이미지를 찾음)
-http://map.naver.com/?dlevel=11&lat=37.3834241&lng=127.1283413&query=66eb7KeR&menu=location&searchCoord=127.1323617%3B37.3836169&boundary=127.1199546%3B37.3779157%3B127.1367269%3B37.3889319&type=SITE_1&inBound=on&tab=1&mapMode=0&enc=b64 접속한다.
+http://map.naver.com/?menu=location&mapMode=0&lat=37.3846234&lng=127.1313684&dlevel=14&searchCoord=127.1313684%3B37.3846234&query=66eb7KeR&boundary=127.1304025%3B37.3839125%3B127.1323332%3B37.3853352&type=SITE_1&mpx=02135580%3A37.3846234%2C127.1313684%3AZ14%3A0.0019307%2C0.0014227&inBound=on&tab=1&enc=b64 접속한다.
 지도검색결과핀(A)을 클릭한다. , ,
 현재화면을 캡쳐한다.
 
