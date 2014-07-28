@@ -72,6 +72,13 @@ Global Const $_sCommandJSRun = "JSRun"
 Global Const $_sCommandJSInsert = "JSInsert"
 Global Const $_sCommandWDSessionCreate = "WDSessionCreate"
 Global Const $_sCommandWDSessionDelete = "WDSessionDelete"
+Global Const $_sCommandWDAcceptAlert = "WDAcceptAlert"
+Global Const $_sCommandWDDismissAlert = "WDDismissAlert"
+
+Global Const $_sCommandWDNavigateBack = "WDNavigateBack"
+Global Const $_sCommandWDNavigateForward = "WDNavigateForward"
+Global Const $_sCommandWDNavigateRefresh = "WDNavigateRefresh"
+
 
 Global Const $_sScriptFileExt = ".txt"
 
@@ -197,6 +204,7 @@ func _setCommonVar()
 
 	$_sRunningLogFile = $_runReportPath & "\" & "running.log"
 	$_sReportLogFile = $_runReportPath & "\" & "running_report.log"
+	$_sErrorSumarryFile = $_runReportPath & "\" & "errorsummary.txt"
 
 	SetKeyDelay()
 
@@ -301,6 +309,12 @@ func getCommandText()
 	addCommandList($iCommandCount, $_sCommandWDSessionCreate   , $aCommandList, _getLanguageMsg("Command_WDSessionCreate"))
 	addCommandList($iCommandCount, $_sCommandWDSessionDelete   , $aCommandList, _getLanguageMsg("Command_WDSessionDelete"))
 
+	addCommandList($iCommandCount, $_sCommandWDAcceptAlert   , $aCommandList, _getLanguageMsg("Command_WDAcceptAlert"))
+	addCommandList($iCommandCount, $_sCommandWDDismissAlert    , $aCommandList, _getLanguageMsg("Command_WDDismissAlert"))
+
+	addCommandList($iCommandCount, $_sCommandWDNavigateBack   , $aCommandList, _getLanguageMsg("Command_WDNavigateBack"))
+	addCommandList($iCommandCount, $_sCommandWDNavigateForward    , $aCommandList, _getLanguageMsg("Command_WDNavigateForward"))
+	addCommandList($iCommandCount, $_sCommandWDNavigateRefresh   , $aCommandList, _getLanguageMsg("Command_WDNavigateRefresh"))
 
 	redim $aCommandList[$iCommandCount + 1][$_iCommandEnd]
 
@@ -1487,7 +1501,7 @@ func checkSimpleCommand($sCommand)
 
 	Switch  $sCommand
 
-		case $_sCommandSuccess, $_sCommandFail, $_sCommandCapture, $_sCommandBrowserEnd, $_sCommandMouseHide, $_sCommandMouseWheelUp , $_sCommandMouseWheelDown, $_sCommandComma, $_sCommandGoHome, $_sCommandBlockStart, $_sCommandBlockEnd, $_sCommandFullScreenWork, $_sCommandWDSessionDelete
+		case $_sCommandSuccess, $_sCommandFail, $_sCommandCapture, $_sCommandBrowserEnd, $_sCommandMouseHide, $_sCommandMouseWheelUp , $_sCommandMouseWheelDown, $_sCommandComma, $_sCommandGoHome, $_sCommandBlockStart, $_sCommandBlockEnd, $_sCommandFullScreenWork, $_sCommandWDSessionDelete, $_sCommandWDAcceptAlert, $_sCommandWDDismissAlert, $_sCommandWDNavigateBack, $_sCommandWDNavigateForward, $_sCommandWDNavigateRefresh
 
 			$bResult = True
 
@@ -1660,3 +1674,8 @@ func _UpdateFolderFileInfo($bForceUpdate)
 	endif
 
 endfunc
+
+
+
+
+

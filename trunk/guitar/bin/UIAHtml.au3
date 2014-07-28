@@ -21,8 +21,6 @@ Global $_aTSTitle[$_iTSEnd] =["", "TestCaseName", "ID","시작시간","소요시간","결
 
 ;test()
 
-
-
 ;_createHtmlReport("c:\1.htm" , FileRead("D:\_Autoit\JT\running.log"),"테스트결과 : " & "111" , "", "" )
 
 func test()
@@ -353,7 +351,7 @@ Func _INetGetMHT( $url, $file )
 
 EndFunc
 
-Func _createHtmlReport($sHtmlFile, $sLog, $sTitle, $aNewAddInfo, $sCurrentPaht, $sScriptName, $sTestSkipID, $sTestNotRunID,  $bXMLCreate, byref $sXML, $sDashBoardReport)
+Func _createHtmlReport($sTestingTime, $sHtmlFile, $sLog, $sTitle, $aNewAddInfo, $sCurrentPath, $sScriptName, $sTestSkipID, $sTestNotRunID,  $bXMLCreate, byref $sXML, $sDashBoardReport, $bCreateErrorSumarry)
 
 	local $sHtml
 	local $aAddInfo[1]
@@ -413,17 +411,17 @@ Func _createHtmlReport($sHtmlFile, $sLog, $sTitle, $aNewAddInfo, $sCurrentPaht, 
 
 	endif
 
-	$aFailLog = _getTestResultLog($sLog, $sCurrentPaht, True, "" )
+	$aFailLog = _getTestResultLog($sLog, $sCurrentPath, True, "" )
 
 	addHtml ($sHtml,"<!--ERROR_LOG_START-->")
 	if ubound($aFailLog) <> 1 then
 		addHtml ($sHtml,"<H2>" & "테스트 로그 (실패) :" & "</H2>")
-		addHtml ($sHtml,_createAllResultTable($aFailLog, $sTestSkipID, $sTestNotRunID,  False, $sXML, $sDashBoardReport))
+		addHtml ($sHtml,_createAllResultTable($sScriptName, $sTestingTime,  $aFailLog, $sTestSkipID, $sTestNotRunID,  False, $sXML, $sDashBoardReport, $bCreateErrorSumarry))
 	endif
 
 	addHtml ($sHtml,"<!--DETAIL_LOG_START-->")
 	addHtml ($sHtml,"<H2>" & "테스트 로그 (전체):" & "</H2>")
-	addHtml ($sHtml,_createAllResultTable(_getTestResultLog($sLog, $sCurrentPaht, False, $sTestSkipID), $sTestSkipID, $sTestNotRunID, $bXMLCreate, $sXML, $sDashBoardReport))
+	addHtml ($sHtml,_createAllResultTable($sScriptName, $sTestingTime,  _getTestResultLog($sLog, $sCurrentPath, False, $sTestSkipID), $sTestSkipID, $sTestNotRunID, $bXMLCreate, $sXML, $sDashBoardReport, False))
 
 	addHtml ($sHtml,"</BODY>")
 	addHtml ($sHtml,"</HTML>")
@@ -433,6 +431,7 @@ Func _createHtmlReport($sHtmlFile, $sLog, $sTitle, $aNewAddInfo, $sCurrentPaht, 
 	_FileWriteLarge($sHtmlFile,$sHtml)
 
 endfunc
+
 
 
 func _createTestSkipTable($sTestSkipID)
@@ -642,7 +641,6 @@ func convertImageLink(byref $sNewLog)
 	local $iBrowserTextStart
 	local $sNewWidthHeight
 
-
 	while stringinstr($sNewLog,"<",0,1,$iStart)
 
 		$iStart = stringinstr($sNewLog,"<",0,1,$iStart) + 1
@@ -703,9 +701,14 @@ func getMaxHtmlPreviewRatio($sLinkFileName)
 
 	$sFile = $_runWorkReportPath & "\" & stringreplace($sLinkFileName,"/","\")
 
+	;debug("이미지 파일 : " & $sFile)
+	;sleep (1)
+
 	if FileExists($sFile) then
 
-		getImageSize($sFile, $iImageWidth, $iImageHeight)
+		getImageSizeWithGDISetup($sFile, $iImageWidth, $iImageHeight)
+
+		;debug("이미지 파일 크기  : " ,$iImageWidth, $iImageHeight)
 
 		$iImageMaxSize = number(_Max($iImageWidth, $iImageHeight))
 
@@ -731,7 +734,7 @@ func getMaxHtmlPreviewRatio($sLinkFileName)
 endfunc
 
 
-Func _createAllResultTable($aResultLog, $sTestSkipID, $sTestNotRunID,  $bXMLCreate, byref $sXML, $sDashBoardReport)
+Func _createAllResultTable($sScriptName, $sTestingTime, $aResultLog, $sTestSkipID, $sTestNotRunID,  $bXMLCreate, byref $sXML, $sDashBoardReport, $bCreateErrorSumarry)
 
 	local $i, $j
 	local $sValue
@@ -746,7 +749,8 @@ Func _createAllResultTable($aResultLog, $sTestSkipID, $sTestNotRunID,  $bXMLCrea
 	local $sXMLInfoCount = 0
 	local $sLastXmlTCID, $sXMLTime, $sXMLError, $sXMLSplit, $sXMLDate = @YEAR & "-" & @MON & "-" & @MDAY
 	local $aSkipList,$aNotRunList, $aSkipListTemp
-
+	local $bAllSuccess = True
+	local $sErrorSumarryInfo
 	;debug($sXMLDate)
 
 
@@ -803,13 +807,25 @@ Func _createAllResultTable($aResultLog, $sTestSkipID, $sTestNotRunID,  $bXMLCrea
 
 				case  $_iTCRResult
 					$sAttrib = "id=RESULT"
+
+
+					; 에러인 경우 관련 정보를 파일로 저장
+					; 메인 스크립트명, 메인 테스트 시간, 실제 오류스크립트명 (ID는 @CRLF를 " " 로 구분한뒤 등록) , ID, LINE번호,
+					; 스크립트에 ID 가 있을 경우에만 로그로 기롬함
+					if $sValue = "F"  and $bCreateErrorSumarry and $aResultLog[$i][$_iTCRScriptID] <> "" then
+						$bAllSuccess = False
+						$sErrorSumarryInfo =  $sScriptName  & "," & $sTestingTime  & "," & removeScriptLevelName($aResultLog[$i][$_iTCRScriptName]) & "," & $aResultLog[$i][$_iTCRScriptID] & "," & $aResultLog[$i][$_iTCRNumber]
+						FileWriteLine($_sErrorSumarryFile, $sErrorSumarryInfo)
+
+					endif
+
+
+
 					;if $sValue = "F" then $sAttrib &=" style='font-weight:bold;color:red;'"
 
 				case $_iTCRText
 
 					$sAttrib = "id=TCTEXT"
-
-
 
 					if $aResultLog[$i][$_iTCRErrorText] <> "" then
 						$aResultLog[$i][$_iTCRErrorText] = stringreplace($aResultLog[$i][$_iTCRErrorText], "<BR>",@crlf)
@@ -842,6 +858,11 @@ Func _createAllResultTable($aResultLog, $sTestSkipID, $sTestNotRunID,  $bXMLCrea
 			addHtml ($sHtml,"<TD " & $sAttrib & ">" & $sValue & "</TD>" , False)
 		next
 
+
+		; 에러가 전혀 없을 경우 해당 에러 요약파일에서 해당 스크림트명 정보를 모두 삭제함
+		if $bAllSuccess = True and $bCreateErrorSumarry = True then
+
+		endif
 
 		; XML 정보 취합
 

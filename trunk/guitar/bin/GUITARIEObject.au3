@@ -110,16 +110,20 @@ endfunc
 
 func IEObjectGetAllInnerHtml($oIE)
 
+
 	local $aObject, $oItem, $sInnerHtml
 
+
 	$aObject = IEObjectSearchFromObject($oIE, "body::", False)
-	;msg($aObject)
+
+
 	for $i=1 to ubound($aObject) -1
 
 		$oItem = $aObject[$i][1]
 		$sInnerHtml &= $oItem.outertext
 		;msg($oItem.outertext)
 	next
+
 
 	;debug($sInnerHtml)
 	return $sInnerHtml
@@ -205,10 +209,15 @@ func IEObjectSearchFromObject($oIE, $sCondition, $bCountCheck)
 	local $oFrame
 	local $aCondition[1][5]
 
-	local $oMyError = ObjEvent("AutoIt.Error","UIAIE_NavigateError")
+	local $oMyError
 
 
-	;debug("찾는조건 : " & $sCondition)
+
+	; 2014-04-26 수애 샘플 예제 찾기 할때 이유 없이 AUTOIT이 종료되는 문제가 있어 해제
+
+	;$oMyError = ObjEvent("AutoIt.Error","UIAIE_NavigateError")
+
+
 
 	$sSplitTemp = StringSplit($sCondition, $sGroupSplt)
 
@@ -403,19 +412,19 @@ func IEOjectAttribCheck($Object, $sAttrib, $sSplitChar)
 			;debug($sAttribValue)
 		else
 
-			;_debug($sTagAttribName)
+			;debug($sTagAttribName)
 
 			$sAttribValue = Execute("$Object." & $sTagAttribName)
 
 			if @error <> 0 then
 
 				$sAttribValue = Execute("$Object.attributes." & $sTagAttribName & ".value()")
-				;_debug("1 :" & $sAttribValue)
+				;debug("1 :" & $sAttribValue)
 
 
 
 				;$sAttribValue = Execute("$Object.attributes." & $sTagAttribName & ".nodevalue()")
-				;_debug("2 :" & $sAttribValue)
+				;debug("2 :" & $sAttribValue)
 
 				;for $i=0 to $Object.attributes.length -1
 				;	if $Object.attributes($i).specified then

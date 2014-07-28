@@ -29,6 +29,7 @@ Global $_GMEdit_CommentSet
 Global $_GMEdit_TargetRename
 Global $_GMEdit_TargetDelete
 Global $_GMEdit_CommandTemplate
+Global $_GMEdit_XPathVerify
 Global $_GMEdit_TestCaseImport
 
 Global $_GMRum
@@ -142,6 +143,9 @@ func CreateMainMenu()
 	$_GMEdit_CommentSet = GUICtrlCreateMenuItem("주석 설정/해제(&O)" & @TAB & "CTRL+E", $_GMEdit)
 
 	GUICtrlCreateMenuItem("", $_GMEdit)
+	$_GMEdit_XPathVerify = GUICtrlCreateMenuItem("XPath 재검증 (&B)" & @TAB & "CTRL+B", $_GMEdit)
+
+	GUICtrlCreateMenuItem("", $_GMEdit)
 	$_GMEdit_TargetRename = GUICtrlCreateMenuItem("대상 변경(&R)", $_GMEdit)
 	$_GMEdit_TargetDelete = GUICtrlCreateMenuItem("대상 삭제(&L)", $_GMEdit)
 
@@ -168,6 +172,9 @@ func CreateMainMenu()
 	$_GMAccelTable[$iGMACount][0] = "^t"
 	$_GMAccelTable[$iGMACount][1] = $_GMEdit_CommandTemplate
 
+	$iGMACount += 1
+	$_GMAccelTable[$iGMACount][0] = "^b"
+	$_GMAccelTable[$iGMACount][1] = $_GMEdit_XPathVerify
 
 	; 실행
 	$_GMRum = GUICtrlCreateMenu("실행(&R)")

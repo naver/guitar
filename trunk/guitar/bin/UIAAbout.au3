@@ -51,7 +51,7 @@ func openAboutWindow()
 				ExitLoop
 
 			Case $msg[1] = $formAbout And $msg[0] = $lbHomepage
-				ShellExecute("http://devcode.nhncorp.com/projects/guitar")
+				ShellExecute("http://dev.naver.com/projects/guitar")
 
 		EndSelect
 	WEnd
