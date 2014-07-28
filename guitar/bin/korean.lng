@@ -197,6 +197,13 @@ Command_JSRun	JS실행
 Command_JSInsert	JS추가
 Command_WDSessionCreate	세션생성
 Command_WDSessionDelete	세션종료
+Command_WDAcceptAlert	경고창확인
+Command_WDDismissAlert	경고창취소
+Command_WDNavigateBack	이전화면이동
+Command_WDNavigateForward	다음화면이동
+Command_WDNavigateRefresh	화면갱신
+
+
 
 capture_tooltip0	* 캡쳐 방법
 capture_tooltip1	1. 캡쳐 시작 영역으로 마우스 이동

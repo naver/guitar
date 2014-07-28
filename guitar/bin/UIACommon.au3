@@ -146,6 +146,7 @@ Global $_aRunScriptPathList[1]
 Global $_sDebugLogFile
 Global $_sRunningLogFile
 Global $_sReportLogFile
+Global $_sErrorSumarryFile
 
 Global $_sUserINIFile
 
