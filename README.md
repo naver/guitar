@@ -36,7 +36,7 @@
 * email : ssmmhh@gmail.com
 
 ## 라이선스
-* 본 프로그램은 [GPL v2](/LICENSE/License_GUITAR)로 배포됩니다. 
+* 본 프로그램은 [GPL v2](/LICENSE/License_GUITAR.txt)로 배포됩니다. 
 
 ```
 Copyright (C) 2013 Naver corp.
