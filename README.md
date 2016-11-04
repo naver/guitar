@@ -1,22 +1,29 @@
-## ¼Ò°³
-* GUITAR´Â GUI ±â¹İÀÇ À¥ Å×½ºÆ®¸¦ ÀÚµ¿È­ Framework ÀÔ´Ï´Ù. 
-* ÃÖÃÊ PC ºê¶ó¿ìÀú ±â¹İÀ¸·Î Å×½ºÆ® ÀÚµ¿È­ µµ±¸·Î Á¦ÀÛµÇ¾úÀ¸³ª, ´Ù¾çÇÏ°Ô È®ÀåµÇ¾î PC Client ÇÁ·Î±×·¥ ¹× ½º¸¶Æ®ÆùÀÇ ¸ğ¹ÙÀÏ¾Û±îÁö Å×½ºÆ®°¡ °¡´ÉÇÕ´Ï´Ù.  
-* GUITAR ¼Ò°³ http://helloworld.naver.com/helloworld/1296  
-* GUITAR »ç¿ë ¿¹Á¦ µ¿¿µ»ó (³×ÀÌ¹ö °Ë»ö) : http://www.youtube.com/watch?v=qlnF6mFeP4c  
-* GUITAR »ç¿ë ¿¹Á¦ µ¿¿µ»ó (PC Client + ¾ÆÀÌÆù¾Û + ¾Èµå·ÎÀÌµå¾Û »óÈ£ ¿¬µ¿) : http://www.youtube.com/watch?v=TKyB3DGH15g 
+#GUITAR
 
-## ½Ã½ºÅÛ ±¸Á¶
+## ì†Œê°œ
+* GUITARëŠ” GUI ê¸°ë°˜ì˜ ì›¹ í…ŒìŠ¤íŠ¸ë¥¼ ìë™í™” Framework ì…ë‹ˆë‹¤. 
+* ìµœì´ˆ PC ë¸Œë¼ìš°ì € ê¸°ë°˜ìœ¼ë¡œ í…ŒìŠ¤íŠ¸ ìë™í™” ë„êµ¬ë¡œ ì œì‘ë˜ì—ˆìœ¼ë‚˜, ë‹¤ì–‘í•˜ê²Œ í™•ì¥ë˜ì–´ PC Client í”„ë¡œê·¸ë¨ ë° ìŠ¤ë§ˆíŠ¸í°ì˜ ëª¨ë°”ì¼ì•±ê¹Œì§€ í…ŒìŠ¤íŠ¸ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤.  
+* GUITAR ì†Œê°œ http://helloworld.naver.com/helloworld/1296  
+* GUITAR ì‚¬ìš© ì˜ˆì œ ë™ì˜ìƒ (ë„¤ì´ë²„ ê²€ìƒ‰) : http://www.youtube.com/watch?v=qlnF6mFeP4c  
+* GUITAR ì‚¬ìš© ì˜ˆì œ ë™ì˜ìƒ (PC Client + ì•„ì´í°ì•± + ì•ˆë“œë¡œì´ë“œì•± ìƒí˜¸ ì—°ë™) : http://www.youtube.com/watch?v=TKyB3DGH15g 
+
+## ì‹œìŠ¤í…œ êµ¬ì¡°
 ![Overview](https://github.com/naver/guitar/blob/master/doc/system.png)
 
-## ¼³Ä¡¹æ¹ı
-* ´Ù¿î·Îµå Æú´õ¿¡¼­ ÃÖ½Å ¼³Ä¡ÆÄÀÏÀ» ¹Ş¾Æ ¼³Ä¡ÇÕ´Ï´Ù.  
-* ¼³Ä¡ÈÄ ½ÇÇà½Ã ÀÏºÎ¹é½ÅÇÁ·Î±×·¥¿¡¼­ ½ÇÇàÆÄÀÏÀ» ¹ÙÀÌ·¯½º·Î ¿ÀÁøÇÏ´Â °æ¿ì°¡ ÀÖÀ¸³ª, ¾È½ÉÇÏ°í »ç¿ëÇÏ¼Åµµ µË´Ï´Ù. (http://www.autoitscript.com/forum/topic/34658-are-my-autoit-exes-really-infected/) 
-* WINDOWS 7 ¹× VISTA ÀÌ»óÀÇ OS¿¡¼­´Â Á¦¾îÆÇ¿¡¼­ "»ç¿ëÀÚ°èÁ¤ÄÁÆ®·Ñ¼³Á¤º¯°æ"À» ÃÖ¼Ò·Î ¼³Á¤ÇØ¾ß ÇÕ´Ï´Ù. 
+## ì„¤ì¹˜ë°©ë²•
+* [releases](https://github.com/naver/guitar/releases)ì—ì„œ ìµœì‹  ì„¤ì¹˜íŒŒì¼ì„ ë°›ì•„ ì„¤ì¹˜í•©ë‹ˆë‹¤.  
+* ì„¤ì¹˜í›„ ì‹¤í–‰ì‹œ ì¼ë¶€ë°±ì‹ í”„ë¡œê·¸ë¨ì—ì„œ ì‹¤í–‰íŒŒì¼ì„ ë°”ì´ëŸ¬ìŠ¤ë¡œ ì˜¤ì§„í•˜ëŠ” ê²½ìš°ê°€ ìˆìœ¼ë‚˜, ì•ˆì‹¬í•˜ê³  ì‚¬ìš©í•˜ì…”ë„ ë©ë‹ˆë‹¤. (http://www.autoitscript.com/forum/topic/34658-are-my-autoit-exes-really-infected/) 
+* WINDOWS 7 ë° VISTA ì´ìƒì˜ OSì—ì„œëŠ” ì œì–´íŒì—ì„œ "ì‚¬ìš©ìê³„ì •ì»¨íŠ¸ë¡¤ì„¤ì •ë³€ê²½"ì„ ìµœì†Œë¡œ ì„¤ì •í•´ì•¼ í•©ë‹ˆë‹¤. 
 
-## »ç¿ë¹ı
-* ÀÚ¼¼ÇÑ »ç¿ë¹æ¹ıÀº ´Ù¿î·ÎµåÀÇ »ç¿ëÀÚ¼³¸í¼­ ÀÚ·á¸¦ Âü°íÇÏ½Ã±â ¹Ù¶ø´Ï´Ù. 
+## ê°œë°œê´€ë ¨ ì„¤ì •
+- Autoit 3.3.8.1ì˜ ê¸°ë³¸ ë¼ì´ë¸ŒëŸ¬ë¦¬ì˜ ì¼ë¶€ í•¨ìˆ˜ê°€ ìˆ˜ì •ë˜ì–´ì•¼ í•©ë‹ˆë‹¤. 
+  autoit3381_guirichedit_hotfix\GuiRichEdit.au3 -> Autoitì„¤ì¹˜í´ë”\includeì— ë®ì–´ì“´ë’¤ ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤.
+- autoit í¸ì§‘ê¸°ì˜ SciTE Config (CTRL+1) ì—ì„œ "General Settings > AutoIt3 Directory settings > User include" ìœ„ì¹˜ë¥¼ checkout ë°›ì€ ìµœìƒìœ„ í´ë”ë¡œ ì§€ì •í•´ì•¼ í•©ë‹ˆë‹¤. (í•˜ìœ„ì— _include_nhn ì´ ì¡´ì¬í•´ì•¼ í•©ë‹ˆë‹¤.)
 
-## ´Ù¿î·Îµå
+## ì‚¬ìš©ë²•
+* ìì„¸í•œ ì‚¬ìš©ë°©ë²•ì€ [releases](https://github.com/naver/guitar/releases)ì˜ ì‚¬ìš©ìì„¤ëª…ì„œë¥¼ ì°¸ê³ í•˜ì‹œê¸° ë°”ëë‹ˆë‹¤. 
+
+## ë‹¤ìš´ë¡œë“œ
 * https://github.com/naver/guitar/releases
 
 ## Q&A
@@ -25,8 +32,15 @@
 ## FAQ
 * https://github.com/naver/guitar/issues?utf8=%E2%9C%93&q=label%3ATip%20
 
-## ÇÁ·ÎÁ§Æ® Âü¿©¹æ¹ı
+## í”„ë¡œì íŠ¸ ì°¸ì—¬ë°©ë²•
 * email : ssmmhh@gmail.com
 
-## ¶óÀÌ¼±½º
-* GPL v2 
+## ë¼ì´ì„ ìŠ¤
+* ë³¸ í”„ë¡œê·¸ë¨ì€ GPL v2ë¡œ ë°°í¬ë©ë‹ˆë‹¤. 
+
+## Dependencies 
+- ë³¸ í”„ë¡œê·¸ë¨ì€ Autoit 3.3.8.1 ë²„ì „ìœ¼ë¡œ ê°œë°œë˜ì—ˆìŠµë‹ˆë‹¤. (http://www.autoitscript.com/site/)
+- ë³¸ í”„ë¡œê·¸ë¨ì€ ImageSearchDLL ë¼ì´ë¸ŒëŸ¬ë¦¬ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤. (http://www.autoitscript.com/forum/topic/65748-image-search-library/)
+- ë³¸ í”„ë¡œê·¸ë¨ì€ CollabNetì‚¬ì˜ "Subversion 1.6.x (Windows 32-bit)" í”„ë¡œê·¸ë¨ì„ í¬í•¨í•˜ê³  ìˆìŠµë‹ˆë‹¤. 
+(http://www.collab.net/downloads/svn-other)
+
