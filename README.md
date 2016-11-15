@@ -14,7 +14,8 @@
 * [releases](https://github.com/naver/guitar/releases)에서 최신 설치파일을 받아 설치합니다.  
 * 설치후 실행시 일부백신프로그램에서 실행파일을 바이러스로 오진하는 경우가 있으나, 안심하고 사용하셔도 됩니다. (http://www.autoitscript.com/forum/topic/34658-are-my-autoit-exes-really-infected/) 
 * WINDOWS 7 및 VISTA 이상의 OS에서는 제어판에서 "사용자계정컨트롤설정변경"을 최소로 설정해야 합니다. 
-* 설치 프로그램에 포함된 예제스크립트가 정상작동되지 않을수 있습니다. * 프로그램 설치후 최신 버전의 예제스크립(https://github.com/ssmmhh/guitarsample/archive/master.zip) 를 "c:\guitar\data"에 덮어 쓴뒤 사용하시기 바랍니다. 
+* 설치 프로그램에 포함된 예제스크립트가 정상작동되지 않을수 있습니다. 
+* 프로그램 설치후 최신 버전의 예제스크립(https://github.com/ssmmhh/guitarsample/archive/master.zip) 를 "c:\guitar\data"에 덮어 쓴뒤 사용하시기 바랍니다. 
 
 ## 개발관련 설정
 - Autoit 3.3.8.1의 기본 라이브러리의 일부 함수가 수정되어야 합니다. 
