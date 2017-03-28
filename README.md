@@ -1,4 +1,7 @@
 #GUITAR
+## 업데이트 공지
+Selenium 2.0을 지원하는 최신 버전이 업데이트 되었습니다. 릴리즈 메뉴를 참조하세요.
+* https://github.com/naver/guitar/releases
 
 ## 소개
 * GUITAR는 GUI 기반의 웹 테스트를 자동화 Framework 입니다. 
@@ -6,7 +9,6 @@
 * GUITAR 소개 http://helloworld.naver.com/helloworld/1296  
 * GUITAR 사용 예제 동영상 (네이버 검색) : http://www.youtube.com/watch?v=qlnF6mFeP4c  
 * GUITAR 사용 예제 동영상 (PC Client + 아이폰앱 + 안드로이드앱 상호 연동) : http://www.youtube.com/watch?v=TKyB3DGH15g 
-
 ## 시스템 구조
 ![Overview](https://github.com/naver/guitar/blob/master/doc/system.png)
 
