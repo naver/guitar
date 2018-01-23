@@ -6,6 +6,10 @@ AutoItSetOption("MustDeclareVars", 1)
 #include ".\_include_nhn\_util.au3"
 
 
+
+;_debug(_UnicodeURLDecode("%EB%82%98%EB%8A%94%20%EA%B0%80%EC%88%98%EB%8B%A4"))
+;_debug(_UnicodeURLEncode("Õ€?"))
+
 Global $_bWinhttpRequestError
 
 Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $sHeader = "Content-Type:text/html; charset=utf-8")
@@ -26,6 +30,8 @@ Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $
 	$oHTTPError = ObjEvent("AutoIt.Error","_WinhttpRequestError")
 	$oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
 
+
+
 	With $oHTTP
 		$sHeaderSplit = StringSplit($sHeader,"|",2 )
 
@@ -43,11 +49,13 @@ Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $
 			$sHeaderSplitItem = StringSplit($sHeaderSplit,":")
 
 			.SetRequestHeader ($sHeaderSplitItem[1], $sHeaderSplitItem[2])
+			;debug($sHeaderSplitItem[1] & ":" & $sHeaderSplitItem[2])
 
 		next
 
 		if  $sMethod <> "GET" then
 			.Send($sParam)
+			;debug($sParam)
 		Else
 			.Send()
 		endif
@@ -63,7 +71,7 @@ Func _WinhttpRequest($sURL, $sMethod = "GET", $sParam = "", $iTimeout = 31000, $
 
 	;debug($sHTTPStatus)
 
-	if ($_bWinhttpRequestError) or ($sHTTPStatus = 404)Then Return SetError(1, $sHTTPStatus, "")
+	if ($_bWinhttpRequestError) or ($sHTTPStatus = 404) Then Return SetError(1, $sHTTPStatus, "")
 	;if ($_bWinhttpRequestError) Then Return SetError(1, 0, "")
 
 	return $sRet
@@ -141,7 +149,7 @@ Func _UnicodeURLDecode($toDecode, $bANSI = False)
 
 			$sByte = _ArrayGetByte($aryHex, $iIndex, 2)
 
-			;_debug("read : " & $sByte , $iIndex )
+			;debug("read : " & $sByte , $iIndex )
 
 			if dec($sByte) > 127 then
 
@@ -150,7 +158,7 @@ Func _UnicodeURLDecode($toDecode, $bANSI = False)
 					$sByte &= _ArrayGetByte( $aryHex, $iIndex, 2)
 				next
 
-				;_debug("read : " & $sByte , $iIndex )
+				;debug("read : " & $sByte , $iIndex )
 
 				$sByte = BinaryToString(Binary("0x" & $sByte ), $iDecodeType)
 
@@ -169,7 +177,7 @@ Func _UnicodeURLDecode($toDecode, $bANSI = False)
 
 EndFunc   ;==>_UnicodeURLDecode
 
-;_debug(_UnicodeURLDecode("%EB%82%98%EB%8A%94%20%EA%B0%80%EC%88%98%EB%8B%A4"))
+;debug(_UnicodeURLDecode("%EB%82%98%EB%8A%94%20%EA%B0%80%EC%88%98%EB%8B%A4"))
 
 Func _ANSIURLEncode($UnicodeURL)
 

@@ -108,6 +108,9 @@ func _jsonquery(byref $sjson, $sPathName)
 
 	$aNewPathArray = $oDecode
 
+	_debug($oDecode)
+	;_debug($oDecode[4][1])
+
 	;debug(_GetLogDateTime() & " ÆÄ½Ì ½ÃÀÛ")
 
 	for $i=1 to ubound($aPathName)-1

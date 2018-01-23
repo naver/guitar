@@ -1,37 +1,115 @@
 #include-once
 #include ".\_include_nhn\_util.au3"
+#include <WinAPIGdi.au3>
+#include <ScreenCapture.au3>
 
 Global Const $CCHDEVICENAME             = 32
 Global Const $MONITORINFOF_PRIMARY      = 0x00000001
 
 
-;GetMonitorFromPointTest()
+;debug(GetFullMonitorSize())
 
 ;local $a
 ;$a = GetAareFromPoint(2100,100)
 ;_msg($a)
 
-func GetMonitorFromPointTest()
 
-local $hMonitor
+;_FullScreenCapture_Capture("c:\1.png")
 
-$hMonitor = GetMonitorFromPoint(2002, 102)
-;$hMonitor = GetMonitorFromPoint(-2, 0)
-;$hMonitor = GetMonitorFromPoint(@DesktopWidth, 0)
+Func  GetFullMonitorSize()
 
-If $hMonitor <> 0 Then
-    Dim $arMonitorInfos[4]
-    If GetMonitorInfos($hMonitor, $arMonitorInfos) Then _
-        Msgbox(0, "Monitor-Infos", "Rect-Monitor" & @Tab & ": " & $arMonitorInfos[0] & @LF & _
-                            "Rect-Workarea" & @Tab & ": " & $arMonitorInfos[1] & @LF & _
-                            "PrimaryMonitor?" & @Tab & ": " & $arMonitorInfos[2] & @LF & _
-                            "Devicename" & @Tab & ": " & $arMonitorInfos[3])
-EndIf
+	Local $aPos, $aData = _WinAPI_EnumDisplayMonitors()
+	local $aRet[3][3]
+	local $aXY[5]
 
-Exit
+	; 전체 모니터 정보 얻기
+	If IsArray($aData) Then
+
+		ReDim $aData[$aData[0][0] + 1][5]
+		For $i = 1 To $aData[0][0]
+			$aPos = _WinAPI_GetPosFromRect($aData[$i][1])
+			For $j = 0 To 3
+				$aData[$i][$j + 1] = $aPos[$j]
+			Next
+		Next
+
+	EndIf
+
+
+	; 실제 크기 정보로 변경
+	;_ArrayDisplay($aData, '_WinAPI_EnumDisplayMonitors')
+
+	$aRet[1][1]  = 99999999999
+	$aRet[1][2]  = 99999999999
+	$aRet[2][1]  = -99999999999
+	$aRet[2][2]  = -99999999999
+
+	for $i=1 to ubound($aData) -1
+
+		$aData[$i][3] = $aData[$i][1] + $aData[$i][3]
+		$aData[$i][4] = $aData[$i][2] + $aData[$i][4]
+
+		; 최소값  X
+		if  $aRet[1][1] > $aData[$i][1]  then $aRet[1][1] = $aData[$i][1]
+		if  $aRet[1][1] > $aData[$i][3]  then $aRet[1][1] = $aData[$i][3]
+
+		;최소값 Y
+		if  $aRet[1][2] > $aData[$i][2]  then $aRet[1][2] = $aData[$i][2]
+		if  $aRet[1][2] > $aData[$i][4]  then $aRet[1][2] = $aData[$i][4]
+
+		; 최대값  X
+		if  $aRet[2][1] < $aData[$i][1]  then $aRet[2][1] = $aData[$i][1]
+		if  $aRet[2][1] < $aData[$i][3]  then $aRet[2][1] = $aData[$i][3]
+
+		;최대값 Y
+		if  $aRet[2][2] < $aData[$i][2]  then $aRet[2][2] = $aData[$i][2]
+		if  $aRet[2][2] < $aData[$i][4]  then $aRet[2][2] = $aData[$i][4]
+
+	next
+
+	$aXY[1] = $aRet[1][1]
+	$aXY[2] = $aRet[1][2]
+	$aXY[3] = $aRet[2][1]
+	$aXY[4] = $aRet[2][2]
+	;_ScreenCapture_Capture("c:\1.png",$aRet[1][1] , $aRet[1][2] , $aRet[2][1] , $aRet[2][2] )
+	;_ArrayDisplay($aData, '_WinAPI_EnumDisplayMonitors')
+	return $aXY
 
 endfunc
 
+
+func _FullScreenCapture_Capture ($sFile, $bCursor  = False)
+
+	local $aRet=GetFullMonitorSize()
+	return _ScreenCapture_Capture($sFile,$aRet[1] , $aRet[2] , $aRet[3] , $aRet[4] )
+
+endfunc
+
+Func  GetAllMonitorInfoRec(ByRef $aAllMonitorInfo, $x, $y )
+
+	local $hMonitor
+	local $iNewIndex
+	local $arMonitorInfos[4]
+
+	$hMonitor = GetMonitorFromPoint(1,12)
+
+	If $hMonitor <> 0 Then
+
+		If GetMonitorInfos($hMonitor, $arMonitorInfos) Then
+
+			$iNewIndex = ubound($aAllMonitorInfo)
+			redim $aAllMonitorInfo[$iNewIndex+1][ubound($aAllMonitorInfo,2)]
+
+			for $i=0 to ubound($arMonitorInfos) -1
+				$aAllMonitorInfo[$iNewIndex][$i] = $arMonitorInfos[$i]
+			next
+		endif
+
+	EndIf
+
+	return $aAllMonitorInfo
+
+endfunc
 
 Func GetAareFromPoint($x, $y)
 
@@ -154,8 +232,8 @@ func _MoveWindowtoWorkArea($hWIn)
 
 			if $aWinPos[0] + $aWinPos[2] > $aTempSplit[3] or $aWinPos[1] + $aWinPos[3] > $aTempSplit[4] Then
 
-				;_debug($aWinPos[0] + $aWinPos[2], $aTempSplit[3])
-				;_debug($aWinPos[1] + $aWinPos[3], $aTempSplit[4])
+				;debug($aWinPos[0] + $aWinPos[2], $aTempSplit[3])
+				;debug($aWinPos[1] + $aWinPos[3], $aTempSplit[4])
 				GetMonitorInfos($hMonitor, $arMonitorInfos)
 				$aNewPost  = $aTempSplit
 				$bRelocate = True
@@ -166,17 +244,17 @@ func _MoveWindowtoWorkArea($hWIn)
 		$hMonitor = GetMonitorFromPoint(1,1)
 		GetMonitorInfos($hMonitor, $arMonitorInfos)
 		$aNewPost  = StringSplit($arMonitorInfos[1],";")
-		;_debug($aNewPost)
+		;debug($aNewPost)
 		$bRelocate = True
 	EndIf
 
 	If $bRelocate then
-		;_debug(($aNewPost [3] - $aNewPost [1]) / 2)
+		;debug(($aNewPost [3] - $aNewPost [1]) / 2)
 		$iNewX = $aNewPost [1] + (($aNewPost [3] - $aNewPost [1]) / 2) - ($aWinPos[2]  / 2)
 		$iNewY = $aNewPost [2] + (($aNewPost [4] - $aNewPost [2]) / 2) - ($aWinPos[3]  / 2)
 
 		WinMove($hWIn,"",$iNewX, $iNewY)
-		;_debug("옴겼으")
+		;debug("옴겼으")
 	endif
 
 	return $bRelocate

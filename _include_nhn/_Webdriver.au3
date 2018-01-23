@@ -4,6 +4,7 @@
 #include ".\_include_nhn\_http.au3"
 #include ".\_include_nhn\_util.au3"
 #include ".\_include_nhn\_email.au3"
+#include ".\_include_nhn\_image.au3"
 #include ".\_include_nhn\_json.au3"
 #include ".\_include_nhn\_json_util.au3"
 
@@ -13,6 +14,8 @@ global $_webdriver_last_errormsg
 global $_webdriver_last_elementid
 global $_webdriver_connection_host
 global $_webdriver_connection_param
+global $_webdriver_debug = True
+global $_webdriver_testplatform
 
 func requestWebdriver($sType,$sCommand,$sParam, byref $sRet)
 
@@ -27,7 +30,7 @@ func requestWebdriver($sType,$sCommand,$sParam, byref $sRet)
 
 	$sURLString = "http://" & $_webdriver_connection_host & "/wd/hub/" & $sCommand
 
-	_debug(_GetLogDateTime() & " COMMAND S, " & $sType & ", " & $sURLString & ", " & $sParam)
+	if $_webdriver_debug then _debug(_GetLogDateTime() & " COMMAND S, " & $sType & ", " & $sURLString & ", " & $sParam)
 
 	$sRet = _WinhttpRequest($sURLString, $sType, $sParam, $_webdriver_timeout, 'Content-Type:application/json;charset=UTF-8')
 	$bHTTPError = @error
@@ -44,7 +47,7 @@ func requestWebdriver($sType,$sCommand,$sParam, byref $sRet)
 
 	;_msg(stringlen($sRet))
 
-	;_jdebug($sRet)
+	;jdebug($sRet)
 
 
 	if not($bSuccess) then
@@ -67,11 +70,11 @@ func requestWebdriver($sType,$sCommand,$sParam, byref $sRet)
 			$_webdriver_last_errormsg = "HTTP Error " & $bHTTPExtendErrorCode
 		endif
 
-		_debug("#### ERROR !!! : " &  $_webdriver_last_errormsg)
+		;debug("#### ERROR !!! : " &  $_webdriver_last_errormsg)
 
 	endif
 
-	_debug(_GetLogDateTime() & " COMMAND E, " &  $bSuccess)
+	if $_webdriver_debug then _debug(_GetLogDateTime() & " COMMAND E, " &  $bSuccess & " (" & stringlen($sRet) & ")")
 
 	return $bSuccess
 
@@ -90,6 +93,7 @@ func _WD_accept_alert()
 
 endfunc
 
+
 func _WD_dismiss_alert()
 
 	local $sRet
@@ -104,7 +108,6 @@ func _WD_get_alert_text()
 	local $sRet
 	local $bSuccess = False
 
-
 	if _getWebdriverParam("GET", "/alert_text", $sRet) then
 		$sRet = _Trim(_jsonquery($sRet, "value"))
 	else
@@ -115,6 +118,7 @@ func _WD_get_alert_text()
 
 endfunc
 
+
 func _WD_set_windowsize($sSeeaion = $_webdriver_current_sessionid, $iwidth=0, $iheight=0)
 
 	local $sRet
@@ -123,6 +127,33 @@ func _WD_set_windowsize($sSeeaion = $_webdriver_current_sessionid, $iwidth=0, $i
 
 	if $sCurrnetWindowHandle <> "" then
 		$bSuccess = _getWebdriverParam("POST", "/window/" & $sCurrnetWindowHandle & "/size", $sRet, 'width', $iwidth,'height',$iheight)
+	else
+		$bSuccess = True
+	endif
+
+	return $bSuccess
+
+endfunc
+
+
+func _WD_get_windowsize(byref $iwidth, byref $iheight, $sSeeaion = $_webdriver_current_sessionid)
+
+	local $sRet
+	local $bSuccess = False
+	local $sCurrnetWindowHandle = _WD_current_window_handle()
+
+	$iwidth = 0
+	$iheight = 0
+
+	if $sCurrnetWindowHandle <> "" then
+
+
+		$bSuccess = _getWebdriverParam("GET", "/window/" & $sCurrnetWindowHandle & "/size", $sRet)
+		if $bSuccess  then
+			$iwidth = _jsonquery($sRet, "value\width")
+			$iheight = _jsonquery($sRet, "value\height")
+		endif
+
 	endif
 
 	return $bSuccess
@@ -265,23 +296,19 @@ func _WD_create_session ($sHost, $aParam)
 EndFunc
 
 
-func _WD_get_sessions()
+func _WD_get_sessions(byref $sRet)
 
 	;http://code.google.com/p/selenium/wiki/JsonWireProtocol#/sessions
 	; 현재 연결된 최신 ID값을 리턴
 
-	local $sRet
 	local $sSessions
+	local $bSuccess = False
 
-	if requestWebdriver("GET","sessions","", $sRet) then
-		$sRet = _Trim(_jsonquery($sRet, "value\id"))
-	else
-		$sRet = ""
-	endif
+	$bSuccess = requestWebdriver("GET","sessions","", $sRet)
 
-	;debug($sRet)
+	if not ($bSuccess) then $sRet = ""
 
-	return $sRet
+	return $bSuccess
 EndFunc
 
 
@@ -304,7 +331,7 @@ func _WD_delete_session($sSessionID = $_webdriver_current_sessionid)
 
 	local $sRet
 	local $bSuccess
-
+	;debug("세션종료2")
 	$bSuccess = _getWebdriverParam("DELETE", "" , $sRet)
 	$_webdriver_current_sessionid = ""
 
@@ -313,41 +340,35 @@ func _WD_delete_session($sSessionID = $_webdriver_current_sessionid)
 
 EndFunc
 
-
 func _WD_current_window_handle($sSeeaion = $_webdriver_current_sessionid)
 
 	local $sRet
 	local $bSuccess
 	local $sCurrnetWindowHandle = ""
-
 	;if requestWebdriver("GET", "session/" & $sSeeaion & "/window_handle" , "", $sRet) then $sCurrnetWindowHandle = _jsonquery($sRet, "value")
-	if _getWebdriverParam("GET", "/window_handle" , $sRet) then $sCurrnetWindowHandle = _jsonquery($sRet, "value")
 
+	if _getWebdriverParam("GET", "/window_handle" , $sRet) then $sCurrnetWindowHandle = _jsonquery($sRet, "value")
 	return $sCurrnetWindowHandle
 
 endfunc
 
-
 func _WD_switch_to_windowhandle($sWindowHandleID)
 
 	local $sRet
-
 	return  _getWebdriverParam("POST", "/window" , $sRet, "name", $sWindowHandleID)
 
 endfunc
 
-
-
-func _WD_execute_script ($sScript, byref $sResult, $aParam1="", $aParam2="", $aParam3="", $aParam4="" , $aParam5="")
+func _WD_execute_script ($sScript, byref $sResult, $aParam1="", $aParam2="", $aParam3="", $aParam4="", $aParam5="", $aParam6="")
 
 	local $sRet
 	local $bSuccess
 
 	$sResult = ""
 
-	$bSuccess = _getWebdriverParam("POST", "/execute" , $sRet, "script", $sScript, "args", _JSONArray($aParam1, $aParam2, $aParam3, $aParam4, $aParam5))
+	$bSuccess = _getWebdriverParam("POST", "/execute" , $sRet, "script", $sScript, "args", _JSONArray($aParam1, $aParam2, $aParam3, $aParam4, $aParam5, $aParam6))
 
-	;_jdebug($sRet)
+	;jdebug($sRet)
 
 	$sResult = (_jsonquery($sRet, "value"))
 
@@ -356,22 +377,42 @@ func _WD_execute_script ($sScript, byref $sResult, $aParam1="", $aParam2="", $aP
 endfunc
 
 
-func _WD_send_keys($sKeys)
+func _WD_send_keys($sKeys, $bTestPlatformWEB, $bRAW)
 
 	local $sRet
 	local $bSuccess
 
-
 	;$bSuccess = _getWebdriverParam("POST", "/keys" , $sRet, "value", $sKeys)
+	; autoit 문자를 변환하고자 할때 '{!}" 등
 
-	; 항상 특수키를 초기화 함
-	$sKeys = _WD_AU3KeyMapping ("\ue000" & $sKeys)
+	;debug($bRAW & " ," & $sKeys)
+	if $bRAW =  False then $sKeys = _WD_AU3KeyMapping ($sKeys)
+	;debug($sKeys)
 
-	; "\u" 문자열이 \\u로 변경되어 임의로 복원한뒤 전달함.
-	$bSuccess = requestWebdriver("POST","session/" & $_webdriver_current_sessionid & "/keys", stringreplace(_JSONEncode(_JSONObject("value", _JSONArray($sKeys))),"\\u", "\u"), $sRet)
-	;$bSuccess = requestWebdriver("POST","session/" & $_webdriver_current_sessionid & "/element/" & $_webdriver_last_elementid & "/value", stringreplace(_JSONEncode(_JSONObject("value", _JSONArray($sKeys, "\uE007"))),"\\u", "\u"), $sRet)
+
+	$bTestPlatformWEB= True
+	if $bTestPlatformWEB then
+		; 항상 특수키를 초기화 함
+		;$sKeys = "\ue000" & $sKeys
+		; "\u" 문자열이 \\u로 변경되어 임의로 복원한뒤 전달함.
+		$bSuccess = requestWebdriver("POST","session/" & $_webdriver_current_sessionid & "/keys", stringreplace(_JSONEncode(_JSONObject("value", _JSONArray($sKeys))),"\\u", "\u"), $sRet)
+
+	else
+		;$bSuccess = _getWebdriverParam("POST", "/element/" & $sElementID &  $sActionCommand, $sRet)
+		$bSuccess = requestWebdriver("POST","session/" & $_webdriver_current_sessionid & "/element/" & $_webdriver_last_elementid & "/value", stringreplace(_JSONEncode(_JSONObject("value", _JSONArray($sKeys))),"\\u", "\u"), $sRet)
+	endif
+
 
 	return $bSuccess
+
+endfunc
+
+
+func _WD_refresh()
+
+	local $sRet = ""
+
+	return _getWebdriverParam("POST", "/refresh", $sRet)
 
 endfunc
 
@@ -402,11 +443,17 @@ func _WD_forward()
 endfunc
 
 
-func _WD_get_screenshot_as_file($sSaveFile)
+func _WD_get_screenshot_as_file($sSaveFile, $bCorp = True)
 
+	local $iImageWidth, $iImageHeight
+	local $iCropX =0 , $iCropY =0
 	local $sRet = ""
 	local $sPngdata = ""
 	local $bSuccess
+	local $iWebdriverScreenX,$iWebdriverScreenY
+
+	; 2016/11/24 찾기 중단후 캡쳐시 특정 프레임으로 들어가서 캡쳐가됨, 메인으로 강제로 간뒤 캡쳐하도록 함
+	_WD_focus_frame($_JSONNull)
 
 	$bSuccess = _getWebdriverParam("GET", "/screenshot", $sRet)
 
@@ -415,7 +462,26 @@ func _WD_get_screenshot_as_file($sSaveFile)
 		$sPngdata = (_jsonquery($sRet, "value"))
 
 		if FileExists($sSaveFile) then FileDelete($sSaveFile)
-		if $sPngdata <> "" then $bSuccess = _iif(FileWrite($sSaveFile,_Base64Decode($sPngdata)) = 1, True, False)
+		if $sPngdata <> "" then
+			$bSuccess = _iif(FileWrite($sSaveFile,_Base64Decode($sPngdata)) = 1, True, False)
+
+			if $bCorp and $bSuccess Then
+
+				getImageSizeWithGDISetup($sSaveFile, $iImageWidth, $iImageHeight)
+				;debug("WD 캡쳐 원본 이미지 크기 : " & $iImageWidth &" ," &  $iImageHeight)
+				_WD_get_windowsize ($iWebdriverScreenX,$iWebdriverScreenY)
+
+				if $iWebdriverScreenX  < $iImageWidth Then $iCropX = $iWebdriverScreenX
+				if $iWebdriverScreenY  < $iImageHeight Then $iCropY = $iWebdriverScreenY
+
+				if ($iCropX <> 0) or ($iCropY <> 0) then
+					if $iCropX = 0 then $iCropX = $iImageWidth
+					if $iCropY = 0 then $iCropY = $iImageHeight
+					;debug("이미지 크롭 " & $iCropX, $iCropY)
+					$bSuccess= _ImageCropFromFile($sSaveFile, $sSaveFile  , 0,0, $iCropX, $iCropY)
+				endif
+			endif
+		endif
 
 	endif
 
@@ -447,25 +513,143 @@ func _WD_click($sElementID, $sMouseButton)
 EndFunc
 
 
+func _WD_get_element_size($sElementID, byref $width, byref $height)
+
+	local $sRet = ""
+	local $sValue = ""
+	local $bSuccess = False
+	$width= ""
+	$height= ""
+
+	$bSuccess =  _getWebdriverParam("GET", "/element/" & $sElementID & "/size", $sRet)
+	if $bSuccess then
+		$width = _jsonquery($sRet, "value\width")
+		$height = _jsonquery($sRet, "value\height")
+	endif
+
+	return $bSuccess
+
+EndFunc
+
+; 브라우저 현재 스크롤된 상태에서 오브젝트의 위치를 가져옴
+func _WD_get_element_location_in_view($sElementID, byref $x, byref $y)
+
+	local $sRet = ""
+	local $sValue = ""
+	local $bSuccess = False
+	$x= ""
+	$y= ""
+
+	$bSuccess =  _getWebdriverParam("GET", "/element/" & $sElementID & "/location_in_view", $sRet)
+	if $bSuccess then
+		$x = _jsonquery($sRet, "value\x")
+		$y = _jsonquery($sRet, "value\y")
+	endif
+
+	;debug($x, $y)
+
+	return $bSuccess
+
+EndFunc
+
+func _WD_get_element_location($sElementID, byref $x, byref $y)
+
+	local $sRet = ""
+	local $sValue = ""
+	local $bSuccess = False
+	$x= ""
+	$y= ""
+
+	$bSuccess =  _getWebdriverParam("GET", "/element/" & $sElementID & "/location", $sRet)
+	if $bSuccess then
+		$x = _jsonquery($sRet, "value\x")
+		$y = _jsonquery($sRet, "value\y")
+	endif
+
+	;debug($x, $y)
+
+	return $bSuccess
+
+EndFunc
+
+
+func _WD_get_element_tagname($sElementID)
+
+	local $sRet = ""
+	local $sValue = ""
+
+	if _getWebdriverParam("GET", "/element/" & $sElementID & "/name", $sRet) then
+		$sValue = _jsonquery($sRet, "value")
+	endif
+
+	return $sValue
+
+EndFunc
 
 func _WD_get_element_attribute($sElementID, $sAttributeName, byref $sAttributeValue)
 
 	local $sRet = ""
 	local $bSuccess
-
+	local $bCSS
 
 	$sAttributeValue = ""
 
-	if $sElementID <> ""  then	$bSuccess = _getWebdriverParam("GET", "/element/" & $sElementID & "/attribute/" & $sAttributeName , $sRet)
+	$sAttributeName = StringLower($sAttributeName)
+	$bCSS =  _WD_isCSSProperties($sAttributeName)
 
-	if $bSuccess then
+	if $sElementID <> ""  then
 
-		$sAttributeValue = _jsonquery($sRet, "value")
-		;debug($sRet)
+		if $bCSS =False then
+			if $sAttributeName = "text" then
+				$bSuccess = _getWebdriverParam("GET", "/element/" & $sElementID & "/text" , $sRet)
+			else
+				$bSuccess = _getWebdriverParam("GET", "/element/" & $sElementID & "/attribute/" & $sAttributeName , $sRet)
+			endif
+		else
+			$bSuccess = _getWebdriverParam("GET", "/element/" & $sElementID & "/css/" & $sAttributeName , $sRet)
+		endif
+
+		if $bSuccess then $sAttributeValue = _jsonquery($sRet, "value")
+
+		;if $sAttributeName = "text" then debug($sAttributeValue)
 
 	endif
 
 	return $bSuccess
+
+EndFunc
+
+
+func _WD_isCSSProperties($sText)
+
+	local $bCSS = False
+	local $sCSSLIST  = ""
+
+	$sCSSLIST = $sCSSLIST  & " color opacity background border bottom clear clip display float height left overflow padding position right top visibility width flex margin order "
+	$sCSSLIST = $sCSSLIST  & " hyphens font direction @keyframes animation perspective transform transition content cursor icon outline resize columns widows "
+	$sCSSLIST = $sCSSLIST  & " orphans marks quotes filter mask mark rest "
+
+	if (stringinstr($sText,"-") > 0)  or ( StringInStr($sCSSLIST, " " & $sText & " " ) > 0) then $bCSS = True
+
+
+	return $bCSS
+
+endfunc
+
+
+
+func _WD_find_element_from($sID,  $sUsing, $sSearchTarget)
+
+	local $sRet = ""
+	local $bSuccess
+
+	if _getWebdriverParam("POST", "/element/" & $sID & "/element", $sRet, 'value', $sSearchTarget, 'using',$sUsing) then
+		$sRet = string(_jsonquery($sRet, "value\element"))
+	else
+		$sRet = ""
+	endif
+
+	return $sRet
 
 EndFunc
 
@@ -505,6 +689,7 @@ func _WD_focus_parentframe()
 
 EndFunc
 
+
 func _WD_focus_frame($aFrameId)
 
 	; 배열로 ID값을 리턴
@@ -520,7 +705,7 @@ func _WD_focus_frame($aFrameId)
 	else
 		$bSuccess = _getWebdriverParam("POST", "/frame", $sRet)
 	endif
-	;_jdebug($sRet)
+	;jdebug($sRet)
 
 	return $bSuccess
 
@@ -535,7 +720,7 @@ func _WD_find_elements_by($sUsing, $sSearchTarget)
 	local $bSuccess
 
 	if _getWebdriverParam("POST", "/elements", $sRet, 'value', $sSearchTarget, 'using',$sUsing) then
-		_jdebug($sRet)
+		;jdebug($sRet)
 		$sRet = _jsonquery($sRet, "value")
 	else
 		$sRet = ""
@@ -636,8 +821,19 @@ func _getWebdriverParam($sType, $sUrl, Byref $sRet,  $sParamN1 = "", $sParamV1 =
 				$sParamN5, $sParamV5 _
 			) _
 		)
-	endif
 
+	elseif $sParamN6 = "" then
+		$sParamInfo = _JSONEncode( _
+			_JSONObject( _
+				$sParamN1, $sParamV1, _
+				$sParamN2, $sParamV2, _
+				$sParamN3, $sParamV3, _
+				$sParamN4, $sParamV4, _
+				$sParamN5, $sParamV5, _
+				$sParamN6, $sParamV6 _
+			) _
+		)
+	endif
 	if $_webdriver_current_sessionid <> "" then
 		$bSuccess = requestWebdriver($sType,"session/" & $_webdriver_current_sessionid & $sUrl, $sParamInfo, $sRet)
 	Else
@@ -648,8 +844,6 @@ func _getWebdriverParam($sType, $sUrl, Byref $sRet,  $sParamN1 = "", $sParamV1 =
 	return $bSuccess
 
 EndFunc
-
-
 
 func _WD_AU3KeyMapping ($sStr)
 	; http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/keys
@@ -671,16 +865,22 @@ func _WD_AU3KeyMapping ($sStr)
 	$sStr = StringReplace($sStr,"{ENTER}", "\UE007")
 
 	;Shift  \UE008
+	$sStr = StringReplace($sStr,"+", "\UE008")
+	$sStr = StringReplace($sStr,"{\UE008}", "+")
 	$sStr = StringReplace($sStr,"{LSHIFT}", "\UE008")
 	$sStr = StringReplace($sStr,"{RSHIFT}", "\UE008")
 
 	;Control  \UE009
+	$sStr = StringReplace($sStr,"^", "\UE009")
+	$sStr = StringReplace($sStr,"{\UE009}", "^")
 	$sStr = StringReplace($sStr,"{LCTRL}", "\UE009")
 	$sStr = StringReplace($sStr,"{RCTRL}", "\UE009")
 
 	;Alt  \UE00A
-	$sStr = StringReplace($sStr,"{LALT}", "\UE009")
-	$sStr = StringReplace($sStr,"{RALT}", "\UE009")
+	$sStr = StringReplace($sStr,"!", "\UE00A")
+	$sStr = StringReplace($sStr,"{\UE00A}", "!")
+	$sStr = StringReplace($sStr,"{LALT}", "\UE00A")
+	$sStr = StringReplace($sStr,"{RALT}", "\UE00A")
 
 	;Pause  \UE00B
 	$sStr = StringReplace($sStr,"{PAUSE}", "\UE00C")
@@ -817,6 +1017,12 @@ func _WD_AU3KeyMapping ($sStr)
 	;Command/Meta  \UE03D
 	$sStr = StringReplace($sStr,"{COMMAND}", "\UE03D")
 	$sStr = StringReplace($sStr,"{META}", "\UE03D")
+
+	; 특수문자를 변경
+	$sStr = StringReplace($sStr,"{#}", "#")
+	$sStr = StringReplace($sStr,"{{}", "{")
+	$sStr = StringReplace($sStr,"{}}", "}")
+
 
 	return $sStr
 

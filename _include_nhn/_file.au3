@@ -1,5 +1,9 @@
-#include-once
 opt("MustDeclareVars",1)
+#include-once
+
+#include ".\_include_nhn\_util.au3"
+
+
 
 Func _GetLastFromPath($strpath)
 	local $temp
@@ -80,3 +84,52 @@ EndFunc   ;==>_GetFileList
 
 ; =============================================================================================================
 
+
+;local $a= _filedbwrite("c:\1db.txt", 1, "한글")
+;$a= _filedbwrite("c:\1db.txt", 400, "ABC한글")
+;debug(_filedbread("c:\1db.txt", 1))
+;debug(_filedbread("c:\1db.txt", 400))
+func _filedbwrite($sFile, $iLine, $sContents)
+
+	local $aFile[0], $i, $bRet
+	local $sSaveContents
+	local $hFilehandle
+
+	if FileExists ($sFile) then
+
+		$bRet = _FileReadToArray($sFile, $aFile)
+
+	endif
+
+	;debug($aFile)
+	if ubound($aFile) <= $iLine then ReDim $aFile[$iLine+1]
+	;debug($aFile)
+
+	$aFile[$iLine] = $sContents
+	$sSaveContents = _ArrayToString( $aFile,@crlf,1,-1)
+
+	$hFilehandle = FileOpen($sFile, $FO_ANSI  + $FO_OVERWRITE)
+	FileWrite($hFilehandle, $sSaveContents)
+	FileClose($hFilehandle)
+
+endfunc
+
+
+func _filedbread($sFile, $iLine)
+
+	local $sRet = ""
+	local $aFile, $bRet
+
+	if FileExists ($sFile) then
+
+		$bRet = _FileReadToArray($sFile, $aFile)
+
+		if ubound($aFile) > $iLine then
+			$sRet = $aFile[$iLine]
+		endif
+
+	endif
+
+	return $sRet
+
+endfunc

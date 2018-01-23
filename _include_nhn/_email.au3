@@ -9,7 +9,7 @@ Global $_oEmailErrorRet[2]
 Global $_oEmailError
 
 
-func _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles = "", $bIsUseCID = False, $SmtpServer = "smtp.naver.com", $FromAddress = "ssmmhh_mail@naver.com", $Username = "ssmmhh_mail", $Password = "mail_ssmmhh" , $IPPort = 465)
+func _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles = "", $bIsUseCID = False, $SmtpServer = "smtp.naver.com", $FromAddress = "ssmmhh_mail@naver.com", $Username = "ssmmhh_mail", $Password = "mail_ssmmhh" , $IPPort = 465, $ssl = True)
 
 	local $bReturn = True
 	Local $FromName = $sFrom                      ; name from who the email was sent
@@ -22,11 +22,18 @@ func _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles = "", $bIsU
 	Local $Importance = "Normal"                  ; Send message priority: "High", "Normal", "Low"
 	;Local $IPPort = 587                            ; port used for sending the mail
 	;Local $IPPort = 465                            ; 네이버 SSL 사용 465 포트
-	Local $ssl = 1 ; 0                               ; enables/disables secure socket layer sending - put to 1 if using httpS
+	;Local $ssl = 1 ; 0                               ; enables/disables secure socket layer sending - put to 1 if using httpS
 	local $rc
 	local $i
 	;~ $IPPort=465                          ; GMAIL port used for sending the mail
 	;~ $ssl=1                               ; GMAILenables/disables secure socket layer sending - put to 1 if using httpS
+
+
+	if $ssl = True  then
+		$ssl = 1
+	Else
+		$ssl = 0
+	endif
 
 	;##################################
 	; Script
@@ -36,6 +43,7 @@ func _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles = "", $bIsU
 	;$sBody = _Base64Encode($sBody)
 
 	;$Body = "Content-Type: text/plain; charset=UTF-8" & @crlf & "Content-Transfer-Encoding: base64" & $sBody
+	_debug($ssl)
 
 	for $i=1 to 3
 

@@ -5,6 +5,7 @@
 
 #include "WinAPIError.au3"
 
+Global  $oMyErrorx
 ; #FUNCTION# ====================================================================================================================
 ; Name...........: _IEAttach
 ; Description ...: Attach to the first existing instance of Internet Explorer where the
@@ -55,8 +56,21 @@ Func _IEHeadInsertEventScript2(ByRef $o_object, $s_htmlFor, $s_event, $s_script)
 	Return SetError($_IEStatus_Success, 0, 1)
 EndFunc   ;==>_IEHeadInsertEventScript
 
+func ErrFunc1()
+ local $HexNumber = Hex($oMyErrorx.number, 8)
+    MsgBox(0, "", "We intercepted a COM Error !" & @CRLF & _
+            "Number is: " & $HexNumber & @CRLF & _
+            "WinDescription is: " & $oMyErrorx.windescription)
+
+    SetError(1)
+
+endfunc
 
 Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
+	return  _IEAttach ($s_string, $s_mode, $i_instance)
+endfunc
+
+Func _IEAttach3($s_string, $s_mode = "Title", $i_instance = 1)
 	$s_mode = StringLower($s_mode)
 
 	$i_instance = Int($i_instance)
@@ -94,10 +108,12 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 		EndIf
 	EndIf
 
+
 	Local $o_Shell = ObjCreate("Shell.Application")
 	Local $o_ShellWindows = $o_Shell.Windows(); collection of all ShellWindows (IE and File Explorer)
 	Local $i_tmp = 1
 	Local $f_NotifyStatus, $status, $f_isBrowser, $s_tmp
+
 
 	For $o_window In $o_ShellWindows
 		;------------------------------------------------------------------------------------------
@@ -106,6 +122,7 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 		; Setup internal error handler to Trap COM errors, turn off error notification,
 		;     check object property validity, set a flag and reset error handler and notification
 		;
+
 		$f_isBrowser = True
 		; Trap COM errors and turn off error notification
 
@@ -115,16 +132,16 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 		$f_NotifyStatus = _IEErrorNotify() ; save current error notify status
 		_IEErrorNotify(False)
 
-		; Check conditions to verify that the object is a browser
-		If $f_isBrowser Then
-			$s_tmp = $o_window.type ; Is .type a valid property?
-			If @error Then $f_isBrowser = False
-		EndIf
+
 
 
 		If $f_isBrowser Then
+
+			;$oMyErrorx = ObjEvent("AutoIt.Error", "ErrFunc1")
 			$s_tmp = $o_window.document.title ; Does object have a .document and .title property?
 			If @error Then $f_isBrowser = False
+
+			;$oMyErrorx = ObjEvent("AutoIt.Error", "")
 
 			;ConsoleWrite ("title : " &$o_window.document.title & @cr)
 			;ConsoleWrite ("codename : " & $o_window.document.parentWindow.top.navigator.appCodeName() & @cr )
@@ -138,7 +155,7 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 
 			; IE6 및 이후 버전인경우에만 지원
 			if $o_Window.Name() <> "Internet Explorer" and $o_Window.Name() <> "Windows Internet Explorer" and $o_Window.Name() <> "Microsoft Internet Explorer" then $f_isBrowser = False
-			;_debug($f_isBrowser)
+
 
 			$s_tmp =" "
 			$s_tmp = $o_Window.Hwnd()
@@ -149,18 +166,39 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 			endif
 
 			If @error Then $f_isBrowser = False
-			;_debug($f_isBrowser)
+
 
 		EndIf
+
+
+
+
+		; Check conditions to verify that the object is a browser
+		If $f_isBrowser Then
+
+			;$oMyErrorx = ObjEvent("AutoIt.Error", "ErrFunc1")
+			$s_tmp = $o_window.type ; Is .type a valid property?
+			If @error Then $f_isBrowser = False
+			;$oMyErrorx = ObjEvent("AutoIt.Error", "")
+
+		EndIf
+
+
+
 
 		; restore error notify and error handler status
 		_IEErrorNotify($f_NotifyStatus) ; restore notification status
 
+
+		;$oMyErrorx = ObjEvent("AutoIt.Error", "ErrFunc1")
+
 		;------------------------------------------------------------------------------------------
 
 		If $f_isBrowser Then
+
 			Switch $s_mode
 				Case "title"
+
 					If StringInStr($o_window.document.title, $s_string) > 0 Then
 						If $i_instance = $i_tmp Then
 							Return SetError($_IEStatus_Success, 0, $o_window)
@@ -169,6 +207,7 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 						EndIf
 					EndIf
 				Case "instance"
+
 					If $i_instance = $i_tmp Then
 						Return SetError($_IEStatus_Success, 0, $o_window)
 					Else
@@ -219,9 +258,12 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 						$i_instance = 1
 						__IEConsoleWriteError("Warning", "_IEAttach", "$_IEStatus_GeneralError", "$i_instance > 1 invalid with HWnd.  Setting to 1.")
 					EndIf
+
 					If _IEPropertyGet2($o_window, "hwnd") = $s_string Then
+
 						Return SetError($_IEStatus_Success, 0, $o_window)
 					EndIf
+
 				Case Else
 					; Invalid Mode
 					__IEConsoleWriteError("Error", "_IEAttach", "$_IEStatus_InvalidValue", "Invalid Mode Specified")
@@ -229,6 +271,9 @@ Func _IEAttach2($s_string, $s_mode = "Title", $i_instance = 1)
 			EndSwitch
 		EndIf
 	Next
+
+
+
 	__IEConsoleWriteError("Warning", "_IEAttach", "$_IEStatus_NoMatch 3")
 	Return SetError($_IEStatus_NoMatch, 1, 0)
 EndFunc   ;==>_IEAttach
@@ -591,7 +636,7 @@ next
 _ArraySort($aList)
 
 for $i=1 to ubound($aList) -1
-	;_debug($aList[$i])
+	;debug($aList[$i])
 next
 
 endfunc
@@ -605,10 +650,8 @@ func _IEGetObjByClassName(byref $oIE, $sTagType,$sClassName)
 
 	For $tag in $tags
 		$class_value = $tag.attributes.class.value()
-		;_debug($class_value)
-		;_debug($tag.tagname)
 		If $class_value = $sClassName Then
-			;_debug($class_value)
+
 			$sRetTag = $tag
 			exitloop
 		EndIf

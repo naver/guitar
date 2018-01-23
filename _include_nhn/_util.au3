@@ -24,18 +24,23 @@ endfunc
 func _debug($strmsg, $strmsg2="_EMPTY_", $strmsg3="_EMPTY_", $strmsg4="_EMPTY_", $strmsg5="_EMPTY_")
 
 	local $strValue
+	local Const $sSplitChar =" | "
 
 	if $__debugoff = "" then
 
 		$strValue = _ArrayToText($strmsg)
-		consolewrite($strValue)
 
-		if string($strmsg2) <> "_EMPTY_" then consolewrite(" | " & $strmsg2)
-		if string($strmsg3) <> "_EMPTY_" then consolewrite(" | " & $strmsg3)
-		if string($strmsg4) <> "_EMPTY_" then consolewrite(" | " & $strmsg4)
-		if string($strmsg5) <> "_EMPTY_" then consolewrite(" | " & $strmsg5)
+		 $strmsg2 = string($strmsg2) <> "_EMPTY_"  ? $sSplitChar & $strmsg2 : ""
+		 $strmsg3 = string($strmsg3) <> "_EMPTY_"  ? $sSplitChar & $strmsg3 : ""
+		 $strmsg4 = string($strmsg4) <> "_EMPTY_"  ? $sSplitChar & $strmsg4 : ""
+		 $strmsg5 = string($strmsg5) <> "_EMPTY_"  ? $sSplitChar & $strmsg5 : ""
 
-		consolewrite(@crlf)
+
+		$strValue  =  $strValue &  $strmsg2 & $strmsg3 &  $strmsg4  &  $strmsg5
+
+		; 디버그 창에서 문자열이 깨져서 임의로 공백을 끝에 추가함
+		;consolewrite($strValue " ,4) & @crlf )
+		consolewrite($strValue &  @crlf )
 
 		if $__debugfile <> "" then
 			FileWriteLine($__debugfile, $strValue)
@@ -170,7 +175,7 @@ func _KillProc($strProc, $strexcept = "")
 	$_plist= _GetAllProcess($strProc)
 	;_msg($_plist)
 	for $i = 1 to ubound($_plist) -1
-		if not(stringinstr($_plist[$i][1],$strexcept) <> 0 and $strexcept <> "" )then
+		if not(stringinstr($_plist[$i][1],$strexcept) <> 0 and $strexcept <> "" ) then
 			;if stringinstr($_plist[$i][1],_GetScriptName() & ".exe") = 0 then
 			;_msg($_plist[$i][1])
   				processclose($_plist[$i][2])
@@ -224,7 +229,7 @@ func _CmdlineCheck($minArgCount,$MaxArgCount,$strErrorMsg)
 endfunc
 
 
-func _GetCommandArg($strArg,byref $strArgVar)
+func _GetCommandArg($strArg, byref $strArgVar)
 
 	local $i
 
@@ -319,6 +324,8 @@ func _GetPathName($strFile)
 	local $szDrive, $szDir, $szFName, $szExt
 
 	_PathSplit($strFile, $szDrive, $szDir, $szFName, $szExt)
+
+	if Stringright ($szDir,1) = "\" then $szDir= StringTrimRight($szDir,1)
 
 	return $szDrive & $szDir
 
@@ -702,10 +709,13 @@ func _FileWriteLarge($sFile, $sText)
 
 	FileDelete($sFile)
 
+	local $iFileHandle = FileOpen($sFile, $FO_APPEND + $FO_ANSI )
+
 	for $i= 1 to $iCount
 		;debug(($i-1) * $iSizeLimit + 1, $iSizeLimit)
-		FileWrite($sFile, stringmid($sText , ($i-1) * $iSizeLimit + 1, $iSizeLimit))
+		FileWrite($iFileHandle, stringmid($sText , ($i-1) * $iSizeLimit + 1, $iSizeLimit))
 	next
+	FileClose ( $iFileHandle)
 
 endfunc
 
@@ -719,7 +729,9 @@ func _ScriptLogWrite($sText, $bDelete = False)
 
 	$sLogText = _nowcalc() & " : " & $sText
 
+	local $iFileHandle = FileOpen($sLogFile, $FO_APPEND + $FO_ANSI )
 	FileWriteLine($sLogFile, $sLogText)
+	FileClose ( $iFileHandle)
 
 endfunc
 
@@ -728,7 +740,6 @@ func _DateFromMonth($MonthName)
 ;달이름을 입력받아 해당 달의 숫자를 리턴함
 
 	local $sRet
-
 
 	for $i=1 to 12
 		if _trim($MonthName) = _DateToMonth($i, 1) or _trim($MonthName) = _DateToMonth($i) or _trim($MonthName) = StringLeft(_DateToMonth($i,1),3) Then
@@ -752,3 +763,90 @@ Func _isWorksatationLocked()
 
 	return  $res
 EndFunc
+
+
+func _Assign(byref $sVarName, $sValue)
+
+	$sVarName = $sValue
+
+	Return True
+
+endfunc
+
+func _Eval(byref $sVarName)
+
+	return $sVarName
+
+endfunc
+
+
+func _Redim (byref $aArray,  $a1 =0 , $a2 = 0 , $a3 =0 ,  $a4 =0)
+
+	if $a4 <> 0 Then
+		redim $aArray[$a1][$a2][$a3][$a4]
+	ElseIf $a3 <> 0 Then
+		redim $aArray[$a1][$a2][$a3]
+	ElseIf $a2 <> 0 Then
+		redim $aArray[$a1][$a2]
+	ElseIf $a1 <> 0 Then
+		redim $aArray[$a1]
+	endif
+
+	return True
+
+EndFunc
+
+; autoit 3.3.10.2 버전 이후에 삭제되어 임의로 추가됨   이후 정식 기능으로 지원될 경우 삭제 필요
+; 2016/10/11
+func _iif ($vCondition,  $vTrue, $vFalse)
+
+	return ($vCondition ? $vTrue : $vFalse)
+
+EndFunc
+
+Func _Run($sCommand, $bWait = True, $bShow = False)
+
+	local $iRet
+	local $iShow = 	@SW_HIDE
+
+	if $bShow then  $iShow  = @SW_SHOW
+
+	if $bWait then
+		$iRet =RunWait(@comspec & ' /c ' &'' & $sCommand , @scriptdir, $bShow)
+	Else
+		$iRet =Run(@comspec & ' /c ' &'' & $sCommand , @scriptdir, $bShow)
+	endif
+
+	return $iRet
+
+endfunc
+
+
+
+;local $xx, $sSTDOUT, $sERROUT
+;$xx =_RunWait("adb shell am start xddd ",@ScriptDir ,False ,  $sSTDOUT, $sERROUT)
+Func _RunWait($sCmd, $sDir, $bShow, byref $sSTDOUT, byref $sERROUT)
+
+	 $bShow  = $bShow ? @SW_SHOW : @SW_HIDE
+
+	Local $iPID = Run(@comspec & ' /c ' &'' & $sCmd , $sDir, $bShow , $STDERR_CHILD + $STDOUT_CHILD)
+
+	;_debug($sCmd,$iPID, $sOption)
+	$sSTDOUT = ""
+	$sERROUT = ""
+
+	;_debug(ProcessExists($iPID))
+	While (ProcessExists($iPID) <> 0)
+		sleep(1)
+		$sSTDOUT = $sSTDOUT & StdoutRead($iPID)
+		$sERROUT = $sERROUT & StderrRead($iPID)
+	WEnd
+
+
+;_debug("STD", $sSTDOUT)
+;_debug("ERROR", $sERROUT)
+
+
+EndFunc
+
+
