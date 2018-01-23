@@ -28,8 +28,6 @@ Global $_sProgramUpdater = "GUITARUpdater.exe"
 Global $_sImageSearcher = "GUITARImageSearcher.exe"
 Global $_sAVICapture = "AVICapture.exe"
 
-Global $_EditFontName = "Gulim"
-Global $_EditFontSize = 9
 
 Global $_runBrowser
 Global $_runLastBrowser
@@ -38,6 +36,7 @@ Global $_oBrowser
 Global $_runWaitTimeOut
 Global $_runCommandSleep
 
+Global $_runRecentResult = True
 Global $_runWebdriver = False
 Global $_runMobileOS
 Global $_runInputType
@@ -98,6 +97,7 @@ Global $_runCommadLintTimeInit
 Global $_runCommadLintTimeStart
 Global $_runAreaWork [6]
 
+Global $_runMouseHide
 Global $_runDebugLogFileHanle
 Global $_runTolerance
 Global $_runAlwaysImageEdit
@@ -158,11 +158,19 @@ Global $_sReceiverLogFile = @ScriptDir & "\receiver.log"
 Global $_tDebugTimeDiff
 Global $_tDebugMainTimeDiff
 
+Global $_EditFontName
+Global $_EditFontSize
+
+Global $_LogFontName
+Global $_LogFontSize
+
 
 Global Enum $_ETab_Hwnd, $_ETab_Title, $_ETab_Filename, $_ETab_RichLineHwnd, $_ETab_RichEditHwnd, $_ETab_CDataSaved, $_ETab_CData1, $_ETab_CData2, $_ETab_CData3, $_ETab_CData4, $_ETab_CData5, $_ETab_CData6, $_ETab_CData7, $_ETab_CData8,  $_ETab_CData9, $_ETab_CData10,$_ETab_CData11,$_ETab_End
 
 Global $_ETabMain, $_ETabMainHwnd
 Global $_ETabInfo[20][$_ETab_End]
+
+Global $_GUITAR_USER_VAR1[1], $_GUITAR_USER_VAR2[1], $_GUITAR_USER_VAR3[1], $_GUITAR_USER_VAR4[1], $_GUITAR_USER_VAR5[1], $_GUITAR_USER_VAR6[1], $_GUITAR_USER_VAR7[1], $_GUITAR_USER_VAR8[1], $_GUITAR_USER_VAR9[1], $_GUITAR_USER_VAR0[1]
 
 
 ; ----------- Ä¸ÃÄ ºÎºÐ
@@ -405,18 +413,23 @@ func writeRmoteLog($sText)
 	local $i
 	local $aLog
 	local $iMaxLine = 100
+	local $hFileHandle
 
 	_FileReadToArray($_sControlLogFile, $aLog)
 
 	FileDelete($_sControlLogFile)
 
-	FileWriteLine($_sControlLogFile, _NowCalc() & " : " & $sText)
+	$hFileHandle = FileOpen ($_sControlLogFile, $FO_ANSI + $FO_OVERWRITE)
+
+	FileWriteLine($hFileHandle, _NowCalc() & " : " & $sText)
 
 
 	for $i=1 to ubound($aLog) -1
-		FileWriteLine($_sControlLogFile, $aLog[$i])
+		FileWriteLine($hFileHandle, $aLog[$i])
 		if $i >= $iMaxLine then exitloop
 	next
+
+	FileClose($hFileHandle)
 
 endfunc
 

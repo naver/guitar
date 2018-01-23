@@ -13,6 +13,8 @@ Func _createUserCaptureReport($sHtmlFile, $sPath, $sTitle, $sViewType)
 	local $i
 	local $sSplitChar = "_"
 	local $aFileGoup
+	Local $hFileOpen
+
 
 	$aFileGoup = getUserCaptureFileGrop($sPath,$sSplitChar)
 
@@ -34,8 +36,10 @@ Func _createUserCaptureReport($sHtmlFile, $sPath, $sTitle, $sViewType)
 	addHtml ($sHtml,"</BODY>")
 	addHtml ($sHtml,"</HTML>")
 
-	filedelete ($sHtmlFile)
-	FileWrite($sHtmlFile,$sHtml)
+	;filedelete ($sHtmlFile)
+	$hFileOpen =  FileOpen ( $sHtmlFile, $FO_ANSI +  $FO_OVERWRITE)
+	FileWrite($hFileOpen,$sHtml)
+	FileClose($hFileOpen)
 
 endfunc
 
@@ -123,7 +127,7 @@ func getUserCaptureFileGrop($sPath, $sSplitChar)
 
 	if $aFileList  = "" then return $aGourpList
 
-	_ArraySort($aFileList,0,1,0)
+	_ArraySort($aFileList,0,1)
 
 	for $i=1 to ubound($aFileList) -1
 

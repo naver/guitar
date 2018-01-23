@@ -93,7 +93,7 @@ func _addNewTestScriptResult(byref $sHtml, $aTestSummry, $iMaxNumber, $sSummryRe
 	local $sNewHtml = ""
 	local $sLinkURL
 	local $iPathSplitPos
-
+	;msg($sSummryReportFile)
 	$iTestScriptStart = _getTestScriptCategory($sHtml, $aTestSummry[$_iTSScriptName])
 
 	$iTestScriptNewLine = _getTestScriptFirstLine($sHtml, $iTestScriptStart)

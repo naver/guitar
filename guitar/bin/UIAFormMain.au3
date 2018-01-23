@@ -177,8 +177,10 @@ func _loadMainForm()
 	$_gHideScript=_GUICtrlRichEdit_Create  ($_gForm, "", 10200, 10200, 100,100)
 	$_gTempScript=_GUICtrlRichEdit_Create  ($_gForm, "", 10200, 10200, 100,100)
 
-	;_GUICtrlRichEdit_SetFont($_gHideScript, $_EditFontSize, $_EditFontName)
-	;_GUICtrlRichEdit_SetFont($_gTempScript, $_EditFontSize, $_EditFontName)
+	;_GUICtrlRichEdit_SetFont($_gHideScript, 11, "궁서")
+	;_GUICtrlRichEdit_SetFont($_gTempScript, 11, "궁서")
+
+	;getReadINI("SCRIPT","TemplateScript")
 
 	; 에러로그 창
 	$aObjectPos=getRichLineXY("Log")
@@ -298,17 +300,22 @@ func CreateNewImageViwer ()
 	_GUICtrlListView_Destroy($_gListViewImage)
 
 
-	$_gListViewImage = GUICtrlCreateListView("",  $aObjectPos[0], $aObjectPos[1], $aObjectPos[2], $aObjectPos[3], -1, BitOr($WS_EX_CLIENTEDGE, $LVS_EX_DOUBLEBUFFER))
+	;$_gListViewImage = GUICtrlCreateListView("",  $aObjectPos[0], $aObjectPos[1], $aObjectPos[2], $aObjectPos[3], -1, BitOr($WS_EX_CLIENTEDGE, $LVS_EX_DOUBLEBUFFER, $LVS_LIST, $LVS_NOCOLUMNHEADER))
+	$_gListViewImage = GUICtrlCreateListView("",  $aObjectPos[0], $aObjectPos[1], $aObjectPos[2], $aObjectPos[3], BitOr( $WS_EX_CLIENTEDGE, $LVS_LIST,$LVS_NOCOLUMNHEADER ))
+	;$_gListViewImage = GUICtrlCreateListView("",  $aObjectPos[0], $aObjectPos[1], $aObjectPos[2], $aObjectPos[3], -1, $LVS_LIST)
+	_GUICtrlListView_SetExtendedListViewStyle($_gListViewImage, BitOR($LVS_EX_DOUBLEBUFFER, $LVS_EX_SUBITEMIMAGES))
 
 	if $_gListViewImage <> 0 then
 		$_gListViewPic = GUICtrlCreatePic("", -1, -1, 1, 1)
 		GUICtrlSetResizing($_gListViewImage, $GUI_DOCKLEFT + $GUI_DOCKBOTTOM + $GUI_DOCKHEIGHT + $GUI_DOCKRIGHT)
 
-		_GUICtrlListView_SetView($_gListViewImage, 1)
+		_GUICtrlListView_SetView($_gListViewImage, 2)
+		;_GUICtrlListView_SetWorkAreas($_gListViewImage, 0, 0, 100, 100)
+
 		_GUICtrlListView_SetIconSpacing($_gListViewImage, $_iListViewImageWidth + 25, $_iListViewImageHeight)
 
-		_GUICtrlListView_InsertColumn($_gListViewImage, 0, "", 0)
-		_GUICtrlListView_InsertColumn($_gListViewImage, 1, "", 0)
+		_GUICtrlListView_InsertColumn($_gListViewImage, 0, "", 10, 2,0,True )
+		_GUICtrlListView_InsertColumn($_gListViewImage, 1, "", 100, 2,0,True )
 		$bRet = True
 
 	else
@@ -417,7 +424,7 @@ endfunc
 
 func getScriptFileName ()
 ; 스크립트명 리턴
-	return $_runScriptName
+	return StringLower($_runScriptName)
 endfunc
 
 
@@ -449,7 +456,10 @@ func onClickNew()
 	$sTemplateFile = $_runCommonScriptPath & "\" & getReadINI("SCRIPT","TemplateScript")
 	if FileExists($sTemplateFile) then
 		_GuiCtrlRichEdit_SetText ($_gEditScript, FileRead($sTemplateFile))
+		_GUICtrlRichEdit_SetSel($_gEditScript, 0, -1)
+		_GUICtrlRichEdit_SetFont($_gEditScript, $_EditFontSize, $_EditFontName)
 		_GUICtrlRichEdit_SetSel ($_gEditScript, -1,-1)
+
 		$_sRichTextModified = _GuiCtrlRichEdit_getText  ($_gEditScript, False)
 	endif
 
@@ -549,9 +559,9 @@ func setupImagePathList($sFileName)
 
 
 	;debug($sScriptPath, $sFileName)
-	$sScriptCommonImage = getServiceNameFormFile($sDefautImagePath, $sDefautScriptPath & "\",  $sScriptPath & "\" , $sFileName)
-	$sScriptCommonScript = getServiceNameFormFile($sDefautScriptPath, $sDefautScriptPath & "\",  $sScriptPath & "\" , $sFileName)
-
+	$sScriptCommonImage = getServiceNameFormFile($sDefautImagePath, $sDefautScriptPath & "\",  $sScriptPath & "\" , $sFileName & "\")
+	$sScriptCommonScript = getServiceNameFormFile($sDefautScriptPath, $sDefautScriptPath & "\",  $sScriptPath & "\" , $sFileName & "\")
+;debug($sScriptCommonScript)
 	;debug("공용스트립트 :" & $sScriptCommonScript )
 	;debug("서비스명:" & $sScriptCommonImage)
 
@@ -563,7 +573,7 @@ func setupImagePathList($sFileName)
 	if $sScriptCommonImage <> "" then _ArrayAdd($_aRunImagePathList,$sScriptCommonImage)
 	if $sScriptCommonScript <> "" then _ArrayAdd($_aRunScriptPathList,$sScriptCommonScript)
 
-	;debug($_aRunImagePathList)
+
 
 	_addImagePathList($sFileName)
 
@@ -576,7 +586,7 @@ func getServiceNameFormFile($sDefautImagePath, $sCommoncriptPath, $sScriptPath, 
 	local $iPos, $iPos2
 	local $sSeletPath
 	local $sServiceName
-
+	;debug($sDefautImagePath, $sCommoncriptPath, $sScriptPath, $sFile)
 	$iPos = StringInStr($sFile,$sCommoncriptPath )
 	if $ipos <> 0 then
 		$sSeletPath = $sCommoncriptPath
@@ -725,10 +735,12 @@ func onClickSave($bSaveOnly = False, $bNewSave = False)
 	if FileExists($sFileName) = 1 then
 		$iEncodingType = FileGetEncoding ($sFileName)
 	Else
-		if getIniBoolean(getReadINI("Environment","SaveUTF8")) = True then $iEncodingType = 128
-		;msg(getReadINI("Environment","SaveUTF8"))
+		if getIniBoolean(getReadINI("Environment","SaveUTF8")) = True then
+				$iEncodingType = $FO_UTF8
+		Else
+				$iEncodingType = $FO_ANSI
+		endif
 	endif
-
 
 	$handle = fileopen($sFileName,2 + $iEncodingType )
 	FileWrite($handle, _GuiCtrlRichEdit_getText  ($_gEditScript, True))
@@ -1042,7 +1054,7 @@ Func onClickCapture()
 
 		$_sLastSavedFileName = ""
 
-		$_sCapturePath = _GetPathName(getScriptFileName()) & "Image"
+		$_sCapturePath = _GetPathName(getScriptFileName()) & "\Image"
 		$_sCaptureFirstImageFolder = $_sCapturePath
 
 		$_aRichEditLastSelect = _GuiCtrlRichEdit_GetSel($_gEditScript)
@@ -1451,18 +1463,33 @@ func viewRichEditLineNumber()
 	local $i
 	local $sNumber
 
+
+
 	if $_runLastRicheditFirstVisibleLine <> $iCurrentVisibleLine then
+
 
 		for $i = 0 to 100
 			$sNumber &= $iCurrentVisibleLine + $i & @cr
 		next
 
 		;GUICtrlSetData  ($_gLinelist,  $sNumber)
-		_GUICtrlRichEdit_SetText($_gLinelist,  $sNumber)
+		_GUICtrlRichEdit_SetText($_gLinelist,  "")
+		_GUICtrlRichEdit_SetFont($_gLinelist, $_EditFontSize, $_EditFontName)
+		_GUICtrlRichEdit_InsertText($_gLinelist,  $sNumber)
+
+		;if _GUICtrlRichEdit_GetFont($_gLinelist)[1] <> $_EditFontName then
+		;	_debug ("왔다 : " & _GUICtrlRichEdit_GetFont($_gLinelist)[1])
+		;	_GUICtrlRichEdit_SetSel($_gLinelist, 0, -1)
+		;	_GUICtrlRichEdit_SetFont($_gLinelist, $_EditFontSize, $_EditFontName)
+		;	_GUICtrlRichEdit_SetSel($_gLinelist, 0, 0)
+		;endif
 
 		$_runLastRicheditFirstVisibleLine = $iCurrentVisibleLine
 
+
 	endif
+
+
 
 	if $_runLastRicheditCursor <> $iRicheditCursor then
 

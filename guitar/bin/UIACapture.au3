@@ -310,7 +310,7 @@ func setComboListUpdate()
 
 		if $i=1 then
 			if 	$_aDefaultCaptureFileList[$i][2] <> "" then
-				_setSavePath(stringtrimright(_GetPathName($_aDefaultCaptureFileList[$i][2]),1))
+				_setSavePath(_GetPathName($_aDefaultCaptureFileList[$i][2]))
 			else
 				_setSavePath($_sCapturePath)
 			endif
@@ -691,7 +691,6 @@ func onClickFileSave()
 	if ubound($aDeleteList) > 1 then
 
 		$iArrayDeleteID = _ArraySearch($aDeleteList, _GetPathname($sNewFile) ,  0,0,0,1,1)
-
 
 		while $iArrayDeleteID <> -1
 			_ArrayDelete($aDeleteList,$iArrayDeleteID)

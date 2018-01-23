@@ -60,7 +60,7 @@ Func _getErrorSumarry($sCount, $sScriptName, $sTestTime)
 	$aRetList = $aNewList
 
 	_FileReadToArray ($_sErrorSumarryFile, $aFile,0)
-	$aFile = _ArrayUnique($aFile,1)
+	$aFile = _ArrayUnique($aFile)
 
 	for $i=0 to ubound($aFile) -1
 
@@ -101,7 +101,7 @@ Func _getErrorSumarry($sCount, $sScriptName, $sTestTime)
 
 		for $j=1 to ubound($aCount) -1
 
-			if $aNewList[$i][0] = Number($aCount [$j])  and ($sTestTime = $aNewList[$i][2])then
+			if $aNewList[$i][0] = Number($aCount [$j])  and ($sTestTime = $aNewList[$i][2]) then
 
 				$iSearchIndex = ubound($aRetList)
 				redim $aRetList[$iSearchIndex + 1][ubound($aRetList,2)]
@@ -137,7 +137,7 @@ func deleteSuccessListFormErrorSumarry($sScriptName)
 
 	next
 
-	$aFile = _ArrayUnique($aFile,1)
+	$aFile = _ArrayUnique($aFile)
 	;_msg($aFile)
 	_FileWriteFromArray($_sErrorSumarryFile, $aFile,1)
 

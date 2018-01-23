@@ -120,6 +120,7 @@ func IEObjectGetAllInnerHtml($oIE)
 	for $i=1 to ubound($aObject) -1
 
 		$oItem = $aObject[$i][1]
+
 		$sInnerHtml &= $oItem.outertext
 		;msg($oItem.outertext)
 	next
@@ -217,8 +218,6 @@ func IEObjectSearchFromObject($oIE, $sCondition, $bCountCheck)
 
 	;$oMyError = ObjEvent("AutoIt.Error","UIAIE_NavigateError")
 
-
-
 	$sSplitTemp = StringSplit($sCondition, $sGroupSplt)
 
 	redim $aCondition[ubound($sSplitTemp)][5]
@@ -282,8 +281,7 @@ func IEObjectSearchFromObject($oIE, $sCondition, $bCountCheck)
 
 	next
 
-
-	$oMyError = ObjEvent("AutoIt.Error")
+	;$oMyError = ObjEvent("AutoIt.Error")
 
 	return $aRetObject
 
@@ -605,9 +603,9 @@ func convertHtmlChar(byref $sText, $bReverse = False)
 	convertHtmlCharItem($sText,"&#91;", "[", $bReverse)
 	convertHtmlCharItem($sText,"&#93;", "]", $bReverse)
 	convertHtmlCharItem($sText,"&gt;", ">", $bReverse)
-	convertHtmlCharItem($sText,"&62;", ">", $bReverse)
+	convertHtmlCharItem($sText,"&#62;", ">", $bReverse)
 	convertHtmlCharItem($sText,"&lt;", "<", $bReverse)
-	convertHtmlCharItem($sText,"&60;", "<", $bReverse)
+	convertHtmlCharItem($sText,"&#60;", "<", $bReverse)
 	convertHtmlCharItem($sText,"&#94;", "^", $bReverse)
 	convertHtmlCharItem($sText,"&#124;", "|", $bReverse)
 	convertHtmlCharItem($sText,"&#123;", "}", $bReverse)

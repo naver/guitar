@@ -15,7 +15,7 @@
 Global $_iColorLabelX
 Global $_iColorLabelY
 
-Global $_aSampleDataList[1][5]
+Global $_aSampleDataList[1][6]
 Global $_iSelectedSampleID
 Global $_gfrmSample
 Global $_SampleHideRichText
@@ -27,7 +27,7 @@ Global $_btnSampleBefore
 Global $_btnSampleClose
 Global $_iSampleViewPage
 
-Global $_iSampleMaxPage = 4
+Global $_iSampleMaxPage = 5
 Global $_iSampleLastPage = 1
 
 ;Global  $_SampleHideRichText2
@@ -36,11 +36,19 @@ Global $_iSampleLastPage = 1
 
 func loadSampleList()
 
-	redim $_aSampleDataList[1][5]
-	redim $_aSampleDataList[1000][5]
+	redim $_aSampleDataList[1][6]
+	redim $_aSampleDataList[1000][6]
 
 	$_iSampleDataListCount = 0
 
+
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = "* 브라우저 관리"
 
 	;001
 	$_iSampleDataListCount += 1
@@ -65,6 +73,14 @@ func loadSampleList()
 	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_004c")
 	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_004s")
 	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_004d")
+
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = "* 마우스 "
 
 
 	;005
@@ -151,24 +167,9 @@ func loadSampleList()
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
-
-	;015
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_015c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_015s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_015d")
-
-
-	;016
-	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_016c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_016s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_016d")
-
-
-	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
-
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = "* 조건문"
 
 	;017
 	$_iSampleDataListCount += 1
@@ -212,9 +213,35 @@ func loadSampleList()
 	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_022d")
 
 
+
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = "* 키보드"
+
+
+	;015
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_015c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_015s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_015d")
+
+
+	;016
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_016c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_016s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_016d")
+
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = "* 확인"
 
 	;023
 	$_iSampleDataListCount += 1
@@ -232,6 +259,10 @@ func loadSampleList()
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = "* 대기 "
+
 
 	;025
 	$_iSampleDataListCount += 1
@@ -246,26 +277,14 @@ func loadSampleList()
 	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_026s")
 	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_026d")
 
-	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
-
-	;027
-	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_027c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_027s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_027d")
-
-
-	;028
-	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_028c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_028s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_028d")
 
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 테이블 변수"
 
 	;029
 	$_iSampleDataListCount += 1
@@ -289,6 +308,11 @@ func loadSampleList()
 
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 캡쳐"
 
 
 	;032
@@ -350,6 +374,31 @@ func loadSampleList()
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 조건"
+
+
+	;027
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_027c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_027s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_027d")
+
+
+	;028
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_028c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_028s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_028d")
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 실행"
+
 
 	;040
 	$_iSampleDataListCount += 1
@@ -357,11 +406,14 @@ func loadSampleList()
 	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_040s")
 	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_040d")
 
-	;041
+
+
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_041c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_041s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_041d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 기타"
 
 
 	;042
@@ -373,6 +425,10 @@ func loadSampleList()
 
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 블럭"
 
 
 	;043
@@ -403,6 +459,11 @@ func loadSampleList()
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * TAG 속성"
+
 	;047
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_047c")
@@ -426,6 +487,16 @@ func loadSampleList()
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * Autoit"
+
+	;041
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_041c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_041s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_041d")
+
 	;050
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_050c")
@@ -447,11 +518,23 @@ func loadSampleList()
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 프로세스"
+
 	;053
 	$_iSampleDataListCount += 1
 	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_053c")
 	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_053s")
 	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_053d")
+
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 모바일"
 
 	;054
 	$_iSampleDataListCount += 1
@@ -508,114 +591,200 @@ func loadSampleList()
 	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
 
 
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * WEBDRIVER"
+
+
+	; WEBDRIVER
+	;080
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_080c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_080s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_080d")
+
+	;081
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_081c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_081s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_081d")
+
+	;082
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_082c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_082s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_082d")
+
+	;083
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_083c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_083s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_083d")
+
+	;084
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_084c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_084s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_084d")
+
+	;085
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_085c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_085s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_085d")
+
+	;086
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_086c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_086s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_086d")
+
+
+	;087
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_087c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_087s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_087d")
+
+
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "-"
+
+
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = "_"
+	$_aSampleDataList[$_iSampleDataListCount][2] = " * 시스템 변수"
+
+
+	;  시스템 변경
 	;062
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_062c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_062s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_062d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_162c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_162s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_162d")
 
 
 	;063
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_063c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_063s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_063d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_163c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_163s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_163d")
 
 
 	;064
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_064c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_064s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_064d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_164c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_164s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_164d")
 
 	;065
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_065c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_065s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_065d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_165c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_165s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_165d")
 
 	;066
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_066c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_066s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_066d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_166c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_166s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_166d")
 
 	;067
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_067c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_067s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_067d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_167c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_167s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_167d")
 
 	;068
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_068c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_068s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_068d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_168c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_168s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_168d")
 
 	;069
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_069c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_069s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_069d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_169c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_169s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_169d")
 
 	;070
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_070c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_070s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_070d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_170c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_170s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_170d")
 
 	;071
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_071c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_071s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_071d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_171c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_171s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_171d")
 
 
 	;072
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_072c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_072s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_072d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_172c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_172s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_172d")
 
 	;073
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_073c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_073s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_073d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_173c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_173s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_173d")
 
 	;074
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_074c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_074s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_074d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_174c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_174s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_174d")
 
 	;075
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_075c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_075s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_075d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_175c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_175s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_175d")
 
 	;076
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_076c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_076s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_076d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_176c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_176s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_176d")
 
 
 	;077
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_077c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_077s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_077d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_177c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_177s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_177d")
 
 	;078
 	$_iSampleDataListCount += 1
-	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_078c")
-	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_078s")
-	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_078d")
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_178c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_178s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_178d")
+
+	;079
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_179c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_179s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_179d")
 
 
-	redim $_aSampleDataList[$_iSampleDataListCount + 1][5]
+	;090
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_190c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_190s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_190d")
+
+	;091
+	$_iSampleDataListCount += 1
+	$_aSampleDataList[$_iSampleDataListCount][1] = _getLanguageMsg ("sample_191c")
+	$_aSampleDataList[$_iSampleDataListCount][2] = _getLanguageMsg ("sample_191s")
+	$_aSampleDataList[$_iSampleDataListCount][3] = _getLanguageMsg ("sample_191d")
+
+
+	redim $_aSampleDataList[$_iSampleDataListCount + 1][ubound($_aSampleDataList,$UBOUND_COLUMNS) + 1]
 
 endfunc
 
@@ -689,9 +858,11 @@ EndFunc   ;==>Example
 func getPageRange($iPage, byref $iPageStart, byref $iPageEnd)
 
 	local $iPage1=1
-	local $iPage2=30
-	local $iPage3=58
-	local $iPage4=86
+	local $iPage2=27
+	local $iPage3=54
+	local $iPage4=81
+	local $iPage5=104
+	local $iPage6=136
 
 	if $iPage = 1 then
 		$iPageStart  = $iPage1
@@ -703,11 +874,21 @@ func getPageRange($iPage, byref $iPageStart, byref $iPageEnd)
 	elseif $iPage = 3 then
 		$iPageStart  = $iPage3
 		$iPageEnd  = $iPage4 - 1
-	else
+	elseif $iPage = 4 then
 		$iPageStart  = $iPage4
+		$iPageEnd  = $iPage5 - 1
+	elseif $iPage = 5 then
+		$iPageStart  = $iPage5
+		$iPageEnd  = $iPage6 - 1
+
+	else
+		$iPageStart  = $iPage6
 		$iPageEnd  = ubound ($_aSampleDataList)-1
 
 	endif
+
+	if $iPageEnd  >  ubound ($_aSampleDataList)-1 then $iPageEnd =  ubound ($_aSampleDataList)-1
+
 
 endfunc
 
@@ -722,12 +903,13 @@ func viewSamplePage($iPage = 1)
 
 	$_iSampleViewPage = $iPage
 
+	_GUICtrlButton_Enable($_btnSampleBefore,False)
+	_GUICtrlButton_Enable($_btnSampleNext,False)
+
 
 	GUISetState (@SW_LOCK,$_gfrmSample)
 
 	if $iPage <> $_iSampleLastPage then
-
-
 		;debug("페이지 정보삭제 : " & $iPage)
 		getPageRange($_iSampleLastPage,  $iPageStart,  $iPageEnd)
 		disableSampleGUI($iPageStart, $iPageEnd)
@@ -738,8 +920,6 @@ func viewSamplePage($iPage = 1)
 	GUISetState (@SW_LOCK,$_gfrmSample)
 	;getPageRange($iPage+1,  $iPageStart,  $iPageEnd)
 	;disableSampleGUI($iPageStart, $iPageEnd)
-
-
 
 	getPageRange($iPage,  $iPageStart,  $iPageEnd)
 
@@ -779,6 +959,7 @@ func enableSampleGUI($iPageStart, $iPageEnd)
 	local $iYadd
 	local $sLabelIDs
 	local $tTimeInit  = _TimerInit()
+	local $iLabelID
 
 	GUISetFont(9, 400,0,"Arial")
 
@@ -797,8 +978,15 @@ func enableSampleGUI($iPageStart, $iPageEnd)
 				$y = 20 + ($iYadd * 21)
 
 				if $_aSampleDataList[$i][1] = "-" and $j = 2 then
+				  ;                                                                                          _________________________________
+					$_aSampleDataList[$i][4] &=  "|" & GUICtrlCreateLabel ("________________________________________________________________________________________________________",$x, $y-4)
 
-					$_aSampleDataList[$i][4] &=  "|" & GUICtrlCreateLabel ("___________________________________________________________________________________________________________",$x, $y-4)
+				ElseIf $_aSampleDataList[$i][1] = "_" and $j = 2 then
+				  ;
+
+					$_aSampleDataList[$i][4] &=  "|" & GUICtrlCreateLabel ($_aSampleDataList[$i][2],$x, $y-4)
+
+
 
 					;GUISetState (@SW_UNLOCK,$_gfrmSample)
 					;$_aSampleDataList[$i][4] &=  GUICtrlCreateGraphic(24,$y + 8,600, 1)
@@ -808,14 +996,16 @@ func enableSampleGUI($iPageStart, $iPageEnd)
 
 					;GUISetState()
 
-				Elseif $_aSampleDataList[$i][1] <> "-" and $j=1 then
+				Elseif $_aSampleDataList[$i][1] <> "-" and $_aSampleDataList[$i][1] <> "_" and $j=1 then
 
 					$_aSampleDataList[$i][0] = GUICtrlCreateRadio($_aSampleDataList[$i][1], $x , $y, $iRadioSize, 20)
 					$_aSampleDataList[$i][4] &=  "|" & $_aSampleDataList[$i][0]
 
 					writeColorLabelLine($x + $iRadioSize , $y, $_aSampleDataList[$i][2], $_aSampleDataList[$i][3], $sLabelIDs)
 					$_aSampleDataList[$i][4] &= "|" & $sLabelIDs
+					$_aSampleDataList[$i][5]  = $sLabelIDs & "|"
 
+					;debug("신규 : " & $_aSampleDataList[$i][0] & " -- " & $_aSampleDataList[$i][5])
 					GUICtrlSetColor ($_aSampleDataList[$i][0] , 0)
 					GUICtrlSetTip($_aSampleDataList[$i][0], $_aSampleDataList[$i][3])
 					;GUICtrlSetOnEvent($_aSampleDataList[$i][0] , "onClickSampleSelect")
@@ -898,13 +1088,17 @@ func _waitSampleForm()
 
 	local $nMsg
 	local $j
+	local $iLabelIndex
 
 	Do
 		sleep (1)
 		$nMsg = GUIGetMsg()
 
 		for $j=1 to ubound($_aSampleDataList) -1
-			If $nMsg = $_aSampleDataList[$j][0] And BitAND(GUICtrlRead($_aSampleDataList[$j][0]), $GUI_CHECKED) = $GUI_CHECKED then  $_iSelectedSampleID = $j
+
+			If $nMsg = $_aSampleDataList[$j][0] And BitAND(GUICtrlRead($_aSampleDataList[$j][0]), $GUI_CHECKED) = $GUI_CHECKED then
+					$_iSelectedSampleID = $j
+			endif
 		next
 
 		Switch $nMsg
@@ -1044,7 +1238,6 @@ func writeColorLabelLine($x, $y, $sText, $sToolTip, byref $sLabelIDs)
 
 	for $i=1 to ubound($aWord) -1
 		$aItem = StringSplit($aWord[$i],":")
-
 
 		if ubound($aItem) = 2 then
 			writeColorLabelWord("normal", $aItem[1] , $sToolTip, $sLabelIDs)

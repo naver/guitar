@@ -37,8 +37,9 @@ Func _ListViewImageLoad(byref $LV, byref $Pic, $FL2A, byref $hImageList, $Guitar
 
 	$hImageList = _GUiImageList_Create($GuitarListImageWidth , $GuitarListImageHeight, 5, 3)
 
-	_GUICtrlListView_SetImageList($LV, $hImageList, 0)
+	_GUICtrlListView_SetImageList($LV, $hImageList, 1)
 
+	;debug("i1111111111 : " & ubound($FL2A) -1)
 	For $i = 1 To ubound($FL2A) -1
 
 		$hBmp = _GetImage($FL2A[$i], $GuitarListImageWidth, $GuitarListImageHeight)
@@ -48,12 +49,38 @@ Func _ListViewImageLoad(byref $LV, byref $Pic, $FL2A, byref $hImageList, $Guitar
 		;debug("Ãß°¡ : " & $temp)
 		_GUICtrlListView_AddSubItem($LV, $iCnt, $FL2A[$i],1)
 		_GUICtrlListView_SetItemImage($LV, $iCnt, $iCnt)
+		;_GUICtrlListView_SetItemImage($LV, 1,1,1)
 		$iCnt += 1
 	Next
 
-	;sleep (1)
+	sleep (1)
 
 EndFunc
+
+Func _GetImage2 ($sFile, $iMW, $iMH, $iBkClr = 0xCCCCCC)
+
+    Local $GDIpBmpLarge
+    Local $GDIpBmpResized
+    Local $GDIbmp
+
+	_GDIPlus_Startup()
+
+    ; This line works-> _GUIImageList_AddBitmap($hImage, $sPath & "\Red.bmp")
+	;_debug($sFile)
+    ;$GDIpBmpLarge = _GDIPlus_BitmapCreateFromMemory(FileRead($sFile)) ;GDI+ image!
+	$GDIpBmpLarge = _GDIPlus_BitmapCreateFromMemory(FileRead("c:\ua.png")) ;GDI+ image!
+    $GDIpBmpResized = _GDIPlus_ImageResize($GDIpBmpLarge, 32,32) ;GDI+ image
+    $GDIbmp = _GDIPlus_BitmapCreateHBITMAPFromBitmap($GDIpBmpResized) ;GDI image!
+
+	_GDIPlus_BitmapDispose($GDIpBmpLarge)
+    _GDIPlus_BitmapDispose($GDIpBmpResized)
+    _WinAPI_DeleteObject($GDIbmp)
+    _GDIPlus_Shutdown()
+	_debug($GDIbmp)
+	Return $GDIbmp
+
+EndFunc
+
 
 Func _GetImage($sFile, $iMW, $iMH, $iBkClr = 0xCCCCCC)
 

@@ -64,6 +64,7 @@ Global $_GMHelp_Help
 Global $_GMHelp_HelpAutoitKey
 Global $_GMHelp_HelpAutoitCommand
 Global $_GMHelp_About
+Global $_GMHelp_Keylist
 
 
 func AllMenuDisable($bDisable)
@@ -281,6 +282,7 @@ func CreateMainMenu()
 	$_GMHelp_Help = GUICtrlCreateMenuItem("도움말 (&H)" & @TAB & "F1", $_GMHelp)
 	$_GMHelp_HelpAutoitCommand = GUICtrlCreateMenuItem("AutoIt 함수 목록 (&F)" , $_GMHelp)
 	$_GMHelp_HelpAutoitKey = GUICtrlCreateMenuItem("AutoIt Key 목록 (&K)" , $_GMHelp)
+	$_GMHelp_Keylist = GUICtrlCreateMenuItem("특수문자표 (&E)" , $_GMHelp)
 	$_GMHelp_About = GUICtrlCreateMenuItem("GUITAR 정보 (&A)" , $_GMHelp)
 
 	$iGMACount += 1

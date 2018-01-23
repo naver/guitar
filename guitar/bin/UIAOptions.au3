@@ -158,7 +158,7 @@ func _setRecentFileList($sFile)
 
 	redim $aNewList[$iNewListCount+1]
 
-	$sList = _ArrayToString($aNewList,"|",1,0)
+	$sList = _ArrayToString($aNewList,"|",1)
 
 	;xdebug($sList)
 

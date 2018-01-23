@@ -1,15 +1,17 @@
 #AutoIt3Wrapper_Icon=GUITARCmdSender.ico
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.20
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.22
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 #include-once
 
 #include "UIACommon.au3"
+#include ".\_include_nhn\_file.au3"
+#include "GUITARLanguage.au3"
 
 main()
 
 func main ()
-;¸ŞÀÎ
+;ë©”ì¸
 
 	local $sCmdLine1
 	local $sCmdLine2
@@ -47,7 +49,7 @@ func main ()
 
 	;if ProcessExists($_sRemoteRiceiver) = 0 then
 	;	_setReportHtmlFile()
-	;	writeRmoteLog($_sRemoteRiceiver & " ÀÌ ¼­¹ö¿¡¼­ ½ÇÇàÁßÀÌÁö ¾Ê¾Æ ¸í·ÉÀ» Àü´ŞÇÏÁö ¸øÇÏ¿´½À´Ï´Ù.")
+	;	writeRmoteLog($_sRemoteRiceiver & " ì´ ì„œë²„ì—ì„œ ì‹¤í–‰ì¤‘ì´ì§€ ì•Šì•„ ëª…ë ¹ì„ ì „ë‹¬í•˜ì§€ ëª»í•˜ì˜€ìŠµë‹ˆë‹¤.")
 	;endif
 
 	;_debug($_runReportPath)

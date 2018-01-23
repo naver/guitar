@@ -1,5 +1,5 @@
 #AutoIt3Wrapper_Icon=GUITARCmdReceiver.ico
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.40
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.42
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
 
 #include-once
@@ -18,7 +18,7 @@ Global $_bReceiverDebugLog
 main()
 
 func main ()
-;¸ŞÀÎ
+;ë©”ì¸
 
 	local $sMainProgram
 	local $sMainProgramFullPath
@@ -44,7 +44,7 @@ func main ()
 
 	$_bReceiverDebugLog = getIniBoolean(getReadINI("environment","DebugLog"))
 
-	writeReceiverLog("ÇÁ·Î±×·¥ ½Å±Ô ½ÇÇà")
+	writeReceiverLog("í”„ë¡œê·¸ë¨ ì‹ ê·œ ì‹¤í–‰")
 
 
 	checkAdminRun()
@@ -54,7 +54,7 @@ func main ()
 
 	_setCommonPathVar()
 
-	writeReceiverLog("°ü¸®ÀÚ¸ğµå ½ÇÇà È®ÀÎ")
+	writeReceiverLog("ê´€ë¦¬ìëª¨ë“œ ì‹¤í–‰ í™•ì¸")
 
 
 	$sReportPath = getRelativePath(getReadINI("Report","path"), @ScriptDir)
@@ -65,30 +65,30 @@ func main ()
 	$_sLastRunSciprtList = $sReportPath & "\lastrunscript.txt"
 
 
-	; ·¹Áö½ºÆ®¸®¿¡¼­ ÃÖ½ÅÀÇ ½ÇÇØÁßÀÌ ÇÁ·Î¼¼½º ID¸¦ ¾ò¾î¿È
+	; ë ˆì§€ìŠ¤íŠ¸ë¦¬ì—ì„œ ìµœì‹ ì˜ ì‹¤í•´ì¤‘ì´ í”„ë¡œì„¸ìŠ¤ IDë¥¼ ì–»ì–´ì˜´
 	$sOldPid = _readSettingReg($_sRemoteRiceiver)
 	$sMainProgram = getReadINI("Environment","Main")
 
 	$sMainProgramFullPath = @ScriptDir & "\" & $sMainProgram
 
-	writeReceiverLog("°æ·Î ¼³Á¤ ¿Ï·á")
-	writeReceiverLog("¿ø°İ·Î±× °æ·Î : " & $_sControlLogFile)
+	writeReceiverLog("ê²½ë¡œ ì„¤ì • ì™„ë£Œ")
+	writeReceiverLog("ì›ê²©ë¡œê·¸ ê²½ë¡œ : " & $_sControlLogFile)
 
 
-	; ÇØ´ç ÇÁ·Î¼¼½º°¡ Á¸ÀçÇÏ¸é ·Î±× Àû°í Á¾·á
+	; í•´ë‹¹ í”„ë¡œì„¸ìŠ¤ê°€ ì¡´ì¬í•˜ë©´ ë¡œê·¸ ì ê³  ì¢…ë£Œ
 
 
 	$aPlist = ProcessList (_GetScriptName() & ".exe")
 
 	if (ProcessExists($sOldPid) <> 0) and (ubound($aPlist) > 2) then
 		writeRmoteLog($_sRemoteRiceiver & " " &  _getLanguageMsg("cmdreciver_exists") & " PID : " & $sOldPid)
-		writeReceiverLog("Áßº¹ ½ÇÇàÀ¸·Î Á¾·á")
+		writeReceiverLog("ì¤‘ë³µ ì‹¤í–‰ìœ¼ë¡œ ì¢…ë£Œ")
 		return
 	endif
 
-	writeReceiverLog("Áßº¹ ½ÇÇà Á¡°Ë ¿Ï·á")
+	writeReceiverLog("ì¤‘ë³µ ì‹¤í–‰ ì ê²€ ì™„ë£Œ")
 
-	; ¾øÀ¸¸é ·¹Áö¿¡ ±â·Ï
+	; ì—†ìœ¼ë©´ ë ˆì§€ì— ê¸°ë¡
 	$sNewPid = ProcessExists($_sRemoteRiceiver)
 	_writeSettingReg($_sRemoteRiceiver, $sNewPid)
 	writeRmoteLog($_sRemoteRiceiver & " run PID:" & $sNewPid)
@@ -104,7 +104,7 @@ func main ()
 
 	_writeRemoteCommand( "","", "")
 
-	writeReceiverLog("¹İº¹ ÁøÀÔ")
+	writeReceiverLog("ë°˜ë³µ ì§„ì…")
 
 	do
 		$sCommandRunResult = False
@@ -116,7 +116,7 @@ func main ()
 
 			_writeRemoteCommand( "","","")
 
-			writeReceiverLog("¸í·É ¼öÇà : " &  $sCommand & ", " & $sCommandValue)
+			writeReceiverLog("ëª…ë ¹ ìˆ˜í–‰ : " &  $sCommand & ", " & $sCommandValue)
 
 			Switch  StringLower($sCommand)
 

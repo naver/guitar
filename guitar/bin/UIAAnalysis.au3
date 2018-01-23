@@ -71,6 +71,7 @@ Global Const $_sCommandTagCountGet = "TagCountGet"
 Global Const $_sCommandJSRun = "JSRun"
 Global Const $_sCommandJSInsert = "JSInsert"
 Global Const $_sCommandWDSessionCreate = "WDSessionCreate"
+Global Const $_sCommandWDSessionAttach = "WDSessionAttach"
 Global Const $_sCommandWDSessionDelete = "WDSessionDelete"
 Global Const $_sCommandWDAcceptAlert = "WDAcceptAlert"
 Global Const $_sCommandWDDismissAlert = "WDDismissAlert"
@@ -112,6 +113,14 @@ func _setCommonVar()
 	endif
 
 	; 신규 추가되는 INI의 기본 값을 설정함.
+
+	if getReadINI("Environment","EditFontName") = "" then setWriteINI("environment", "EditFontName", "Gulim")
+	if getReadINI("Environment","EditFontSize") = "" then setWriteINI("environment", "EditFontSize", "9")
+
+	if getReadINI("Environment","LogFontName") = "" then setWriteINI("environment", "LogFontName", "Gulim")
+	if getReadINI("Environment","LogFontSize") = "" then setWriteINI("environment", "LogFontSize", "9")
+
+	if getReadINI("Environment","MouseHide") = "" then setWriteINI("environment", "MouseHide", "False")
 	if getReadINI("Environment","ImageCapture") = "" then setWriteINI("environment", "ImageCapture", "True")
 	if getReadINI("Environment","TrayToolTip ") = "" then setWriteINI("environment", "TrayToolTip ", "True")
 	if getReadINI("HTML_TAG","HighlightDelay") = "" then setWriteINI("HTML_TAG", "HighlightDelay", "500")
@@ -121,6 +130,8 @@ func _setCommonVar()
 	if getReadINI("environment","VerifyTime") = "" then setWriteINI("environment", "VerifyTime", "200")
 	if getReadINI("BROWSER","OTHER") = "" then setWriteINI("BROWSER", "OTHER", "AVD:emulator.exe|VNC:vncviewer.exe")
 	if getReadINI("Report","XMLReport") = "" then setWriteINI("Report", "XMLReport", "False")
+	if getReadINI("Email","SSL") = "" then setWriteINI("Email", "SSL", "True")
+	if getReadINI("ALARM","FailOnly") = "" then setWriteINI("ALARM", "FailOnly", "False")
 
 	if getReadINI("SCRIPT","WorkPath") = "" then
 		if getReadINI("SCRIPT","ScriptPath") <> "" then
@@ -139,6 +150,7 @@ func _setCommonVar()
 	$_runPreRun = replacePathAlias(getReadINI("SCRIPT","PreRun"))
 
 	$_aCommandText = getCommandText()
+
 	$_aCommandSplitText = getCommandSplitText()
 
 	$_aTargetExcludeText = getTargetExcludeList()
@@ -149,6 +161,13 @@ func _setCommonVar()
 	$_runCommandSleep = getReadINI("environment","CommandSleep")
 	$_runVerifyTime = number(getReadINI("environment","VerifyTime"))
 	$_runErrorResume = getReadINI("Environment","ErrorResumeLevel")
+
+	$_EditFontName = getReadINI("Environment","EditFontName")
+	$_EditFontSize = getReadINI("Environment","EditFontSize")
+
+	$_LogFontName = getReadINI("Environment","LogFontName")
+	$_LogFontSize = getReadINI("Environment","LogFontSize")
+
 
 	; 에러시 재 실행 단위를 기본 "SCRIPT" 로 지정
 	if $_runErrorResume <> "LINE" AND $_runErrorResume <> "TEST"  then $_runErrorResume = "SCRIPT"
@@ -168,6 +187,7 @@ func _setCommonVar()
 	$_runAVICapture = getIniBoolean(getReadINI("Environment","AVICapture"))
 	$_runRunningToolTip = getIniBoolean(getReadINI("Environment","RunningToolTip"))
 	$_runRunningImageCapture = getIniBoolean(getReadINI("Environment","ImageCapture"))
+	$_runMouseHide = getIniBoolean(getReadINI("Environment","MouseHide"))
 	$_runErrorLineSelect = getIniBoolean(getReadINI("environment","ErrorLineSelect"))
 
 	$_runHTMLTimeColor  = getIniBoolean(getReadINI("Report","HTMLTimeColor"))
@@ -231,12 +251,13 @@ endfunc
 func getCommandText()
 ; 명령어 전체를 배열로 추가
 
-	local $aCommandList[100][$_iCommandEnd]
+	local $aCommandList[900][$_iCommandEnd]
 	local $iCommandCount
 
 	$iCommandCount = 0
 
 	addCommandList($iCommandCount, $_sCommandClick, $aCommandList, _getLanguageMsg("Command_Click"))
+
 	addCommandList($iCommandCount, $_sCommandAssert, $aCommandList, _getLanguageMsg("Command_Assert"))
 	addCommandList($iCommandCount, $_sCommandInclude, $aCommandList, _getLanguageMsg("Command_Include"))
 	addCommandList($iCommandCount, $_sCommandSet, $aCommandList, _getLanguageMsg("Command_Set"))
@@ -307,6 +328,7 @@ func getCommandText()
 	addCommandList($iCommandCount, $_sCommandJSInsert   , $aCommandList, _getLanguageMsg("Command_JSInsert"))
 
 	addCommandList($iCommandCount, $_sCommandWDSessionCreate   , $aCommandList, _getLanguageMsg("Command_WDSessionCreate"))
+	addCommandList($iCommandCount, $_sCommandWDSessionAttach   , $aCommandList, _getLanguageMsg("Command_WDSessionAttach"))
 	addCommandList($iCommandCount, $_sCommandWDSessionDelete   , $aCommandList, _getLanguageMsg("Command_WDSessionDelete"))
 
 	addCommandList($iCommandCount, $_sCommandWDAcceptAlert   , $aCommandList, _getLanguageMsg("Command_WDAcceptAlert"))
@@ -315,6 +337,8 @@ func getCommandText()
 	addCommandList($iCommandCount, $_sCommandWDNavigateBack   , $aCommandList, _getLanguageMsg("Command_WDNavigateBack"))
 	addCommandList($iCommandCount, $_sCommandWDNavigateForward    , $aCommandList, _getLanguageMsg("Command_WDNavigateForward"))
 	addCommandList($iCommandCount, $_sCommandWDNavigateRefresh   , $aCommandList, _getLanguageMsg("Command_WDNavigateRefresh"))
+
+
 
 	redim $aCommandList[$iCommandCount + 1][$_iCommandEnd]
 
@@ -357,8 +381,8 @@ func addCommandList(byref $iCommandCount, $sCommand, byref $aCommandList, $sDefa
 	$aCommandText = stringsplit( $sDefaultName , "|")
 
 	;debug($aCommandText)
-	$aCommandText = _ArrayUnique($aCommandText,1,1,0)
-
+	if ubound($aCommandText) > 1 then $aCommandText = _ArrayUnique($aCommandText,0,1,0)
+	;debug($aCommandText)
 
 
 	for $i=1 to ubound($aCommandText) -1
@@ -408,7 +432,7 @@ func getScript($aRowScript, byref $aResultScript, byref $sErrorMsgAll, $bImageCh
 	for $i = 1 to ubound($aRowScript) -1
 
 		if $bImageCheck then
-			if ($i >= $iScriptStartLine and $i <= $iScriptEndLine) or  ($iScriptStartLine <= 0)then
+			if ($i >= $iScriptStartLine and $i <= $iScriptEndLine) or  ($iScriptStartLine <= 0) then
 				$bImageCheckLine = $bImageCheck
 			Else
 				$bImageCheckLine = False
@@ -502,6 +526,7 @@ func getScriptLine($sScript, byref $sNewCommandAll, byref $sNewCommandStartPosAl
 	elseif $sScript <> "" Then
 		;debug("스트립트:" & $sScript)
 		; 찾아야 될 명령어들만 List함
+
 
 		for $i = 1 to ubound ($_aCommandText) -1
 			for $j=1 to $_aCommandSplitText[$i][0]
@@ -689,8 +714,6 @@ Func getCommandAndTarget($sScript, byref $sRestScript, byref $sNewCommand, byref
 
 	writeConsoleDebug("명령 나누기 시작 : " & $sScript)
 
-	;sleep(1)
-
 	for $i = 1 to ubound ($aSearchCommandIndex) -1
 		;debug("찾기 " & $sScript, $_aCommandText[$i][$_iCommandText])
 		;if stringinstr($sScript,$_aCommandText[$i][$_iCommandText]) then
@@ -785,7 +808,10 @@ Func getCommandAndTarget($sScript, byref $sRestScript, byref $sNewCommand, byref
 					writeConsoleDebug("스크립트 찾기 시작")
 					$sSearchedScriptFile = searchScriptFile(_GetFileName($sNewTarget) & _GetFileExt($sNewTarget), $sNewCheckMessage)
 					if $sSearchedScriptFile <> "" then
-						if $bIncludeFileAdd then _ArrayAdd($_aPreAllScriptFile, $sSearchedScriptFile )
+						if $bIncludeFileAdd then
+								_ArrayAdd($_aPreAllScriptFile, $sSearchedScriptFile )
+								;msg($_aPreAllScriptFile)
+						endif
 					Else
 						$sNewCheckCode = $_iScriptCheckIDIncludeFileNotFound
 						;msg("에러")
@@ -1062,19 +1088,24 @@ func searchScriptFile($sScriptFilename, byref $sErrorMsg, $bFirstSearchOnly = Tr
 ;~ 		if $bFound and $bFirstSearchOnly then exitloop
 
 ;~ 	next
+			;FileDelete("c:\log2.txt")
+			;FileWrite("c:\log2.txt", $_sScriptForderFileList)
+
+
 
 	$aFoundFileList = _findFolderFileInfo($_sScriptForderFileList, $sScriptFilename, False)
-
-
-	$aFoundFileList = _ArrayUnique($aFoundFileList,1,1)
-
+	;msg($aFoundFileList)
+	if ubound($aFoundFileList) > 1 then 	$aFoundFileList = _ArrayUnique($aFoundFileList,0,1)
+;msg($aFoundFileList)
 	if ubound($aFoundFileList) = 1 or IsArray($aFoundFileList) = 0  then
 		$sErrorMsg = $_sLogText_Error & _getLanguageMsg("cmdreciver_scriptnotfound") & " : " & $sScriptFilename
 		;FileWrite("c:\1.txt", $_sScriptForderFileList)
 		return ""
+
 	elseif ubound ($aFoundFileList) > 2 then
 		$sErrorMsg = $_sLogText_Error & _getLanguageMsg("error_scriptduple") &  " " & _ArrayToString($aFoundFileList," , ")
 		return ""
+
 	endif
 
 	;msg($aFoundFileList)
@@ -1248,7 +1279,7 @@ func sortImageListByOSBrowser(byref $aFileList, $sBrowser, $iStart = 2)
 	;debug($aFileList)
 
 	;버그가 있어서 1이상인 경우에만 유니크 펑션 실행
-	if ubound($aFileList) > 1 then $aFileList = _ArrayUnique($aFileList,1,1)
+	if ubound($aFileList) > 1 then $aFileList = _ArrayUnique($aFileList,0,1)
 	;ConsoleWrite("error" & @error)
 	;debug("후")
 	;debug($aFileList)
@@ -1537,7 +1568,8 @@ func _findFolderFileInfo($sFileList, $sName, $bExisitCheckOnly)
 	local $i
 
 
-	writeConsoleDebug("이미지배열 찾기 시작")
+	;writeConsoleDebug("이미지배열 찾기 시작 1" & $sFileList )
+	writeConsoleDebug("이미지배열 찾기 시작 2" & $sName )
 
 	for $i=1 to ubound($aName) -1
 
@@ -1567,7 +1599,10 @@ func _findFolderFileInfo($sFileList, $sName, $bExisitCheckOnly)
 					if $iFSlash > $iFStart then
 						$sFile = stringmid($sFileList,$iFStart, $iFEnd - $iFStart)
 						;debug ($iFStart, $iFEnd, $sFile )
+						;msg("파일찾음")
+
 						_ArrayAdd ($aFoundList, $sFile)
+						;_msg("이미지배열 찾음")
 						writeConsoleDebug("이미지배열 찾음")
 						if $bExisitCheckOnly then return $aFoundList
 
@@ -1582,9 +1617,13 @@ func _findFolderFileInfo($sFileList, $sName, $bExisitCheckOnly)
 	next
 
 	;msg($aFoundList)
-
-	if IsArray($aFoundList) Then _ArraySort($aFoundList,0,1,0)
-
+	if IsArray($aFoundList) Then
+			;FileDelete("c:\log.txt")
+			;FileWrite("c:\log.txt", $sFileList)
+			;ConsoleWrite($sName)
+			;_msg($aFoundList)
+			_ArraySort($aFoundList,0,1)
+	endif
 	writeConsoleDebug("이미지배열 찾기 작업 종료")
 
 	return $aFoundList
@@ -1634,16 +1673,18 @@ func _getFolderFileInfo($aFolderList, byref $sFileList, $sWildCard)
 	endif
 
 	for $i=0 to ubound($aFolderList)-1
-		;debug($aFolderList[$i], $i)
+		;debug($aFolderList[$i], $sWildCard)
 
 		$aList = _GetFileNameFromDir ($aFolderList[$i], $sWildCard, 1)
-
+	;debug($aList )
 		if IsArray($aList) and  ubound($aList) > 1 then
 			;if $sFileList = "" then $sFileList = $sFileList & "|"
-			$sFileList = $sFileList & "|" &  _ArrayToString($aList,"|", 1,0)
+			$sFileList = $sFileList & "|" &  _ArrayToString($aList,"|", 1)
 		endif
 
 	next
+
+
 
 	;debug("이미지 리스트 정리 수행 " & $sWildCard)
 	;debug($sFileList)
@@ -1656,6 +1697,7 @@ func _UpdateFolderFileInfo($bForceUpdate)
 	;msg("$_runScriptFileName: " & $_runScriptFileName & " , " & "$_bUpdateForderFileList:" & $_bUpdateForderFileList & " , " & "$bForceUpdate:" & $bForceUpdate)
 
 	if $_bUpdateForderFileList or $bForceUpdate then
+
 		;debug("파일 목록 업데이트")
 		$_bUpdateForderFileList = False
 		;debug($_aRunImagePathList)
@@ -1676,6 +1718,70 @@ func _UpdateFolderFileInfo($bForceUpdate)
 endfunc
 
 
+func _addWebdriverSessionINIInfo($sSession, $sHost, $sParams)
+
+	local $i
+
+	for $i=9 to 1 step -1
+		setWriteINI("WebdriverSessionInfo" & $i , "Session",  getReadINI("WebdriverSessionInfo" & ($i-1) ,"Session"))
+		setWriteINI("WebdriverSessionInfo" & $i , "Host",  getReadINI("WebdriverSessionInfo" & ($i-1) ,"Host"))
+		setWriteINI("WebdriverSessionInfo"  & $i , "Params",  getReadINI("WebdriverSessionInfo" & ($i-1) ,"Params"))
+		;if getReadINI("WebdriverSessionInfo" & i ,"host") = "" then setWriteINI("environment", "ImageCapture", "True")
+	next
+
+	$i=0
+	setWriteINI("WebdriverSessionInfo" & $i , "Session", $sSession )
+	setWriteINI("WebdriverSessionInfo"  & $i , "Host", $sHost )
+	setWriteINI("WebdriverSessionInfo" & $i , "Params", $sParams)
+
+endfunc
+
+func _deleteWebdriverSessionINIInfo($sSession)
+
+	local $i
+	local $bFound = False
+
+	for $i=0 to 9
+		if getReadINI("WebdriverSessionInfo" & ($i) ,"Session") = $sSession then $bFound = True
+
+		if $bFound then
+			setWriteINI("WebdriverSessionInfo" & $i , "Session",  getReadINI("WebdriverSessionInfo" & ($i+1) ,"Session"))
+			setWriteINI("WebdriverSessionInfo" & $i , "Host",  getReadINI("WebdriverSessionInfo" & ($i+1) ,"Host"))
+			setWriteINI("WebdriverSessionInfo" & $i , "Params",  getReadINI("WebdriverSessionInfo" & ($i+1) ,"Params"))
+		endif
+	next
+
+	if $bFound then
+		$i=9
+		setWriteINI("WebdriverSessionInfo" & $i , "Session", "")
+		setWriteINI("WebdriverSessionInfo"  & $i , "Host", "")
+		setWriteINI("WebdriverSessionInfo" & $i , "Params", "")
+
+	endif
+
+endfunc
 
 
+func _getWebdriverSessionINIInfo($sSession, ByRef $sHost, ByRef $sParams)
+
+	local $i
+	local $bFound = False
+
+	for $i=0 to 9
+		if getReadINI("WebdriverSessionInfo" & ($i) ,"Session") = $sSession then
+			$bFound = True
+			$sHost =  getReadINI("WebdriverSessionInfo" & ($i) ,"Host")
+			$sParams =   getReadINI("WebdriverSessionInfo" & ($i) ,"Params")
+			ExitLoop
+		endif
+	next
+
+	return $bFound
+
+endfunc
+
+
+func _getNewestWebdriverSessionINIInfo()
+	return  getReadINI("WebdriverSessionInfo" & (0) ,"Session")
+EndFunc
 

@@ -194,11 +194,15 @@ func _GTAddTabItem($sTitle)
 
 	$aObjectPos = getRichLineXY("Line")
 	$_ETabInfo[$iAddTabIndex][$_ETab_RichLineHwnd]  = _GUICtrlRichEdit_Create ($_gForm,"", $aObjectPos[0], $aObjectPos[1], $aObjectPos[2], $aObjectPos[3])
+	;_GUICtrlRichEdit_SetSel($_ETabInfo[$iAddTabIndex][$_ETab_RichLineHwnd], 0, -1)
+	;_GUICtrlRichEdit_SetFont($_ETabInfo[$iAddTabIndex][$_ETab_RichLineHwnd], $_EditFontSize, $_EditFontName)
+
 
 
 	$aObjectPos = getRichLineXY("Edit")
 	$_ETabInfo[$iAddTabIndex][$_ETab_RichEditHwnd]  = _GUICtrlRichEdit_Create ($_gForm, "", $aObjectPos[0], $aObjectPos[1], $aObjectPos[2], $aObjectPos[3], BitOR($ES_MULTILINE, $WS_VSCROLL,  $WS_HSCROLL ))
-
+	;_GUICtrlRichEdit_SetSel($_ETabInfo[$iAddTabIndex][$_ETab_RichEditHwnd], 0, -1)
+	;_GUICtrlRichEdit_SetFont($_ETabInfo[$iAddTabIndex][$_ETab_RichEditHwnd], $_EditFontSize, $_EditFontName)
 
 
 	;GUICtrlCreateButton($sTitle, 10 + ($iAddTabIndex*15), 280, 50, 20)
@@ -223,6 +227,10 @@ func _GTAddTabItem($sTitle)
 	_GUICtrlRichEdit_SetBkColor ( $_gLinelist, "0xCCCCCC" )
 
 	_GuiCtrlRichEdit_SetEventMask($_gEditScript, $ENM_MOUSEEVENTS)
+	;_GUICtrlRichEdit_SetSel($_gEditScript, 0, -1)
+	;_GUICtrlRichEdit_SetText($_gLinelist,  "1")
+	;_GUICtrlRichEdit_SetSel($_gLinelist, 0, -1)
+
 
 	_GUICtrlRichEdit_SetFont($_gLinelist, $_EditFontSize, $_EditFontName)
 	_GUICtrlRichEdit_SetFont($_gEditScript, $_EditFontSize, $_EditFontName)

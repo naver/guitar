@@ -15,8 +15,9 @@ func _SendMail($sFrom, $sToEmail, $sTitle, $sBody,  $AttachFiles = "", $bIsUseCI
 	local $Username = getReadINI("EMAIL","ID")
 	local $Password = getReadINI("EMAIL","Password")
 	local $FromAddress = getReadINI("EMAIL","EmailAddress")
+	local $SSL = getIniBoolean(getReadINI("EMAIL","SSL"))
 
-	return _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles, $bIsUseCID, $SmtpServer , $FromAddress , $Username , $Password, $IPPort)
+	return _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles, $bIsUseCID, $SmtpServer , $FromAddress , $Username , $Password, $IPPort, $SSL )
 
 endfunc
 
@@ -65,8 +66,7 @@ func SplitKorean($sText, $bArrayType = False)
 	if $bArrayType then
 		return $aRet
 	else
-		return _ArrayToString($aRet,"")
-
+		return _ArrayToString($aRet,"",1)
 	endif
 
 endfunc
@@ -194,7 +194,7 @@ func SplitKoreanDetail($aText, $bArrayType = False)
 
 	next
 
-	if $bArrayType = False then $aRet = _ArrayToString($aRet,"",1,0)
+	if $bArrayType = False then $aRet = _ArrayToString($aRet,"",1)
 
 	return $aRet
 

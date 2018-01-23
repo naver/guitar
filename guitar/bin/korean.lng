@@ -196,6 +196,7 @@ Command_TagCountGet	태그개수얻기
 Command_JSRun	JS실행
 Command_JSInsert	JS추가
 Command_WDSessionCreate	세션생성
+Command_WDSessionAttach	세션선택
 Command_WDSessionDelete	세션종료
 Command_WDAcceptAlert	경고창확인
 Command_WDDismissAlert	경고창취소
@@ -254,7 +255,7 @@ common_information	정보
 common_confirm	확인
 common_timehour	시간
 common_timeminute	분
-common_adminerror	프로그램의 정상적인 자동을 위해서 ""관리자 권한""으로 실행되어야 합니다.
+common_adminerror	프로그램의 정상적인 작동을 위해서 ""관리자 권한""으로 실행되어야 합니다.
 
 main_looptest	반복 실행
 main_looptesting	반복 테스트 수행중
@@ -276,13 +277,13 @@ main_quickmenudelete	대상 삭제
 
 
 sample_command	명령
-sample_sample	샘플
+sample_sample	예제
 sample_before	이전
 sample_next	다음
 sample_insert	예제 삽입
 
 
-_getLanguageMsg ("sample_command")
+
 
 
 sample_001c	생성
@@ -538,92 +539,146 @@ sample_056s	"^target:전화기아이콘^"을 ^command:롱탭^ 한다.
 sample_056d	지정된 이미지를 찾아 오래동안(2초) 누릅니다.
 
 sample_057c	위치탭
-sample_057s	"^target:20%,80%^" ^command:위치탭^ 한다.
-sample_057d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 탭한다.
+sample_057s	"^target:20%,80%^" ^command:위치탭^ 한다. "^target:50,20^" ^command:위치탭^ 한다.
+sample_057d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 탭한다. 좌표값이 %가 없이 지정될 경우 픽셀기준으로 절대위치를 의미함
 
 sample_058c	위치롱탭
-sample_058s	"^target:20%,80%^" ^command:위치롱탭^ 한다.
-sample_058d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 롱탭한다.
+sample_058s	"^target:20%,80%^" ^command:위치롱탭^ 한다. "^target:50,20^" ^command:위치롱탭^ 한다.
+sample_058d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 롱탭한다. 좌표값이 %가 없이 지정될 경우 픽셀기준으로 절대위치를 의미함
 
 sample_059c	위치더블탭
-sample_059s	"^target:20%,80%^" ^command:위치더블탭^ 한다.
-sample_059d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 더블탭한다.
+sample_059s	"^target:20%,80%^" ^command:위치더블탭^ 한다. "^target:50,20^" ^command:위치더블탭^ 한다.
+sample_059d	전체 화면크기의 100%로 보았을때 X%, Y% 위치를 더블탭한다.좌표값이 %가 없이 지정될 경우 픽셀기준으로 절대위치를 의미함
 
 sample_060c	플리킹
-sample_060s	"^target:90%,50%,10%,50%^" ^command:플리킹^ 한다.
-sample_060d	화면을 쓸어넘기기 합니다. 각 좌표값은 0~100 까지를 입력할 수 있습니다. & @crlf  X1, Y1 좌표로 부터 X2,Y2 좌표로 쓸어 넘기는 작동을 수행합니다. (0,0=왼쪽위, 100,100 오른쪽 아래)
+sample_060s	"^target:90%,50%,10%,50%^" ^command:플리킹^ 한다. "^target:90,50,10,50^" ^command:플리킹^ 한다. 
+sample_060d	화면을 쓸어넘기기 합니다. 각 좌표값은 0~100 까지를 입력할 수 있습니다. & @crlf  X1, Y1 좌표로 부터 X2,Y2 좌표로 쓸어 넘기는 작동을 수행합니다. (0,0=왼쪽위, 100,100 오른쪽 아래) 좌표값이 %가 없이 지정될 경우 픽셀기준으로 절대위치를 의미함
 
 sample_061c	홈이동
 sample_061s	^command:홈이동^ 한다.
 sample_061d	모바일 테스트시 홈버튼을 누른것과 같은 효과가 발생됩니다. 사전에 시스템 변수 "$GUITAR_모바일OS" 이 설정되어 있어야 합니다.
 
-sample_062c	$GUITAR_CurrentBrowser
-sample_062s	"^target:$GUITAR_CurrentBrowser=IE^" ^command:같으면^ ^target:네이버로그인3단계.TXT^"를 ^command:실행^ 한다.
-sample_062d	현재 작업중인 브라우저 종류를 리턴합니다.($GUITAR_현재브라우저)
 
-sample_063c	$GUITAR_Random
-sample_063s	TEXT상자에 "^target:$GUITAR_Random^"을 ^command:입력^ 한다.
-sample_063d	임의 숫자 값을 리턴합니다. (예, 3454345432234) ($GUITAR_임의값)
-
-sample_064c	$GUITAR_CurrentDateTime
-sample_064s	TEXT상자에 "^target:$GUITAR_CurrentDateTime^"을 ^command:입력^ 한다.
-sample_064d	현재날짜와 시간을 문자열로 리턴합니다. (예, 2011년 10월 28일 15시 30분 06초) ($GUITAR_현재날짜와시간)
-
-sample_065c	$GUITAR_RecentXPos
-sample_065s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentXPos^"을 ^command:입력^ 한다.
-sample_065d	최근에 사용된(클릭, 확인) 이미지의 X좌표를 리턴합니다. 부분캡쳐시 상대좌표로 활용할 수 있습니다. ($GUITAR_최근X좌표)
-
-sample_066c	$GUITAR_RecentYPos
-sample_066s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentYPos^"을 ^command:입력^ 한다.
-sample_066d	최근에 사용된(클릭, 확인) 이미지의 Y좌표를 리턴합니다. 부분캡쳐시 상대좌표로 활용할 수 있습니다.($GUITAR_최근Y좌표)
-
-sample_067c	$GUITAR_RecentXYPos
-sample_067s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentXYPos,샘플캡쳐^"로 ^command:부분캡쳐^ 한다.
-sample_067d	최근에 사용된 이미지의 X1,Y1,X2,Y2형태로 리턴합니다. 부분캡쳐시 상대좌표로 활용 할 수 있습니다. ($GUITAR_최근전체좌표)
-
-sample_068c	$GUITAR_RrportPath
-sample_068s	"^target:$r=FileWriteLine(''|$GUITAR_RrportPath|\|$GUITAR_CurrentDateTime|.log'', ''a'')^" ^command:계산^ 
-sample_068d	작업중인 리포트 경로를 리턴합니다. 경로를 참조하여 추가적인 파일관련 작업을 수행 할 수 있습니다. ($GUITAR_리포트경로)
-
-sample_069c	$GUITAR_ScriptPath
-sample_069s	"^target:$r=FileWriteLine(''|$GUITAR_ScriptPath|\|$GUITAR_CurrentDateTime|.log'', ''a'')^" ^command:계산^ 
-sample_069d	실행중인 스크립트 경로를 리턴합니다. 경로값을 사용하여 파일저장등의 작업을 수행 할 수 있습니다. (누적로그 기록등...) ($GUITAR_스크립트경로)
-
-sample_070c	$GUITAR_WorkPath
-sample_070s	^target:"$GUITAR_WorkPath"^ ^command:로그쓰기^ 한다
-sample_070d	현재 사용중인 작업경로 (스크립트 최상위 폴더)를 리턴합니다. ($GUITAR_작업경로)
-
-sample_071c	$GUITAR_XMLPath
-sample_071s	^target:"$GUITAR_XMLPath"^ ^command:로그쓰기^ 한다
-sample_071d	XML 테스트 결과 파일이 저장될 폴더를 리턴합니다. ($GUITAR_XML경로)
-
-sample_072c	$GUITAR_AdjustXPos
-sample_072s	^target:$GUITAR_AdjustXPos=50^ ^command:설정^하고 ^target:국어사전질문이미지^를 ^command:클릭^한다.
-sample_072d	국어사전이미지를 찾고 해당 이미지의 오른쪽(X+50)을클릭합니다. (사용후 보정값은 자동으로는 0으로 초기화됩니다.) ($GUITAR_X좌표보정)
-
-sample_073c	$GUITAR_AdjustYPos
-sample_073s	^target:$GUITAR_AdjustYPos=-50^ ^command:설정^하고 ^target:국어사전질문이미지^를 ^command:클릭^한다.
-sample_073d	국어사전이미지를 찾고 해당 이미지의 위른쪽(Y-50)을클릭합니다. (사용후 보정값은 자동으로는 0으로 초기화됩니다.) ($GUITAR_Y좌표보정)
-
-sample_074c	$GUITAR_RecentLoadingTime
-sample_074s	^target:www.naver.com^ ^command:접속^하고, ^target:$GUITAR_RecentLoadingTime^ 을 ^command:로그쓰기^한다.
-sample_074d	최근 "접속" 명령으로 사용된 브라우저 로딩완료 소요시간(ms)을 가져옵니다. ($GUITAR_최근접속소요시간)
-
-sample_075c	$GUITAR_BrowserSize
-sample_075s	"^target:$GUITAR_BrowserSize=800,600^" ^command:설정^하고 ^target:IE^를 ^command:생성^한다.
-sample_075d	INI에 설정된 브라우저창 크기를 무시하고 800x600 변경하여 테스트를 진행합니다. ($GUITAR_브라우저창크기)
-
-sample_076c	$GUITAR_BrowserURL
-sample_076s	^target:$GUITAR_BrowserURL ^command:로그쓰기^한다.
-sample_076d	현재 표시되고 있는 브라우저의 URL 주소를 반환합니다. ($GUITAR_브라우저URL)
-
-sample_077c	$GUITAR_MobileOS
-sample_077s	"^target:$GUITAR_MobileOS=IOS^" ^command:설정^한다.
-sample_077d	테스트 대상 모바일 설정을 IOS로 합니다. IOS 외에 ANDROID값을 지정할 수 있습니다.  @crlf 일부 명령들은 $GUITAR_모바일OS 설정에 따라 다르게 작동됨으로 사전에 꼭 테스트할 OS를 지정해야 합니다. ($GUITAR_모바일OS)
+sample_080c	세션생성
+sample_080s	"^target:$신규세션={host=localhost;4444,browserName=id,platform=WINDOWS}^" ^command:세션생성^ 한다.
+sample_080d	WebDriver 신규세션(브라우저)를 생성하고, 세션 ID를 반환합니다.
 
 
-sample_078c	$GUITAR_InputType
-sample_078s	"^target:$GUITAR_InputType=ANSI^" ^command:설정^한다.
-sample_078d	"입력" 명령에서 키보드 입력 방식을 선택합니다. UNICODE, ANSI로 지정할 수 있습니다.  @crlf 기본 각 테스트 대상에 맞게 자동으로 설정되지만  @crlf 강제로 입력방식을 지정할 필요가 있을때 강제로 설정을 변경 할 수 있습니다. ($GUITAR_입력방식)
+sample_081c	세션선택
+sample_081s	"^target:$신규세션^" ^command:세션선택^ 한다.
+sample_081d	기존 생성된 WebDriver 세션ID를 현재 작업대상으로 지정합니다. 
+
+sample_082c	세션종료
+sample_082s	현재 ^command:세션종료^ 한다.
+sample_082d	현재 WebDriver 세션을 종료합니다. (브라우저 자동 종료됨) 
+
+sample_083c	경고창확인
+sample_083s	^command:경고창확인^ 한다.
+sample_083d	브라우저의 모달창의 "확인" 버튼을 클립합니다. 
 
 
+sample_084c	경고창취소
+sample_084s	^command:경고창취소^ 한다.
+sample_084d	브라우저의 모달창의 "취소" 버튼을 클립합니다. 
+
+
+sample_085c	이전화면이동
+sample_085s	^command:이전화면이동^ 한다.
+sample_085d	브라우저의 이전 화면으로 이동합니다. (Back)
+
+
+sample_086c	다음화면이동
+sample_086s	^command:다음화면이동^ 한다.
+sample_086d	브라우저의 다음 화면으로 이동합니다. (Forward)
+
+
+sample_087c	화면갱신
+sample_087s	^command:화면갱신^ 한다.
+sample_087d	브라우저 현재화면을 갱신합니다. (Refresh)
+
+
+
+
+sample_162c	$GUITAR_CurrentBrowser
+sample_162s	"^target:$GUITAR_CurrentBrowser=IE^" ^command:같으면^ ^target:네이버로그인3단계.TXT^"를 ^command:실행^ 한다.
+sample_162d	현재 작업중인 브라우저 종류를 리턴합니다.($GUITAR_현재브라우저)
+
+sample_163c	$GUITAR_Random
+sample_163s	TEXT상자에 "^target:$GUITAR_Random^"을 ^command:입력^ 한다.
+sample_163d	임의 숫자 값을 리턴합니다. (예, 3454345432234) ($GUITAR_임의값)
+
+sample_164c	$GUITAR_CurrentDateTime
+sample_164s	TEXT상자에 "^target:$GUITAR_CurrentDateTime^"을 ^command:입력^ 한다.
+sample_164d	현재날짜와 시간을 문자열로 리턴합니다. (예, 2011년 10월 28일 15시 30분 06초) ($GUITAR_현재날짜와시간)
+
+sample_165c	$GUITAR_RecentXPos
+sample_165s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentXPos^"을 ^command:입력^ 한다.
+sample_165d	최근에 사용된(클릭, 확인) 이미지의 X좌표를 리턴합니다. 부분캡쳐시 상대좌표로 활용할 수 있습니다. ($GUITAR_최근X좌표)
+
+sample_166c	$GUITAR_RecentYPos
+sample_166s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentYPos^"을 ^command:입력^ 한다.
+sample_166d	최근에 사용된(클릭, 확인) 이미지의 Y좌표를 리턴합니다. 부분캡쳐시 상대좌표로 활용할 수 있습니다.($GUITAR_최근Y좌표)
+
+sample_167c	$GUITAR_RecentXYPos
+sample_167s	^target:네이버로고^를 ^command:확인^한다. "^target:$GUITAR_RecentXYPos,샘플캡쳐^"로 ^command:부분캡쳐^ 한다.
+sample_167d	최근에 사용된 이미지의 X1,Y1,X2,Y2형태로 리턴합니다. 부분캡쳐시 상대좌표로 활용 할 수 있습니다. ($GUITAR_최근전체좌표)
+
+sample_168c	$GUITAR_ReportPath
+sample_168s	"^target:$r=FileWriteLine(''|$GUITAR_ReportPath|\|$GUITAR_CurrentDateTime|.log'', ''a'')^" ^command:계산^ 
+sample_168d	작업중인 리포트 경로를 리턴합니다. 경로를 참조하여 추가적인 파일관련 작업을 수행 할 수 있습니다. ($GUITAR_리포트경로)
+
+sample_169c	$GUITAR_ScriptPath
+sample_169s	"^target:$r=FileWriteLine(''|$GUITAR_ScriptPath|\|$GUITAR_CurrentDateTime|.log'', ''a'')^" ^command:계산^ 
+sample_169d	실행중인 스크립트 경로를 리턴합니다. 경로값을 사용하여 파일저장등의 작업을 수행 할 수 있습니다. (누적로그 기록등...) ($GUITAR_스크립트경로)
+
+sample_170c	$GUITAR_WorkPath
+sample_170s	^target:"$GUITAR_WorkPath"^ ^command:로그쓰기^ 한다
+sample_170d	현재 사용중인 작업경로 (스크립트 최상위 폴더)를 리턴합니다. ($GUITAR_작업경로)
+
+sample_171c	$GUITAR_XMLPath
+sample_171s	^target:"$GUITAR_XMLPath"^ ^command:로그쓰기^ 한다
+sample_171d	XML 테스트 결과 파일이 저장될 폴더를 리턴합니다. ($GUITAR_XML경로)
+
+sample_172c	$GUITAR_AdjustXPos
+sample_172s	^target:$GUITAR_AdjustXPos=50^ ^command:설정^하고 ^target:국어사전질문이미지^를 ^command:클릭^한다.
+sample_172d	국어사전이미지를 찾고 해당 이미지의 오른쪽(X+50)을클릭합니다. (사용후 보정값은 자동으로는 0으로 초기화됩니다.) ($GUITAR_X좌표보정)
+
+sample_173c	$GUITAR_AdjustYPos
+sample_173s	^target:$GUITAR_AdjustYPos=-50^ ^command:설정^하고 ^target:국어사전질문이미지^를 ^command:클릭^한다.
+sample_173d	국어사전이미지를 찾고 해당 이미지의 오른쪽(Y-50)을클릭합니다. (사용후 보정값은 자동으로는 0으로 초기화됩니다.) ($GUITAR_Y좌표보정)
+
+sample_174c	$GUITAR_RecentLoadingTime
+sample_174s	^target:www.naver.com^ ^command:접속^하고, ^target:$GUITAR_RecentLoadingTime^ 을 ^command:로그쓰기^한다.
+sample_174d	최근 "접속" 명령으로 사용된 브라우저 로딩완료 소요시간(ms)을 가져옵니다. ($GUITAR_최근접속소요시간)
+
+sample_175c	$GUITAR_BrowserSize
+sample_175s	"^target:$GUITAR_BrowserSize=800,600^" ^command:설정^하고 ^target:IE^를 ^command:생성^한다.
+sample_175d	INI에 설정된 브라우저창 크기를 무시하고 800x600 변경하여 테스트를 진행합니다. ($GUITAR_브라우저창크기)
+
+sample_176c	$GUITAR_BrowserURL
+sample_176s	^target:$GUITAR_BrowserURL ^command:로그쓰기^한다.
+sample_176d	현재 표시되고 있는 브라우저의 URL 주소를 반환합니다. ($GUITAR_브라우저URL)
+
+sample_177c	$GUITAR_MobileOS
+sample_177s	"^target:$GUITAR_MobileOS=IOS^" ^command:설정^한다.
+sample_177d	테스트 대상 모바일 설정을 IOS로 합니다. IOS 외에 ANDROID값을 지정할 수 있습니다.  @crlf 일부 명령들은 $GUITAR_모바일OS 설정에 따라 다르게 작동됨으로 사전에 꼭 테스트할 OS를 지정해야 합니다. ($GUITAR_모바일OS)
+
+
+sample_178c	$GUITAR_InputType
+sample_178s	"^target:$GUITAR_InputType=ANSI^" ^command:설정^한다.
+sample_178d	"입력" 명령에서 키보드 입력 방식을 선택합니다. UNICODE, ANSI로 지정할 수 있습니다.  @crlf 기본 각 테스트 대상에 맞게 자동으로 설정되지만  @crlf 강제로 입력방식을 지정할 필요가 있을때 강제로 설정을 변경 할 수 있습니다. ($GUITAR_입력방식)
+
+
+sample_179c	$GUITAR_RecentResult
+sample_179s	^target:$GUITAR_RecentResult=True^ ^command:설정^ @crlf^target:SUB-SCRIPT.TXT^ ^command:실행^한다.@crlf^target:$GUITAR_RecentResult=False^ ^command:같으면^ ^command:실패^한다. 
+sample_179d	최근 실행한 "실행" 명령중에 일부오류가 발생되었을 경우 False로 값이 변경됩니다. 스크립트내부에서 오류 발생을 확인하고 이후 처리를 진행하는데 사용합니다. (불필요하게 이후 스크립트가 실행되는것을 방지)
+
+
+sample_190c	$GUITAR_Webdriver
+sample_190s	"^target:$GUITAR_Webdriver^" ^command:로그쓰기^한다.
+sample_190d	WebDriver 모드 여부를 확인하거나, 지정합니다.  (True, False)
+
+
+sample_191c	$GUITAR_WebdriverAlerttext
+sample_191s	"^target:$GUITAR_WebdriverAlerttext^" ^command:로그쓰기^한다.
+sample_191d	WebDriver 모드에서 경고창이 나타난 경우 해당 TEXT 값이 저장됩니다.

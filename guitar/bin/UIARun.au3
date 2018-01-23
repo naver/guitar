@@ -1,6 +1,5 @@
 #include-once
 
-
 Global enum $_sLogText_Start = "시작 : "
 Global enum $_sLogText_Testing = "실행 : "
 Global enum $_sLogText_Error = "오류 : "
@@ -48,7 +47,6 @@ Global $_aLastUseMousePos[4]
 
 #include ".\_include_nhn\_ImageGetInfo.au3"
 #include ".\_include_nhn\_ImageSearch.au3"
-#include ".\_include_nhn\_image.au3"
 #include ".\_include_nhn\_monitor.au3"
 
 
@@ -648,17 +646,14 @@ func runCommand($sScriptCommandText, $sScriptCommand, $sScriptTarget, byref $sCo
 	;debug($sScriptCommandText)
 
 	; 변수 값을 실제 값으로 변경함
-	if getVarType($sScriptTarget) and ($sScriptCommand <>  $_sCommandTagCountGet and $sScriptCommand <>  $_sCommandTagAttribGet and $sScriptCommand <> $_sCommandSet and $sScriptCommand <> $_sCommandVariableSet and $sScriptCommand <> $_sCommandValueIf and $sScriptCommand <> $_sCommandValueIfNot and $sScriptCommand <> $_sCommandExcute and $sScriptCommand <> $_sCommandLoop  and $sScriptCommand <>  $_sCommandPartSet and $sScriptCommand <>  $_sCommandSingleQuotationChange and $sScriptCommand <> $_sCommandAU3VarRead and $sScriptCommand <> $_sCommandJSRun ) then
-
+	if getVarType($sScriptTarget) and ($sScriptCommand <>  $_sCommandTagCountGet and $sScriptCommand <>  $_sCommandTagAttribGet and $sScriptCommand <> $_sCommandSet and $sScriptCommand <> $_sCommandVariableSet and $sScriptCommand <> $_sCommandValueIf and $sScriptCommand <> $_sCommandValueIfNot and $sScriptCommand <> $_sCommandExcute and $sScriptCommand <> $_sCommandLoop  and $sScriptCommand <>  $_sCommandPartSet and $sScriptCommand <>  $_sCommandSingleQuotationChange and $sScriptCommand <> $_sCommandAU3VarRead and $sScriptCommand <> $_sCommandJSRun and $sScriptCommand <> $_sCommandWDSessionCreate ) then
 		if ConvertVarFull($sScriptTarget, $sNewVarValue, $bVarAddInfo, ",", True) = False Then
 			return False
 		Else
 			_StringAddNewLine( $sCommentMsg,$bVarAddInfo)
 			$sScriptTarget = $sNewVarValue
 		endif
-
 	endif
-
 
 	; 이전에도 click, 이고, 다음 command도 클릭일 경우 2배 쉬도록 함.
 	;if checkWaitCommand ($sScriptCommand) and $_bLastcheckWaitCommand = True then
@@ -713,7 +708,10 @@ func runCommand($sScriptCommandText, $sScriptCommand, $sScriptTarget, byref $sCo
 
 
 	; 테스트 대상이 브라우저가 아닌 경우 마우스를 숨기도록 함.
-	if checkTargetisBrowser($_runBrowser) = False and checkMouseHideCommand($sScriptCommand) then moveMouseTop(0)
+	; 2016/8/4 모바일 테스트시 의도하지 않게 마우스 숨김이 발생되어 제외함
+	; 2017/4/10 환경설정의 MouseHide 옵션에 따라 작동되도록 변경 (기본 False)
+	if $_runMouseHide = True and checkTargetisBrowser($_runBrowser) = False and checkMouseHideCommand($sScriptCommand) then moveMouseTop(0)
+	;if checkMouseHideCommand($sScriptCommand) then moveMouseTop(0)
 
 	$iCommandTimeInit = _TimerInit()
 
@@ -765,14 +763,13 @@ func runCommand($sScriptCommandText, $sScriptCommand, $sScriptTarget, byref $sCo
 			endif
 
 			if $sInputType = "" then $sInputType = _iif(checkTargetisBrowser($_runBrowser),"UNICODE", "ANSI")
-
-			$bResult = commandKeySend($sScriptTarget,$sInputType)
+			$bResult = commandKeySend($sScriptTarget,$sInputType, True )
 
 			writeDebugTimeLog("$_sCommandInput 완료")
 			runsleep($_runCommandSleep )
 
 		case $_sCommandKeySend
-			$bResult = commandKeySend($sScriptTarget,"ANSI")
+			$bResult = commandKeySend($sScriptTarget,"ANSI", False)
 			writeDebugTimeLog("$_sCommandKeySend 완료")
 			runsleep($_runCommandSleep )
 
@@ -818,16 +815,18 @@ func runCommand($sScriptCommandText, $sScriptCommand, $sScriptTarget, byref $sCo
 			$bResult = commandInclude($sScriptTarget)
 
 		case $_sCommandSet
+		; 설정
 			$bResult = commandSet($sScriptTarget, $sCommentMsg)
 
 		case $_sCommandVariableSet
+		; 설정
 			$bResult = commandVariableSet($sScriptTarget)
 
 		case $_sCommandExcute
 			$bResult = commandExcute($sScriptTarget, $sCommentMsg)
 
-
 		case $_sCommandAttach
+
 			$bResult = commandAttach($sScriptTarget)
 
 			if $bResult = True and $_runScriptErrorCheck = True then
@@ -878,15 +877,9 @@ func runCommand($sScriptCommandText, $sScriptCommand, $sScriptTarget, byref $sCo
 
 
 		case $_sCommandMouseWheelUp, $_sCommandMouseWheelDown
-			if $_runWebdriver = True  then
-				WriteGuitarWebDriverNotSupport ()
-				$bResult = False
-			Else
 				MouseWheel(_iif($sScriptCommand == $_sCommandMouseWheelUp, "up", "down"))
 				runsleep($_runCommandSleep * 2)
 				$bResult = True
-			endif
-
 
 		case $_sCommandDoubleClick
 			$bResult = commandClick($sScriptTarget, "double")
@@ -913,13 +906,13 @@ func runCommand($sScriptCommandText, $sScriptCommand, $sScriptTarget, byref $sCo
 
 		case $_sCommandFullScreenWork
 
-			if $_runWebdriver = True  then
-				WriteGuitarWebDriverNotSupport ()
-				$bResult = False
-			Else
+			;if $_runWebdriver = True  then
+			;	WriteGuitarWebDriverNotSupport ()
+			;	$bResult = False
+			;Else
 				$_runFullScreenWork = True
 				$bResult = True
-			endif
+			;endif
 
 		case $_sCommandAreaCapture
 			$bResult = commandAreaCapture($sScriptTarget, $sCommentMsg)
@@ -978,6 +971,9 @@ func runCommand($sScriptCommandText, $sScriptCommand, $sScriptTarget, byref $sCo
 
 		case $_sCommandWDSessionCreate
 			$bResult = commandWDSessionCreate($sScriptTarget, $sCommentMsg)
+
+		case $_sCommandWDSessionAttach
+			$bResult = commandWDSessionAttach($sScriptTarget)
 
 		case $_sCommandWDSessionDelete
 			;debug("세션종료1")
@@ -1059,6 +1055,7 @@ Func commandMouseHide()
 		$bResult = True
 	else
 		$bResult = _WD_MoveAndAction(_WD_find_element_by("xpath", "//body"), "/moveto" ,  0, 0, 0)
+		moveMouseTop()
 	endif
 
 	return $bResult
@@ -1066,8 +1063,7 @@ Func commandMouseHide()
 endfunc
 
 Func commandWDNavigate($sCommand)
-; 세션종료
-
+;
 	local $shost, $aParamInfo
 	local $bReturn = False
 
@@ -1114,15 +1110,88 @@ Func commandWDClickAlert($bAccept)
 
 EndFunc
 
+Func commandWDSessionCreate($sScriptTarget, byref $sCommentMsg)
+;세션생성
+
+	local $shost, $aParamInfo
+	local $bReturn = False
+	local $sNewName, $sNewValue
+	;debug("111")
+	if  getVarNameValue($sScriptTarget,  $sNewName, $sNewValue) = True  then
+		;debug("222")
+		if getWebdriverConnectionInfo($sNewValue, $shost, $aParamInfo) then
+			if _WD_create_session ($shost, $aParamInfo) then
+
+				$_webdriver_last_elementid = ""
+				addSetVar ($sNewName & "=" & $_webdriver_current_sessionid, $_aRunVar)
+				;_msg($_webdriver_connection_param)
+				_addWebdriverSessionINIInfo($_webdriver_current_sessionid, $_webdriver_connection_host, $sNewValue)
+
+				$bReturn = True
+				$_runWebdriver = True
+
+				; 테스트 환경 정보 확인하여 하일라이트 등의 명령을 수행하지 않도록 함.
+				$_webdriver_testplatform = _WD_getBrowserType()
+
+				_setCurrentBrowserInfo()
+
+				; 윈도우 크기 변경
+				_setBrowserWindowsSize ("")
+			else
+				_StringAddNewLine ( $_runErrorMsg , "Webdriver 세션 생성에 실패하였습니다. " & $_webdriver_last_errormsg)
+			endif
+		endif
+	endif
+
+	if $bReturn = False then
+		_StringAddNewLine ( $_runErrorMsg , "Webdriver 세션 생성 정보가 바르지 않습니다. $변수명={host=호스트정보,환경정보1=값1,환경정보n=값n}")
+	else
+		_StringAddNewLine($sCommentMsg, "세션정보 : " & $shost & " , " & $_webdriver_current_sessionid)
+	endif
+	return $bReturn
+
+EndFunc
+
+Func commandWDSessionAttach($sScriptTarget)
+;세션선택
+	local $bReturn = False
+	local $shost, $aParamInfo, $sParamInfo
+
+	; 세션이 정보가 ini가 있을 경우
+	if _getWebdriverSessionINIInfo($sScriptTarget,$shost, $sParamInfo ) then
+			if getWebdriverConnectionInfo($sParamInfo, $shost, $aParamInfo) then
+				$_webdriver_current_sessionid = $sScriptTarget
+				$_webdriver_connection_host = $shost
+				$_webdriver_connection_param = $aParamInfo
+				$_webdriver_last_elementid = ""
+
+				$_runWebdriver = True
+				; 테스트 환경 정보 확인하여 하일라이트 등의 명령을 수행하지 않도록 함.
+				$_webdriver_testplatform = _WD_getBrowserType()
+				_setCurrentBrowserInfo()
+
+				$bReturn = True
+			endif
+	endif
+
+	if $bReturn = False then WriteGuitarWebDriverError ( "생성된 Webdriver 세션정보가 없습니다. : " & $sScriptTarget)
+
+	return $bReturn
+
+EndFunc
+
+
 
 Func commandWDSessionDelete()
-; 세션종료
+;
 	local $shost, $aParamInfo
 	local $bReturn = False
 
 	if $_webdriver_current_sessionid = "" then
 		WriteGuitarWebDriverError ( "생성된 Webdriver 세션정보가 없습니다." )
 	else
+		_deleteWebdriverSessionINIInfo($_webdriver_current_sessionid)
+
 		if _WD_delete_session () then
 			$bReturn = True
 			$_runWebdriver = False
@@ -1135,35 +1204,6 @@ Func commandWDSessionDelete()
 		endif
 	endif
 
-	return $bReturn
-
-EndFunc
-
-
-Func commandWDSessionCreate($sScriptTarget, byref $sCommentMsg)
-;세션생성
-
-	local $shost, $aParamInfo
-	local $bReturn = False
-
-	if getWebdriverConnectionInfo($sScriptTarget, $shost, $aParamInfo) then
-		if _WD_create_session ($shost, $aParamInfo) then
-			$bReturn = True
-			$_runWebdriver = True
-
-			; 테스트 환경 정보 확인하여 하일라이트 등의 명령을 수행하지 않도록 함.
-			$_webdriver_testplatform = _WD_getBrowserType()
-
-			_setCurrentBrowserInfo()
-			; 윈도우 크기 변경
-			_setBrowserWindowsSize ("")
-		else
-			_StringAddNewLine ( $_runErrorMsg , "Webdriver 세션 생성에 실패하였습니다. " & $_webdriver_last_errormsg)
-		endif
-	else
-		_StringAddNewLine ( $_runErrorMsg , "Webdriver 세션 생성 정보가 바르지 않습니다. {host=호스트정보,환경정보1=값1,환경정보n=값n}")
-	endif
-	_StringAddNewLine($sCommentMsg, "세션정보 : " & $shost & " , " & $_webdriver_current_sessionid)
 	return $bReturn
 
 EndFunc
@@ -1206,15 +1246,13 @@ func commandTargetCapture($sScriptTarget)
 
 		; WEBDriver 방식일 경우
 		if isWebdriverParam ($sTagInfo) then
-
 			_WD_get_element_location($_webdriver_last_elementid,  $aRetWebdriverPos[1],  $aRetWebdriverPos[2])
 			_WD_get_element_size($_webdriver_last_elementid,$aRetWebdriverPos[3],$aRetWebdriverPos[4])
-			$_aLastUseMousePos[3] =  $aRetWebdriverPos[1] & "," & $aRetWebdriverPos[2] & "," &  $aRetWebdriverPos[1] + $aRetWebdriverPos[3] & "," & $aRetWebdriverPos[2] + $aRetWebdriverPos[4]
-			;msg($_webdriver_last_elementid)
-			;msg($_aLastUseMousePos[3])
-			;$_aLastUseMousePos[3] = "1234"
-		endif
 
+			setLastUseMousePos($aRetWebdriverPos[1] , $aRetWebdriverPos[2] , $aRetWebdriverPos[3] , $aRetWebdriverPos[4] )
+			;$_aLastUseMousePos[3] =  $aRetWebdriverPos[1] & "," & $aRetWebdriverPos[2] & "," &  $aRetWebdriverPos[1] + $aRetWebdriverPos[3] & "," & $aRetWebdriverPos[2] + $aRetWebdriverPos[4]
+
+		endif
 
 		$bRet  = commandAreaCapture($_aLastUseMousePos[3] & $sImageFileName, $sCommentMsg)
 		if $bRet  = False then _StringAddNewLine ( $_runErrorMsg , "이미지캡쳐에 실패하였습니다.")
@@ -1234,17 +1272,14 @@ func commandProcessAttach($sScriptTarget)
 	local $i
 
 	getBrowserFullName ($sScriptTarget)
-
 	$sProcessExe = getBrowserExe($sScriptTarget)
 
-
-	;10 초 동안 대기
 	if $sProcessExe = "" then
 		_StringAddNewLine ( $_runErrorMsg , "브라우저나 실행파일에 대한 정보가 없습니다. : " & $sScriptTarget)
 		Return False
 	endif
 
-
+	;10 초 동안 대기하면서 프로세스 목록을 취합함
 	for $i=1 to 5
 
 		$aPlist = getBrowserWindowAll($sProcessExe, $aWinList)
@@ -1304,7 +1339,7 @@ Func CommandAU3VarWrite($sScriptTarget)
 endfunc
 
 
-Func CommandAU3VarRead($sScriptTarget,byref $sCommentMsg)
+Func CommandAU3VarRead($sScriptTarget, byref $sCommentMsg)
 
 	local $bResult = True
 	local $sNewValue
@@ -1388,7 +1423,7 @@ endfunc
 
 
 ;부분설정
-Func commandPartSet($sScriptTarget,byref $sCommentMsg)
+Func commandPartSet($sScriptTarget, byref $sCommentMsg)
 
 	local $bReturn = False
 	local $sPartVar
@@ -1812,7 +1847,7 @@ func commandTagAttribGet($sScriptTarget, byref $sCommentMsg)
 		endif
 
 		if $bTargetError then
-			_StringAddNewLine ( $_runErrorMsg , "명령 대상 값이 잘못 설정 되었습니다. ""$변수명={검색방식:검색조건:읽을 속성명]""")
+			_StringAddNewLine ( $_runErrorMsg , "명령 대상 값이 잘못 설정 되었습니다. ""$변수명={검색방식:검색조건:읽을 속성명}""")
 			Return False
 		endif
 
@@ -1866,8 +1901,6 @@ func commandTagAttribSet($sScriptTarget, byref $sCommentMsg)
 
 	local $oMyError
 
-
-
 	$iValueStart = StringInStr($sScriptTarget,"]")
 	$iValueStart = StringInStr($sScriptTarget,"=",True,1,$iValueStart)
 
@@ -1877,6 +1910,11 @@ func commandTagAttribSet($sScriptTarget, byref $sCommentMsg)
 	if $sNewName = "" or $sNewValue = "" then $bTargetError = True
 
 	;debug($sNewName, $sNewValue)
+
+	if $_runWebdriver = True  then
+		WriteGuitarWebDriverNotSupport ()
+		Return False
+	endif
 
 	if $bTargetError = False then $bTargetError = NOT(getIEObjectType($sNewName))
 
@@ -2164,30 +2202,39 @@ Func commandSwipe($sXY)
 	local $iLoopCount
 	local $x, $y
 	local $iMax, $bError
+	local $isPercent
 
-	$aXY = getXYAreaPositionPercent($sXY, 4,  $bError)
+	$aXY = getXYAreaPositionPercent($sXY, 4,  $bError, $isPercent)
 
 	if $bError = True then
 		;msg($sCommentMsg)
-		$_runErrorMsg = "좌표 정보가 바르지 않음. X1%,Y1%,X2%,Y2% 형태 (값:0~100%, 예: 오른쪽으로 쓸어넘기기 = 90%,50%,10%,50%) : " & $sXY
+		$_runErrorMsg = "좌표 정보가 바르지 않음. X1%,Y1%,X2%,Y2% 형태 이거나, X1,Y1,X2,Y2 이어야 함. (값:0%~100%, 예: 오른쪽으로 쓸어넘기기 = 90%,50%,10%,50%) : " & $sXY
 		$bReturn = False
 		return $bReturn
 	endif
 
 	; 윈도우 해상도를 찾음
-	$aWinPos = _WinGetClientPos($_hBrowser)
 
-	if IsArray($aWinPos) then
+
+
 
 		$bReturn = True
 
-		$iX1 = $aWinPos[0] + ($aWinPos[2] * ($aXY[1] / 100) - ($aWinPos[2]/100/2))
-		$iY1 = $aWinPos[1] + ($aWinPos[3] * ($aXY[2] / 100) - ($aWinPos[3]/100/2))
-		$iX2 = $aWinPos[0] + ($aWinPos[2] * ($aXY[3] / 100) - ($aWinPos[2]/100/2))
-		$iY2 = $aWinPos[1] + ($aWinPos[3] * ($aXY[4] / 100) - ($aWinPos[3]/100/2))
+		if $isPercent then
+			$aWinPos = _WinGetClientPos($_hBrowser)
+			$iX1 = $aWinPos[0] + ($aWinPos[2] * ($aXY[1] / 100) - ($aWinPos[2]/100/2))
+			$iY1 = $aWinPos[1] + ($aWinPos[3] * ($aXY[2] / 100) - ($aWinPos[3]/100/2))
+			$iX2 = $aWinPos[0] + ($aWinPos[2] * ($aXY[3] / 100) - ($aWinPos[2]/100/2))
+			$iY2 = $aWinPos[1] + ($aWinPos[3] * ($aXY[4] / 100) - ($aWinPos[3]/100/2))
 
-		if $iX2 > $aWinPos[0] + $aWinPos[2] then $iX2 = $aWinPos[0] + $aWinPos[2]
-		if $iY2 > $aWinPos[1] + $aWinPos[3] then $iY2 = $aWinPos[1] + $aWinPos[3]
+		Else
+			$aWinPos = WinGetPos($_hBrowser)
+			$iX1 = $aWinPos[0] + $aXY[1]
+			$iY1 = $aWinPos[1] + $aXY[2]
+			$iX2 = $aWinPos[0] + $aXY[3]
+			$iY2 = $aWinPos[1] + $aXY[4]
+
+		endif
 
 
 		MouseMove($ix1, $iy1, 1)
@@ -2211,7 +2258,7 @@ Func commandSwipe($sXY)
 
 		endif
 
-	endif
+
 
 
 	return $bReturn
@@ -2236,13 +2283,12 @@ Func commandExcute($sScriptTarget, byref $sCommentMsg)
 
 	convertHtmlChar ($sNewValue)
 
-
 	$sExcuteReturn = Execute($sNewValue)
 
 	if @error <> 0 then
 		;debug(@error, $sExcuteReturn)
 		;debug("계산명령:" & $sNewValue)
-		$sResultString = " (수행결과 : 실행실패)"
+		$sResultString = " (수행결과 : 실행실패 Code : " &  @error & ")"
 		$bReturn = False
 	Else
 		$sResultString = " (수행결과 : " & $sExcuteReturn & ")"
@@ -2318,11 +2364,7 @@ func commandAttach($sScriptTarget, $iTimeOut = $_runWaitTimeOut)
 	local $sSearchType, $sSearchValue, $sSearchResultID
 	local $aWindowHandles, $sCurrnetWindowHandle, $bFileNotFoundError, $x, $y
 
-
-
 	sleep (1000)
-
-
 	if $_runWebdriver = False then
 
 		if $_runLastBrowser <> "" then
@@ -2379,8 +2421,6 @@ func commandAttach($sScriptTarget, $iTimeOut = $_runWaitTimeOut)
 						$_hBrowser = $iRetHandle
 						;msg($_hBrowser)
 
-
-
 						if hBrowswerActive() = 0 then
 							_StringAddNewLine ( $_runErrorMsg , "선택된 브라우저 윈도우를 활성화 할 수 없습니다.")
 							$bResult = False
@@ -2436,21 +2476,26 @@ func commandAttach($sScriptTarget, $iTimeOut = $_runWaitTimeOut)
 				setStatusText (getTargetSearchRemainTimeStatusText($tTimeInit, $iTimeOut, $sScriptTarget))
 
 				if _WD_switch_to_windowhandle ($aWindowHandles[$i]) then
+					if isWebdriverParam ($sScriptTarget) then
+						if getWebdriverParamTypeAndValue($sScriptTarget, $sSearchType, $sSearchValue) then
+							; TAG 방식인 경우
+							;$bResult = _WD_switch_to_window($sSearchType, $sSearchValue, $_runRetryRun , $_runHighlightDelay)
 
-					if getWebdriverParamTypeAndValue($sScriptTarget, $sSearchType, $sSearchValue) then
-						; TAG 방식인 경우
-						;$bResult = _WD_switch_to_window($sSearchType, $sSearchValue, $_runRetryRun , $_runHighlightDelay)
-
-						if _WD_find_element_with_highlight_by($sSearchType, $sSearchValue, $_runRetryRun, $_runHighlightDelay) <> "" then
-							$bResult = True
-							ExitLoop
+							if _WD_find_element_with_highlight_by($sSearchType, $sSearchValue, $_runRetryRun, $_runHighlightDelay) <> "" then
+								$bResult = True
+								ExitLoop
+							endif
+						Else
+							_StringAddNewLine ( $_runErrorMsg , "Webdriver 테스트 입력정보가 바르지 않습니다. {검색방식:검색조건}")
 						endif
+
 
 					else
 						; 이미지 방식인 경우
 						$bResult = getRunCommnadImageAndSearchTarget ($sScriptTarget, $aImageFile,  $x , $y, False, $_runWaitTimeOut, $bFileNotFoundError)
 						;debug("찾기:" & $aWindowHandles[$i], $bResult)
 						if $bResult then exitloop
+
 
 					endif
 				endif
@@ -2525,7 +2570,7 @@ func commandSet($sScriptName, byref $sCommentMsg)
 
 endfunc
 
-
+; 실행 명령
 func commandInclude($sScriptName)
 
 	local $aRowScript
@@ -2584,6 +2629,7 @@ func commandInclude($sScriptName)
 		$_iScriptRecursive += 1
 		$oldScriptFile = $_runScriptFileName
 		$bResult = runScript($sScriptName, $aScript, 0, 0, $aRunCountInfo)
+		if $bResult = False then 	$_runRecentResult = $bResult
 		$_runScriptFileName = $oldScriptFile
 		$_iScriptRecursive -= 1
 	endif
@@ -2669,18 +2715,23 @@ endfunc
 func commandLocationTab($sScriptTarget, $bButton)
 
 	local $x,$y, $bResult
-	local $aWinPos, $aXY, $bError
+	local $aWinPos, $aXY, $bError, $isPercent
 
 	$bResult = False
 
-	$aXY = getXYAreaPositionPercent($sScriptTarget, 2,  $bError)
+	$aXY = getXYAreaPositionPercent($sScriptTarget, 2,  $bError, $isPercent)
 
 	if $bError = False then
 
-		$aWinPos = _WinGetClientPos($_hBrowser)
-
-		$x = $aWinPos[0] + ($aWinPos[2] * ($aXY[1] / 100))
-		$y = $aWinPos[1] + ($aWinPos[3] * ($aXY[2] / 100))
+		if $isPercent then
+			$aWinPos = _WinGetClientPos($_hBrowser)
+			$x = $aWinPos[0] + ($aWinPos[2] * ($aXY[1] / 100))
+			$y = $aWinPos[1] + ($aWinPos[3] * ($aXY[2] / 100))
+		else
+			$aWinPos = WinGetPos($_hBrowser)
+			$x = $aWinPos[0] + $aXY[1]
+			$y = $aWinPos[1] + $aXY[2]
+		endif
 
 		MouseMove($x, $y,1)
 
@@ -2731,7 +2782,7 @@ func commandClick($sScriptTarget, $bButton)
 
 	if  $bResult = True  then
 
-		if $_runWebdriver = False  then
+		if $_runWebdriver = False or  $_runFullScreenWork = True  then
 
 			addCorrectionYX( $x ,  $y)
 
@@ -2770,10 +2821,20 @@ func commandClick($sScriptTarget, $bButton)
 				runsleep(10)
 				MouseMove($x+1, $y+1,$iDelay)
 				runsleep(10)
+				MouseMove($x, $y)
 
 				;debug($iClickCount)
 
 				MouseClick($bButton,$x, $y,$iClickCount,$iDelay)
+
+				;MouseDown("left")
+				;Sleep(100)
+				;MouseUp("left")
+				;Sleep(10)
+				;MouseUp("left")
+				;MouseMove($x+50, $y+50,1)
+				;Sleep(10)
+				;MouseMove($x, $y,1)
 
 			endif
 
@@ -2907,6 +2968,8 @@ func getBrowserExe($sBrowser)
 			next
 
 	EndSwitch
+
+	if $sBexe="" then $sBexe = $sBrowser & ".exe"
 
 	return $sBexe
 
@@ -3334,7 +3397,7 @@ func commandNavigate($sURL, $bRetry)
 		if _WD_navigate($sURL) then
 			$bResult = True
 		else
-			_StringAddNewLine ( $_runErrorMsg , "Webdriver에서 오류가 발생되었습니다. : " & $_webdriver_last_errormsg)
+			WriteGuitarWebDriverError()
 		endif
 
 	else
@@ -3404,6 +3467,11 @@ func commandNavigate($sURL, $bRetry)
 
 
 						$bNavigate = _IENavigate($sTempBrowser, $sURL, 0)
+						;_IELoadWait ($sTempBrowser,100, $_runWaitTimeOut / 2)
+						;$bNavigate = $sTempBrowser.navigate($sURL, 0)
+						;$bNavigate = -1
+
+						writeDebugTimeLog("commandNavigate _IENavigate 후")
 
 						if $bNavigate = -1  then
 
@@ -3737,6 +3805,8 @@ endfunc
 
 func commandInput($sText)
 
+	;*****************************   사용되지 않음
+
 	local $bResult
 	local $sTemp
 	local $iDelay
@@ -3761,7 +3831,7 @@ func commandInput($sText)
 		endif
 
 	else
-		$bResult = _WD_send_keys($sText)
+		$bResult = _WD_send_keys($sText, _WD_isTestPlatformWEB(), True )
 		if $bResult = False then WriteGuitarWebDriverError()
 	endif
 	sleep(100)
@@ -3771,7 +3841,7 @@ func commandInput($sText)
 endfunc
 
 
-func commandKeySend($sText, $sType = "ANSI")
+func commandKeySend($sText, $sType = "ANSI", $bRaw = False)
 
 	local $bResult
 	local $hCurrentWin
@@ -3781,10 +3851,12 @@ func commandKeySend($sText, $sType = "ANSI")
 
 
 	; 대상 윈도우가 브라우저가 아닌 경우 ANSI 방식으로 입력 할 것
+
 	convertHtmlChar($sText)
 
 
-	if $_runWebdriver = False  then
+
+	if $_runWebdriver = False  or  $_runFullScreenWork = True  then
 
 		$hCurrentWin = WinGetHandle("[ACTIVE]")
 
@@ -3802,7 +3874,6 @@ func commandKeySend($sText, $sType = "ANSI")
 			$iDelay = Number(getReadINI("Environment","InputDelay"))
 			if $iDelay = 0 then $iDelay = 500
 			sleep($iDelay)
-
 
 			setTestHotKey(False)
 
@@ -3833,7 +3904,8 @@ func commandKeySend($sText, $sType = "ANSI")
 		;debug($sText, Stringlen($sText))
 		;send($sText)
 	Else
-		$bResult = _WD_send_keys($sText)
+
+		$bResult = _WD_send_keys($sText, _WD_isTestPlatformWEB(), $bRaw)
 		if $bResult = False then WriteGuitarWebDriverError()
 	endif
 
@@ -3987,7 +4059,8 @@ func commandTextAsert($sText, $iTimeOut = $_runWaitTimeOut, $bIsErrorCheck = Tru
 			if $_runBrowser = $_sBrowserIE then
 
 				seterror(0)
-				$oMyError = ObjEvent("AutoIt.Error","UIAIE_NullError")
+				; 2016-11-15 수애 샘플 예제 찾기 할때 이유 없이 AUTOIT이 종료되는 문제가 있어 해제
+				;$oMyError = ObjEvent("AutoIt.Error","UIAIE_NullError")
 
 				if $sTempBrowser = "" then
 
@@ -4000,16 +4073,18 @@ func commandTextAsert($sText, $iTimeOut = $_runWaitTimeOut, $bIsErrorCheck = Tru
 					endif
 				endif
 
-
+				;debug("내용16 : " & $sTempBrowser)
 				$sLocalText = IEObjectGetAllInnerHtml($sTempBrowser)
 
-				;debug("내용:" & $sLocalText)
+
 
 			else
+
 				if CaptureTextActiveWindow($sLocalText) = False then exitloop
 			endif
 			;$sLocalText = TCaptureXCaptureActiveWindow(WinGetHandle("[ACTIVE]"))
 		endif
+
 
 		$iFoundCount = 0
 		$sNotFoundString = ""
@@ -4091,7 +4166,7 @@ func commandMouseDragAndDrop($sScriptTarget, $sType)
 
 	if  $bResult = True  then
 
-		if $_runWebdriver = False  then
+		if $_runWebdriver = False or  $_runFullScreenWork = True  then
 			hBrowswerActive ()
 			addCorrectionYX( $x ,  $y)
 			if $sType = "drag" then
@@ -4137,7 +4212,7 @@ endfunc
 
 ; -----------------------------------------------------------------------------------------------------
 
-func getRunCommnadImage($sScriptTarget,byref $aImageFile, $bPreView = True )
+func getRunCommnadImage($sScriptTarget, byref $aImageFile, $bPreView = True )
 ; 명령어 지정된 이미지를 찾아서 배열로 전달
 
 	local $bResult
@@ -4410,7 +4485,7 @@ func getRunCommnadImageAndSearchTarget ($sScriptTarget, byref $aImageFile,  byre
 	local $aRetWebdriverPos [5]
 	local $aImageRoad [1]
 	local $sPositionImage
-	local $aWinPos
+	local $aWinPos[3]
 	local $oTag = ""
 	local $aTemprunAreaWork = $_runAreaWork
 	local $aMaxImageInfo
@@ -4419,6 +4494,8 @@ func getRunCommnadImageAndSearchTarget ($sScriptTarget, byref $aImageFile,  byre
 	local $bVerify
 	local $sSearchType,  $sSearchValue, $sSearchResultID
 	local $tTimeInitAll
+	local $aRetWebdriverInViewPos[5]
+	local $bSearchTypeImage =False
 
 	$bFileNotFoundError = False
 	$aImageFile = $aImageRoad
@@ -4475,6 +4552,8 @@ func getRunCommnadImageAndSearchTarget ($sScriptTarget, byref $aImageFile,  byre
 			if $i = ubound($aImageList) -1 then $sPositionImage = $aImageList[$i]
 
 			if getIEObjectType($aImageList[$i]) = False and isWebdriverParam ($aImageList[$i]) = False then
+
+				$bSearchTypeImage = True
 				; 이미지 방식 경우
 
 				writeDebugTimeLog("이미지 읽어 오기" )
@@ -4577,16 +4656,19 @@ func getRunCommnadImageAndSearchTarget ($sScriptTarget, byref $aImageFile,  byre
 						;좌표 0번 배열에 찾은 Tag를 리턴함.
 						$aImageFile = $aImageRoad
 						_ArrayAdd($aImageFile, $oTag)
+						;setLastUseMousePos ($aRetPos[2], $aRetPos[3], $aRetPos[4] - $aRetPos[2], $aRetPos[3] + $aRetPos[5])
+						;setLastUseMousePos ($aRetPos[2], $aRetPos[3], $aRetPos[4],  $aRetPos[5])
 					endif
 
 				else
 					_StringAddNewLine ( $_runErrorMsg ,"IE 브라우저에서만 Tag방식으로 대상을 지정 할 수 있습니다.")
 				endif
 			elseif  isWebdriverParam ($aImageList[$i]) = True then
-			; WEBDriver  이미지 방식 찾기
+			; WEBDriver  TAG 방식 찾기
 			$tTimeInitAll = _TimerInit()
 
 				if getWebdriverParamTypeAndValue($aImageList[$i],  $sSearchType,  $sSearchValue) then
+
 					do
 						setStatusText (getTargetSearchRemainTimeStatusText($tTimeInitAll, $iTimeOut, $aImageList[$i]))
 						$sSearchResultID = _WD_find_element_with_highlight_by($sSearchType, $sSearchValue, $_runRetryRun , $_runHighlightDelay)
@@ -4597,6 +4679,15 @@ func getRunCommnadImageAndSearchTarget ($sScriptTarget, byref $aImageFile,  byre
 						$bResult = True
 						$_webdriver_last_elementid = $sSearchResultID
 						$x = $sSearchResultID
+
+						; 최근 좌표값을 기록
+						_WD_get_element_location($_webdriver_last_elementid,  $aRetWebdriverPos[1],  $aRetWebdriverPos[2])
+						_WD_get_element_location_in_view($_webdriver_last_elementid,  $aRetWebdriverInViewPos[1],  $aRetWebdriverInViewPos[2])
+
+						_WD_get_element_size($_webdriver_last_elementid,$aRetWebdriverPos[3],$aRetWebdriverPos[4])
+
+						setLastUseMousePos ($aRetWebdriverInViewPos[1], $aRetWebdriverInViewPos[2],$aRetWebdriverPos[3], $aRetWebdriverPos[4])
+						;msg($_aLastUseMousePos)
 
 						; X값에 검색된 ID값을 전달
 					else
@@ -4640,17 +4731,26 @@ func getRunCommnadImageAndSearchTarget ($sScriptTarget, byref $aImageFile,  byre
 
 		writeDebugTimeLog("이미지 읽어 오기 완료 3차 " )
 
-		if $bResult = True then
+		if $bResult = True and ($bSearchTypeImage = True or  getIEObjectType($sScriptTarget) = True) then
 
-			$aWinPos = WinGetPos($_hBrowser)
+
+			; 웹드라이버 이미지 방식인 경우 윈도우 값을 0으로 지정하여 여백이 없도록 함
+			if $_runWebdriver = False then
+				$aWinPos = WinGetPos($_hBrowser)
+			else
+				redim $aWinPos[3]
+				$aWinPos[1]=0
+				$aWinPos[2]=0
+			endif
 
 			if IsArray($aWinPos) then
+				;_msg("왔다")
 				$_aLastUseMousePos[1] = $x - $aWinPos[0]
 				$_aLastUseMousePos[2] = $y  - $aWinPos[1]
 			endif
 
-
-			if IsArray($aRetPos) then
+			; 이미지 위치 보정 (윈도우 크기만큼 제외함)
+			if IsArray($aRetPos) and IsArray($aWinPos) then
 				$_aLastUseMousePos[3] = ""
 				$_aLastUseMousePos[3] = $_aLastUseMousePos[3] & ($aRetPos[1] - $aWinPos[0]) & ","
 				$_aLastUseMousePos[3] = $_aLastUseMousePos[3] & ($aRetPos[2] - $aWinPos[1]) & ","
@@ -4673,6 +4773,11 @@ func getRunCommnadImageAndSearchTarget ($sScriptTarget, byref $aImageFile,  byre
 
 endfunc
 
+func setLastUseMousePos ($x1, $y1, $width, $height)
+	$_aLastUseMousePos[1] = $x1
+	$_aLastUseMousePos[2] = $y1
+	$_aLastUseMousePos[3] =  $x1 & "," & $y1 & "," &  $x1+ $width & "," & $y1+ $height
+endfunc
 
 func getMaxSizeFormImageList(byref $aImageList)
 
@@ -4763,13 +4868,12 @@ func getMultiSearchArea(byref $aSearchResult, byref $aMaxImageInfo, $iCurrentIma
 	; 좌표 사용시 절대 좌표로 계산
 	$aRetArea[5] = False
 
-
 	return $aRetArea
 
 endfunc
 
 
-func selectMultiImage(byref $aSearchResult, byref $aImageRoad, byref  $x,byref  $y, $iAddBoder, $sPositionImage, byref $aRetPos)
+func selectMultiImage(byref $aSearchResult, byref $aImageRoad, byref  $x, byref  $y, $iAddBoder, $sPositionImage, byref $aRetPos)
 
 	local $i, $j
 	local $bFound = False
@@ -4973,7 +5077,7 @@ func checkMultiImageAllFound(byref $aImageRoad)
 endfunc
 
 
-func getMultiImagePos(byref $aSearchResult, $aImageRoad, byref  $x,byref  $y, $sPositionImage, byref $aRetPos)
+func getMultiImagePos(byref $aSearchResult, $aImageRoad, byref  $x, byref  $y, $sPositionImage, byref $aRetPos)
 
 	local $i
 	local $iMaxLeft = 100000000
@@ -5013,7 +5117,7 @@ func getMultiImagePos(byref $aSearchResult, $aImageRoad, byref  $x,byref  $y, $s
 endfunc
 
 
-Func SearchIEObjectTarget($hBrowser, $sTarget,byref $x, byref $y, byref $aRetPos, byref $oTag, $bLoopSearch, $iTimeOut)
+Func SearchIEObjectTarget($hBrowser, $sTarget, byref $x, byref $y, byref $aRetPos, byref $oTag, $bLoopSearch, $iTimeOut)
 
 	local $sTempBrowser
 	local $oMyError
@@ -5225,7 +5329,7 @@ Func SearchTarget($hWindow, $sFile, byref $x, byref $y, $bLoopSearch, $iTimeOut,
 	$tTimeInitAll = _TimerInit()
 	$iRetryCount = 0
 
-	if $_runWebdriver = False then
+	if $_runWebdriver = False  or $_runFullScreenWork = True then
 
 		$aWinPos = WinGetPos($hWindow)
 		$aWinPosOrg = $aWinPos
@@ -5233,10 +5337,34 @@ Func SearchTarget($hWindow, $sFile, byref $x, byref $y, $bLoopSearch, $iTimeOut,
 
 	endif
 
-	; 전체대상작업으로 설정된 경우 검색 위치를 화면 전체로 함.
-	if $_runFullScreenWork and $_runWebdriver = False then
 
-		$aFullScreenPos = GetAareFromPoint($aWinPos[0] + ($aWinPos[2]/2) ,$aWinPos[1]  + ($aWinPos[3]/2))
+	if $_runWebdriver = True then
+
+		_WD_get_windowsize ($iWebdriverScreenX,$iWebdriverScreenY)
+
+		redim $aWinPos[5]
+
+		$aWinPos[0] =0
+		$aWinPos[1] =0
+		$aWinPos[2] =$iWebdriverScreenX
+		$aWinPos[3] =$iWebdriverScreenY
+
+	endif
+
+	; 상대윈도우로 지정하는것
+	setWorkAreaPosition( $aWinPos,  $aWinPosOrg)
+
+
+
+
+	; 전체대상작업으로 설정된 경우 검색 위치를 화면 전체로 함.
+	;if $_runFullScreenWork and $_runWebdriver = False then
+	if $_runFullScreenWork  then
+
+		;$aFullScreenPos = GetAareFromPoint($aWinPos[0] + ($aWinPos[2]/2) ,$aWinPos[1]  + ($aWinPos[3]/2))
+
+		; 신규로 완전히 전체 모니터를 기준으로 하도록 변경
+		$aFullScreenPos =  	GetFullMonitorSize ()
 
 		$aWinPos[0] = $aFullScreenPos[1]
 		$aWinPos[1] = $aFullScreenPos[2]
@@ -5248,64 +5376,51 @@ Func SearchTarget($hWindow, $sFile, byref $x, byref $y, $bLoopSearch, $iTimeOut,
 
 	endif
 
-
-
-	if $_runAreaWork[0] = True then
-
-		; 현재 윈도우 크기에 상대좌표를 추가함
-		if $_runAreaWork[5] = True then
-			$aWinPos[0] = $aWinPos[0] + $_runAreaWork[1]
-			$aWinPos[1] = $aWinPos[1] + $_runAreaWork[2]
-			$aWinPos[2] = $_runAreaWork[3] - $_runAreaWork[1]
-			$aWinPos[3] = $_runAreaWork[4] - $_runAreaWork[2]
-		else
-			$aWinPos[0] = $_runAreaWork[1]
-			$aWinPos[1] = $_runAreaWork[2]
-
-			; 윈도우 보다 큰 경우 위도우 크기만으로 지정
-			if $aWinPos[0] < $aWinPosOrg[0] then $aWinPos[0] = $aWinPosOrg[0]
-			if $aWinPos[1] < $aWinPosOrg[1] then $aWinPos[1] = $aWinPosOrg[1]
-
-			$aWinPos[2] = $_runAreaWork[3] - $aWinPos[0]
-			$aWinPos[3] = $_runAreaWork[4] - $aWinPos[1]
-
-			if $aWinPos[2] > $aWinPosOrg[2] then $aWinPos[2] = $aWinPosOrg[2]
-			if $aWinPos[3] > $aWinPosOrg[3] then $aWinPos[3] = $aWinPosOrg[3]
-
-			;debug($aWinPosOrg)
-			;debug($_runAreaWork)
-			;debug($aWinPos)
-
-		endif
-
-	endif
-
-
-	if $_runWebdriver = True then
-		; TAG Type
-
-		_WD_get_windowsize ($iWebdriverScreenX,$iWebdriverScreenY)
-
-		redim $aWinPos[5]
-
-		$aWinPos[0] =0
-		$aWinPos[1] =0
-		$aWinPos[2] =$iWebdriverScreenX
-		$aWinPos[3] =$iWebdriverScreenY
-		;msg($aWinPos)
-	endif
-
-
 	$iMouseMoveSleepTimer = _TimerInit()
-
+	;debug ("이미지 찾기 시작 : 윈도우 위치 " & $aWinPos[0] & ", " & $aWinPos[1])
 	writeDebugTimeLog("이미지 찾기 시작 : 윈도우 위치 " & $aWinPos[0] & ", " & $aWinPos[1])
 
 	redim $aImageTolerance[ubound($sImageFiles)]
 
 	do
+
 		$iLoopCount += 1
 		;debug (TimerDiff($tTimeInit) , $iTimeOut)
 		$tTimeInitUnit = _TimerInit()
+
+
+		if $_runWebdriver = True  and $_runFullScreenWork = False then
+
+			if $sSearchedImage = "" then
+
+				$sWebdriverScreenShot = StringReplace(_TempFile(),".tmp",".png")
+
+				;writeDebugTimeLog("WD 이미지 캡쳐시작 : " & $sWebdriverScreenShot)
+				;debug("WD 이미지 캡쳐시작 : " & $sWebdriverScreenShot)
+
+				; 전체작업 대상일 경우 클릭을 전체 윈도우로 할것
+
+				_WD_get_screenshot_as_file($sWebdriverScreenShot)
+
+				;writeDebugTimeLog("WD 이미지 캡쳐종료")
+
+				; 캡쳐된 이미지 기반으로 사이즈를 확인하여 진행
+				getImageSizeWithGDISetup($sWebdriverScreenShot, $iWebdriverScreenX, $iWebdriverScreenY)
+
+				$aWinPos[0] =0
+				$aWinPos[1] =0
+				$aWinPos[2] =$iWebdriverScreenX
+				$aWinPos[3] =$iWebdriverScreenY
+
+				$aWinPosOrg = $aWinPos
+
+				setWorkAreaPosition( $aWinPos,  $aWinPosOrg)
+
+			else
+				$sWebdriverScreenShot = $sSearchedImage
+			endif
+		endif
+
 
 		for $i=1 to ubound($sImageFiles) -1
 
@@ -5362,27 +5477,21 @@ Func SearchTarget($hWindow, $sFile, byref $x, byref $y, $bLoopSearch, $iTimeOut,
 			$iTolerance = $aImageTolerance[$i]
 
 			;debug($aSearchPos)
-			writeDebugTimeLog("이미지 찾기 시작 진짜 : "  &  " x1=" & $aSearchPos[0]  &  " y1=" & $aSearchPos[1]  &  " x2=" & $aSearchPos[2] &  " y2=" & $aSearchPos[3]  & ", SearchCount : " & $iSearchCount )
+
 
 			;if WinActive($hWindow) = 0 Then WinActivate($hWindow)
 			$iTransparentColor = getTransparentImageAndColor ($sImageFiles[$i])
 
-			if $_runWebdriver = True then
-				if $sSearchedImage = "" then
-					$sWebdriverScreenShot = _TempFile()
-					writeDebugTimeLog("WD 이미지 캡쳐시작 : " & $sWebdriverScreenShot)
-					;debug("WD 이미지 캡쳐시작 : " & $sWebdriverScreenShot)
-					_WD_get_screenshot_as_file($sWebdriverScreenShot)
-					writeDebugTimeLog("WD 이미지 캡쳐종료")
-				else
-					$sWebdriverScreenShot = $sSearchedImage
-				endif
-			endif
+
+			writeDebugTimeLog("이미지 찾기 시작 진짜 : "  &  " x1=" & $aSearchPos[0]  &  " y1=" & $aSearchPos[1]  &  " x2=" & $aSearchPos[2] &  " y2=" & $aSearchPos[3]  & ", SearchCount : " & $iSearchCount )
 
 			if $iLoopCount = 0 then $iTolerance = 0
 
 			if _ImageSearchArea2($sImageFiles[$i],1,$aSearchPos[0],$aSearchPos[1],$aSearchPos[2],$aSearchPos[3], $x, $y, $iTolerance, $aRetPos, $bAllSearch, $bCRCCheck, $iTransparentColor, $sWebdriverScreenShot) = 1 then
 				$bImageFound = True
+				;_debug($aRetPos)
+				;_debug($aWinPos[0] )
+				;_debug($aWinPos[1] )
 				$sSearchedImage = $sWebdriverScreenShot
 			endif
 				;debug($bImageFound)
@@ -5446,6 +5555,41 @@ Func SearchTarget($hWindow, $sFile, byref $x, byref $y, $bLoopSearch, $iTimeOut,
 
 endfunc
 
+
+func setWorkAreaPosition(byref $aWinPos, byref $aWinPosOrg)
+
+
+	; 상대윈도우로 지정하는것 함수로 만들어서 뺄것  getImageSizeWithGDISetup after add
+	if $_runAreaWork[0] = True then
+
+		; 현재 윈도우 크기에 상대좌표를 추가함
+		if $_runAreaWork[5] = True then
+			$aWinPos[0] = $aWinPos[0] + $_runAreaWork[1]
+			$aWinPos[1] = $aWinPos[1] + $_runAreaWork[2]
+			$aWinPos[2] = $_runAreaWork[3] - $_runAreaWork[1]
+			$aWinPos[3] = $_runAreaWork[4] - $_runAreaWork[2]
+		else
+			$aWinPos[0] = $_runAreaWork[1]
+			$aWinPos[1] = $_runAreaWork[2]
+
+			; 윈도우 보다 큰 경우 위도우 크기만으로 지정
+			if $aWinPos[0] < $aWinPosOrg[0] then $aWinPos[0] = $aWinPosOrg[0]
+			if $aWinPos[1] < $aWinPosOrg[1] then $aWinPos[1] = $aWinPosOrg[1]
+
+			$aWinPos[2] = $_runAreaWork[3] - $aWinPos[0]
+			$aWinPos[3] = $_runAreaWork[4] - $aWinPos[1]
+
+			if $aWinPos[2] > $aWinPosOrg[2] then $aWinPos[2] = $aWinPosOrg[2]
+			if $aWinPos[3] > $aWinPosOrg[3] then $aWinPos[3] = $aWinPosOrg[3]
+
+			;debug($aWinPosOrg)
+			;debug($_runAreaWork)
+			;debug($aWinPos)
+
+		endif
+
+	endif
+endfunc
 
 Func checkScriptStopping()
 
@@ -5811,15 +5955,15 @@ endfunc
 
 func setupLogFile($sScriptName, $sReportLog )
 
-	$_runLogFileHanle = FileOpen($sScriptName, 2)
-	$_runReportLogHanle = FileOpen($sReportLog, 2)
+	$_runLogFileHanle = FileOpen($sScriptName, $FO_OVERWRITE + $FO_ANSI )
+	$_runReportLogHanle = FileOpen($sReportLog, $FO_OVERWRITE + $FO_ANSI )
 
 endfunc
 
 func setupDebugLogFile($sDebugLog)
 
 	if $_runDebugLog then
-		$_runDebugLogFileHanle = FileOpen($sDebugLog, 2)
+		$_runDebugLogFileHanle = FileOpen($sDebugLog, $FO_OVERWRITE + $FO_ANSI)
 	endif
 
 endfunc
@@ -5988,12 +6132,15 @@ Func saveBrowserScreen($sFileName, $bDeskTop, $hCurBrowser, $aCaptureArea = "" )
 
 	;ScrollPage(True)
 
-	if $_runWebdriver then
+	; 웹드라이버 모드 이면서 전체화면 캡쳐가 아닌 경우에만
+	if $_runWebdriver and $bDeskTop = False then
+
 	; webdriver 모드인 경우
 		writeDebugTimeLog("웹드라이버 캡쳐")
+
 		_WD_get_screenshot_as_file ($sFileName)
 		if IsArray($aCaptureArea) Then
-			;debug($sFileName, $sTempFileName )
+			;debug("_ImageCropFromFile 실행")
 			_ImageCropFromFile($sFileName,$sTempFileName  , $iCaptureStartX, $iCaptureStarty, $iCaptureWidth - $iCaptureStartX, $iCaptureHeight - $iCaptureStarty)
 			FileDelete($sFileName)
 			FileMove($sTempFileName, $sFileName)
@@ -6002,7 +6149,8 @@ Func saveBrowserScreen($sFileName, $bDeskTop, $hCurBrowser, $aCaptureArea = "" )
 	elseif $bDeskTop then
 
 		writeDebugTimeLog("전체 윈도우 캡쳐")
-		_ScreenCapture_Capture ($sFileName)
+		_FullScreenCapture_Capture($sFileName)
+		;_ScreenCapture_Capture ($sFileName)
 
 	else
 		;msg($iCaptureStartX & " " &  $iCaptureStarty & " " &   $iCaptureWidth & " " &  $iCaptureHeight)
@@ -6386,6 +6534,7 @@ Func writePassFail($bResult)
 endfunc
 
 
+; 변수읽기
 func getRunVar($sScriptTarget, byref $sNewValue)
 ; 실행 변수를 값을 찾아서 리턴
 
@@ -6394,6 +6543,9 @@ func getRunVar($sScriptTarget, byref $sNewValue)
 	$sNewValue = ""
 
 	switch $sScriptTarget
+		case "$GUITAR_RecentResult"
+			$sNewValue =  $_runRecentResult
+			return true
 
 		case "$GUITAR_현재날짜와시간", "$GUITAR_CurrentDateTime"
 			;$sNewValue = StringFormat("%04d년 %02d월 %02d일 %02d시 %02d분 %02d초", @YEAR, @MON ,@MDAY ,@HOUR , @MIN, @SEC, @MSEC)
@@ -6405,7 +6557,13 @@ func getRunVar($sScriptTarget, byref $sNewValue)
 			return true
 
 		case "$GUITAR_현재브라우저", "$GUITAR_CurrentBrowser"
-			$sNewValue =  $_runBrowser
+
+			if $_runWebdriver = False then
+				$sNewValue =  $_runBrowser
+			Else
+				; 웹드라이버 모드인 경우
+				$sNewValue =  _WD_getBrowserName()
+			endif
 			return true
 
 		caSE "$GUITAR_최근X좌표", "$GUITAR_RecentXPos"
@@ -6420,7 +6578,7 @@ func getRunVar($sScriptTarget, byref $sNewValue)
 			$sNewValue =  $_aLastUseMousePos[3]
 			return true
 
-		CASE "$GUITAR_리포트경로", "$GUITAR_RrportPath"
+		CASE "$GUITAR_리포트경로", "$GUITAR_ReportPath"
 			$sNewValue =  $_runWorkReportPath
 			return true
 
@@ -6429,7 +6587,7 @@ func getRunVar($sScriptTarget, byref $sNewValue)
 			return true
 
 		CASE "$GUITAR_스크립트경로", "$GUITAR_ScriptPath"
-			$sNewValue =  StringTrimRight(_GetPathName($_runScriptFileName),1)
+			$sNewValue =  _GetPathName($_runScriptFileName)
 			return true
 
 		CASE "$GUITAR_작업경로", "$GUITAR_WorkPath"
@@ -6473,7 +6631,7 @@ func getRunVar($sScriptTarget, byref $sNewValue)
 			$sNewValue =  _Boolean($_runWebdriver)
 			return true
 
-		CASE "$GUITAR_Alerttext"
+		CASE "$GUITAR_WebdriverAlerttext"
 			$sNewValue =  _WD_get_alert_text()
 			return true
 
@@ -6546,7 +6704,7 @@ func checkTableValue($sScriptTarget)
 	local $sVarFile
 	local $bisTableVar = False
 
-	$sVarFile = _GetPathName($_runScriptFileName) & $sScriptTarget & ".txt"
+	$sVarFile = _GetPathName($_runScriptFileName) & "\" & $sScriptTarget & ".txt"
 
 	; 테이블 변수 인 경우
 	;debug("파일존재 확인 :" & FileExists($sVarFile), $sVarFile )
@@ -6568,7 +6726,7 @@ func checkTableValue($sScriptTarget)
 		endif
 
 		;debug($iNewCount)
-		;debug($aFileReadArray[$iNewCount])
+		;debug($aFileReadArray)
 
 		$_aRunVar[$iVarIndex][$_iVarValue] = $aFileReadArray[$iNewCount]
 
@@ -6648,7 +6806,7 @@ func checkTableValue2($sScriptTarget, $iResetIndex = "")
 		endif
 	next
 
-	$sVarFile = _GetPathName($_runScriptFileName) & $sScriptTarget & ".txt"
+	$sVarFile = _GetPathName($_runScriptFileName) & "\" & $sScriptTarget & ".txt"
 
 	; 테이블 변수 인 경우
 	;debug("파일존재 확인 :" & FileExists($sVarFile), $sVarFile )
@@ -6727,6 +6885,7 @@ func addSetVar ($sVarString, byref $aVar, $bExtractCheck = False)
 		endif
 	next
 
+	if $sNewName = "$GUITAR_RecentResult" then $_runRecentResult = _Boolean($sNewValue)
 	if $sNewName = "$GUITAR_X좌표보정" or $sNewName = "$GUITAR_AdjustXPos" then $_runCorrectionX = Number($sNewValue)
 	if $sNewName = "$GUITAR_Y좌표보정" or $sNewName = "$GUITAR_AdjustYPos" then $_runCorrectionY = Number($sNewValue)
 	if $sNewName = "$GUITAR_모바일OS" or $sNewName = "$GUITAR_MobileOS" then $_runMobileOS = $sNewValue
@@ -7164,7 +7323,7 @@ func checkIE9FontSmoothingSetting()
 	local $aTempSplit = StringSplit($sVer , ".")
 	local $sMSg = ""
 
-	if $aTempSplit[1] = "9" and (FileExists(@ProgramFilesDir & "\Internet Explorer\DWrite.dll") = 0)then
+	if $aTempSplit[1] = "9" and (FileExists(@ProgramFilesDir & "\Internet Explorer\DWrite.dll") = 0) then
 
 		$sMSg = $sMSg & "IE 9은 시스템의 ClearType 옵션의 설정이 적용되지 않아 캡쳐된 이미지가 틀려질 수 있습니다." & @cr
 		$sMSg = $sMSg & "아래 devcode 게시판 글을 참조하여 패치를 적용한뒤 사용하시기 바랍니다." & @cr & @cr
@@ -7177,7 +7336,7 @@ endfunc
 
 
 
-func getXYAreaPositionPercent($sXY, $iCount, byref $bError)
+func getXYAreaPositionPercent($sXY, $iCount, byref $bError, byref $isPercent)
 
 	local $bRet
 	local $i
@@ -7192,15 +7351,19 @@ func getXYAreaPositionPercent($sXY, $iCount, byref $bError)
 		return $bRet
 	endif
 
+	$isPercent = False
+
 	for $i=1 to ubound($bRet) -1
 
 		$bRet[$i] = _Trim($bRet[$i])
 
 		if stringright($bRet[$i] ,1) = "%" then
+			$isPercent= True
 			$bRet[$i] = Number(stringTrimRight($bRet[$i],1))
 			if $bRet[$i] > 100 or $bRet[$i] < 0 then $bError = True
 		else
-			$bError = True
+			$bRet[$i] = Number($bRet[$i])
+			$isPercent= False
 		endif
 
 	next
@@ -7210,7 +7373,7 @@ func getXYAreaPositionPercent($sXY, $iCount, byref $bError)
 endfunc
 
 
-func getXYAreaPosition($sXY,byref $sCommentMsg, byref $bError)
+func getXYAreaPosition($sXY, byref $sCommentMsg, byref $bError)
 
 	local $bRet
 	local $i
@@ -7344,8 +7507,17 @@ endfunc
 
 
 func _setLastImageArrayInit()
+
+	; redim 일 경우 오류를 파악해서 임시로 배열 생성후 사용 (2015/12/21)
+	local $aTemp[1]
+	if IsArray($_runLastImageArray) = 0 then
+		$_runLastImageArray= $aTemp
+	endif
+
 	redim $_runLastImageArray [1]
+
 	$_runLastImageArray[0] = ""
+
 EndFunc
 
 
@@ -7363,7 +7535,7 @@ func GUITAR_NullError ()
 endfunc
 
 
-func WriteGuitarWebDriverError ($sDefaultText = "Webdriver에서 오류가 발생되었습니다. ")
+func WriteGuitarWebDriverError ($sDefaultText = "Webdriver에서 오류가 발생되었습니다. : ")
 	_StringAddNewLine ( $_runErrorMsg , $sDefaultText & $_webdriver_last_errormsg)
 endfunc
 
@@ -7383,3 +7555,6 @@ func getTargetSearchRemainTimeStatusText($tTimeInitAll, $iTimeOut, $sText)
 	return "대상 검색중 : " & $sText & ", " & $iRemainTime & "초 남음" & @crlf
 
 EndFunc
+
+
+

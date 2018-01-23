@@ -286,7 +286,7 @@ func SplitKoreanDetail($aText, $bArrayType = False)
 
 	next
 
-	if $bArrayType = False then $aRet = _ArrayToString($aRet,"",1,0)
+	if $bArrayType = False then $aRet = _ArrayToString($aRet,"",1)
 
 	return $aRet
 

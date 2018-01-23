@@ -2,7 +2,7 @@
 #include ".\_include_nhn\_util.au3"
 #include ".\_include_nhn\_webdriver.au3"
 
-global $_WebdriverSearchTypeInfo [6][3]
+global $_WebdriverSearchTypeInfo [9][3]
 global $_WebdriverSubFramePath = ""
 global $_WebdriverMobileLastDragX = ""
 global $_WebdriverMobileLastDragY = ""
@@ -22,6 +22,14 @@ $_WebdriverSearchTypeInfo[4][2]= "name"
 $_WebdriverSearchTypeInfo[5][1]= "xpath"
 $_WebdriverSearchTypeInfo[5][2]= "xpath"
 
+$_WebdriverSearchTypeInfo[6][1]= "link"
+$_WebdriverSearchTypeInfo[6][2]= "link text"
+
+$_WebdriverSearchTypeInfo[7][1]= "partial link"
+$_WebdriverSearchTypeInfo[7][2]= "partial link text"
+
+$_WebdriverSearchTypeInfo[8][1]= "tag"
+$_WebdriverSearchTypeInfo[8][2]= "tag name"
 
 ;local $a, $b
 ;local $x="   {css ,    123   456 }   "
@@ -64,18 +72,17 @@ func getWebdriverParamTypeAndValue ($sStr, byref $sSearchType, byref $sSearchVal
 
 		if $iSplitPos > 0 then
 
-			$bSuccess = True
+
 
 			$sSearchTypeKey = StringLower(_Trim(Stringleft ($sStr, $iSplitPos -1)))
 			$sSearchTypeIndex =  _ArraySearch($_WebdriverSearchTypeInfo,$sSearchTypeKey,0,0,0,0,1,1)
 
-
 			$sSearchValue = StringStripWS(Stringmid ($sStr, $iSplitPos + 1, stringlen($sStr) - $iSplitPos + 1), $STR_STRIPLEADING)
+			convertHtmlChar ($sSearchValue)
 
 			if $sSearchTypeIndex > 0 Then
 				$sSearchType = $_WebdriverSearchTypeInfo[$sSearchTypeIndex][2]
-			Else
-				$sSearchType = $sSearchTypeKey
+				$bSuccess = True
 			endif
 		endif
 
@@ -152,6 +159,8 @@ func _WD_getBrowserType()
 
 	local $sbrowserType
 
+	;debug("_WD_getBrowserName =" & _WD_getBrowserName())
+
 	Switch StringLower(_Trim(_WD_getBrowserName()))
 		case "chrome","firefox","internet explorer","ie","safari"
 			$sbrowserType = "WEB"
@@ -218,6 +227,39 @@ func _WD_getBrowserName()
 
 endfunc
 
+
+func _appium_actions_tap($sElementID, $x="", $y="")
+
+	local $bSuccess = False
+	local $sRet
+	local $sActions
+	local $aActionsOptions[2]
+
+	$aActionsOptions[0] = MakeJSonActionsOptionPress ($sElementID, $x, $y)
+	$aActionsOptions[1] = MakeJSonActionsOptionRelease ()
+
+	$sActions = MakeJSonActions ($_webdriver_current_sessionid, $aActionsOptions)
+	$bSuccess = _appium_action ($sActions)
+
+	return $bSuccess
+
+endfunc
+
+
+func _appium_action ($sActions)
+
+	local $bSuccess = False
+	local $sRet
+
+	;debug($sActions)
+	$bSuccess = requestWebdriver("POST", "session/" & $_webdriver_current_sessionid & "/touch/perform" , $sActions, $sRet )
+
+
+	return $bSuccess
+
+endfunc
+
+
 func _WD_MoveAndAction($sElementID, $sActionCommand, $Button = 0, $iOffsetX=0, $iOffsetY=0)
 
 	local $bSuccess = False
@@ -228,14 +270,19 @@ func _WD_MoveAndAction($sElementID, $sActionCommand, $Button = 0, $iOffsetX=0, $
 	local $iClickCount = 1
 	local $sMobileCommand
 	local $sBodyID
+	local $bForceDirectClick = False
+	local $ilast_elementID =""
+	local $ilast_elementX =""
+	local $ilast_elementY =""
 
 	$bSuccess = False
 
 	;$iOffsetX = String($iOffsetX)
 	;$iOffsetY = String($iOffsetY)
 
-
+	;if True then
 	if _WD_isTestPlatformWEB() then
+		;debug("appium click")
 		;웹 형태의 경우
 
 		Switch $sActionCommand
@@ -243,22 +290,68 @@ func _WD_MoveAndAction($sElementID, $sActionCommand, $Button = 0, $iOffsetX=0, $
 			case "/moveto", "/click", "/buttondown", "/buttonup", "/doubleclick"
 
 
-				if $sElementID <> "" then
+				if $sElementID <> ""  and $bForceDirectClick = False  then
 					; TAG 형태로 찾아서 클릭
 					; 플랫폼이 웹인 경우에만 이동후 클릭하도록
-					$bSuccess = _getWebdriverParam("POST", "/moveto", $sRet, 'element', $sElementID,"xoffset",$iOffsetX,"yoffset", $iOffsety)
+
+					$bSuccess = _WD_get_element_location($sElementID,  $ElementX,  $ElementY)
+
+					if $ElementX = 0 or $ElementY = 0 then $bForceDirectClick = True
+
+					;debug("directclick.. : " & $bForceDirectClick)
+
+					if $bForceDirectClick = False then
+						$bSuccess = _getWebdriverParam("POST", "/moveto", $sRet, 'element', $sElementID,"xoffset",$iOffsetX,"yoffset", $iOffsety)
+					endif
+					;$bSuccess= _WD_click($sElementID, $Button)
+
 
 				else
-					; 이미지 타입으로 찾아서 클릭
-					$sBodyID = _WD_find_element_by("xpath", "//body")
-					$bSuccess = _getWebdriverParam("POST", "/moveto" , $sRet, "element",$sBodyID, "xoffset", $iOffsetX, "yoffset" , $iOffsety)
+					; WEB 형태 이미지 타입으로 찾아서 클릭
+
+					; 이전 사용한 ID가 있을 경우 해당 ID기준으로 상대좌표 계산
+					if $_webdriver_last_elementid <> "" then
+						if _WD_get_element_location_in_view($_webdriver_last_elementid, $ilast_elementX, $ilast_elementY) Then
+							$ilast_elementID = $_webdriver_last_elementid
+						endif
+					endif
+
+					; 최근사용 ID가 없거나 최표값을 가져오는데 문제가 있을 경우 "body"를 기준으로 사용함
+					if $ilast_elementID = "" then
+							$ilast_elementID = _WD_find_element_by("xpath", "//body")
+							$ilast_elementX = 0
+							$ilast_elementY = 0
+					endif
+
+					;debug($ilast_elementX,$ilast_elementY)
+
+					$bSuccess = _getWebdriverParam("POST", "/moveto" , $sRet, "element",$ilast_elementID, "xoffset", $iOffsetX - $ilast_elementX, "yoffset" , $iOffsety - $ilast_elementY)
+
+
+					;$sBodyID = _WD_find_element_by("xpath", "//*")
+					;$bSuccess = _WD_actions_tap($sBodyID)
+					;$bSuccess = _appium_actions_tap ("", $iOffsetX, $iOffsetY)
+
 				endif
 
-				if $bSuccess and $sActionCommand <> "/moveto" then
+				if $bSuccess then
+
 					if $sElementID <> "" then $_webdriver_last_elementid = $sElementID
-					sleep(1)
-					;msg($sActionCommand)
-					$bSuccess = _getWebdriverParam("POST", $sActionCommand, $sRet, 'button', $Button)
+
+					if not($sActionCommand = "/moveto") then
+						sleep(1)
+						;msg($sActionCommand)
+
+
+						; OPTION 과 같이 좌표가 없는 경우에는 바로 클릭하도록 함
+						if $bForceDirectClick then
+							$bSuccess = _WD_click($sElementID, "")
+						else
+							$bSuccess = _getWebdriverParam("POST", $sActionCommand, $sRet, 'button', $Button)
+						endif
+
+					endif
+
 				endif
 
 			case Else
@@ -268,13 +361,15 @@ func _WD_MoveAndAction($sElementID, $sActionCommand, $Button = 0, $iOffsetX=0, $
 		EndSwitch
 
 	else
-
+		;debug("webdriver click")
 		$_webdriver_last_elementid = $sElementID
 
 		$bSuccess = _WD_get_element_location($sElementID,  $ElementX,  $ElementY)
 
 		$x = $ElementX +  $iOffsetX
 		$y = $ElementY +  $iOffsetY
+
+
 
 		Switch $sActionCommand
 
@@ -304,7 +399,13 @@ func _WD_MoveAndAction($sElementID, $sActionCommand, $Button = 0, $iOffsetX=0, $
 				;$bSuccess = requestWebdriver("POST","session/" & $_webdriver_current_sessionid & "/buttondown", _JSONEncode(_JSONObject("x",$x,"y",$y )), $sRet)
 
 				; Webdriver 기본
-				$bSuccess = _getWebdriverParam("POST", "/element/" & $sElementID &  $sActionCommand, $sRet)
+
+				; 더블클릭인 경우 0.1초 후 재 클릭
+				for $i=1 to $iClickCount
+					if $i=2 then sleep (100)
+					$bSuccess = _getWebdriverParam("POST", "/element/" & $sElementID &  $sActionCommand, $sRet)
+				next
+
 
 			case "/buttondown"
 				$_WebdriverMobileLastDragX = $x
@@ -348,26 +449,48 @@ func _WD_find_element_with_highlight_by($sUsing, $sSearchTarget, $bhighlight, $i
 	local $sID
 	local $i
 	local $aCurrentFrames
+	local $iLastUsedFrameIndex
 
+	;debug("프레임찾기 1"  )
 	$iDelay = Number($iDelay)
 
-	if  _WD_isTestPlatformWEB() = True  then
-		;debug ("프레임위치 : " & $_WebdriverSubFramePath)
-		; 이전에 하위 프레임에 위치할 경우 메인으로 이동함
-		if $_WebdriverSubFramePath <> "" then _WD_focus_frame($_JSONNull)
+	; 이전 프레임에서 먼저 찾아 봄
+	$sID = _WD_find_element_by($sUsing, $sSearchTarget)
+
+	; 없으면 메인에서 한번더 찾아봄
+	if $sID = ""  and _WD_isTestPlatformWEB() = True and $_WebdriverSubFramePath <> "" then
+		_WD_focus_frame($_JSONNull)
+		$sID = _WD_find_element_by($sUsing, $sSearchTarget)
 	endif
 
-	$sID = _WD_find_element_by($sUsing, $sSearchTarget)
 
 	; 메인화면에 없을 경우 하위 프레임을 검색함.
 	if $sID = "" and  _WD_isTestPlatformWEB() = True Then
 
 		; 전체 프레임 정보를 읽어옴
+		;debug("프레임찾기 2.5"  )
+
 		do
+			if checkScriptStopping() then return ""
 		until _WD_get_allframes($aCurrentFrames)
 
+		;debug("프레임찾기 3"  )
+
+		; 프레임 소트 이전에 찾을 프레임이 있을 경우 1번 값으로 지정함
+		 $iLastUsedFrameIndex = _ArraySearch($aCurrentFrames,$_WebdriverSubFramePath,1,0,0,0,1,1)
+		;debug($aCurrentFrames)
+		if $iLastUsedFrameIndex > 0 then
+			;debug("프레임찾기 XX : " & $iLastUsedFrameIndex  & " , " & $_WebdriverSubFramePath)
+			;_ArrayDisplay($aCurrentFrames, "Original", Default, 8)
+			_ArraySwap($aCurrentFrames,2,$iLastUsedFrameIndex)
+			;_ArrayDisplay($aCurrentFrames, "Original", Default, 8)
+		endif
+
 		for $i=2 to ubound($aCurrentFrames) -1
+			if checkScriptStopping() then return ""
+			;debug("프레임찾기 : " & $i )
 			if _WD_go_frame($aCurrentFrames[$i][1]) = True then
+
 				$_WebdriverSubFramePath = $aCurrentFrames[$i][1]
 				$sID = _WD_find_element_by($sUsing, $sSearchTarget)
 				if $sID <> "" then
@@ -382,6 +505,7 @@ func _WD_find_element_with_highlight_by($sUsing, $sSearchTarget, $bhighlight, $i
 
 	; 플랫폼이 웹일경우에만
 	if $bhighlight and $sID <> "" and _WD_isTestPlatformWEB() = True  and ($iDelay > 0)  then
+
 		_WD_execute_script ("arguments[0].setAttribute('style', 'color: yellow; border: 2px solid red;')",$sRet, _JSONObject("ELEMENT",$sID))
  		sleep($iDelay)
 		_WD_execute_script ("arguments[0].setAttribute('style', '')",$sRet, _JSONObject("ELEMENT",$sID))
@@ -391,7 +515,6 @@ func _WD_find_element_with_highlight_by($sUsing, $sSearchTarget, $bhighlight, $i
 	return $sID
 
 endfunc
-
 
 func _WD_get_allframes(byref $aAllFrames)
 	; 2차원 배열로 현재의 모든 하위 프레임 정보를 읽어옴
@@ -480,3 +603,80 @@ func _WD_isTestPlatformWEB()
 	return _iif($_webdriver_testplatform = "WEB",True, False)
 
 endfunc
+
+
+
+
+; Appium 관련
+
+
+func MakeJSonActionstest()
+
+
+	local $aActionsOptions[3]
+
+	$aActionsOptions[0] = MakeJSonActionsOptionPress (8)
+	$aActionsOptions[1] = MakeJSonActionsOptionMoveTo (4)
+	$aActionsOptions[2] = MakeJSonActionsOptionRelease ()
+
+
+	;{"sessionId":"23bad50b-59d9-4756-9222-a7b0dac18c15","actions":[{"options":{"element":"8","x":null,"y":null},"action":"press"},{"options":{"element":"4","x":null,"y":null},"action":"moveTo"},{"options":{},"action":"release"}]}
+
+	return MakeJSonActions ("23bad50b-59d9-4756-9222-a7b0dac18c15", $aActionsOptions)
+
+endfunc
+
+
+func MakeJSonActions ($sSessionID, $aActionsOptions)
+
+	local $sActionsObject  =""
+	local $sActionsArray  =""
+	local $sRet
+
+	$sActionsObject = _JSONObject("sessionId",$sSessionID,"actions", $aActionsOptions)
+
+	$sRet =_JSONEncode($sActionsObject)
+
+	return  $sRet
+
+endfunc
+
+
+func MakeJSonActionsOptionPress ($sElementID="", $x = $_JSONNull, $y = $_JSONNull)
+
+	return MakeJSonActionsOptionIDXYZ ("press", $sElementID, $x,  $y)
+
+
+endfunc
+
+
+func MakeJSonActionsOptionMoveTo ($sElementID="", $x = $_JSONNull, $y = $_JSONNull)
+
+	return MakeJSonActionsOptionIDXYZ ("moveTo", $sElementID, $x,  $y)
+
+endfunc
+
+
+func MakeJSonActionsOptionIDXYZ ($sAction, $sElementID="", $x = $_JSONNull, $y = $_JSONNull)
+
+
+	if $sElementID = "" Then
+		return   _JSONObject("options",_JSONObject("x", $x, "y", $y),"action", $sAction)
+	Else
+		return   _JSONObject("options",_JSONObject("element",string($sElementID),"x", $x, "y", $y),"action", $sAction)
+	endif
+
+
+endfunc
+
+
+func MakeJSonActionsOptionRelease ()
+
+	return _JSONObject("options",_JSONObject(""),"action", "release")
+
+endfunc
+
+
+
+
+

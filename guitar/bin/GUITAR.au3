@@ -1,7 +1,11 @@
 ﻿#AutoIt3Wrapper_Icon=GUITAR.ico
-#AutoIt3Wrapper_Res_Fileversion=1.9.0.18
+#AutoIt3Wrapper_Res_ProductVersion=2.0
+#AutoIt3Wrapper_Res_Fileversion=2.0.0.25
 #AutoIt3Wrapper_Res_FileVersion_AutoIncrement=p
-
+#AutoIt3Wrapper_OutFile=GUITAR.EXE
+#AutoIt3Wrapper_Res_Comment=GUITAR
+#AutoIt3Wrapper_Res_Description=GUITAR
+#AutoIt3Wrapper_Res_LegalCopyright= Copyright (c) 2010-2017 NAVER Corp
 
 ; /INI:D:\GUITAR_MAP\BIN / /WorkPath:D:\GUITAR_MAP\DATA
 
@@ -129,8 +133,10 @@ func main ()
 	setupDebugLogFile ($_sDebugLogFile)
 	writeDebugLog("공용변수 로딩완료")
 
-
-	if checkUACSetting() = False then _exit(1, True )
+	; UAC 확인 설정이  되어 있지 않은 경우 검사
+	if getIniBoolean(getReadINI("Environment","UACignore")) = False then
+		if checkUACSetting() = False then _exit(1, True )
+	endif
 
 	;********************************************************************************
 	checkAdminRun()
@@ -369,7 +375,7 @@ endfunc
 func _waitFormMain()
 ; 대기, 상단 툴바 클릭에 따른 작동
 
-	local $msg, $i
+	local $mmsg, $i
 	local $hFindReplaceForm = ""
 	local $iStartPost, $iEndPos
 
@@ -380,7 +386,7 @@ func _waitFormMain()
 
 	if $_gFindReplaceForm <> "" then $hFindReplaceForm = WinGetHandle($_gFindReplaceForm)
 
-	$msg = GuiGetMsg(1)
+	$mmsg = GuiGetMsg(1)
 
 	viewRichEditLineNumber()
 
@@ -397,13 +403,13 @@ func _waitFormMain()
 		RealTimeTargetCheck(False, $iStartPost, $iEndPos)
 	endif
 
-	if $msg[0] = 0 then return
+	if $mmsg[0] = 0 then return
 
-	if $msg[1] = $hFindReplaceForm then
+	if $mmsg[1] = $hFindReplaceForm then
 		;debug($hFindReplaceForm)
-		$msg = $msg[0]
+		$mmsg = $mmsg[0]
 
-		Switch $msg
+		Switch $mmsg
 
 			case $_gFindReplaceFindCmd
 				_FindRichText()
@@ -420,11 +426,11 @@ func _waitFormMain()
 		return
 
 	Else
-		$msg = $msg[0]
+		$mmsg = $mmsg[0]
 	endif
 
 
-	Switch $msg
+	Switch $mmsg
 
 		; 파일
 
@@ -587,12 +593,14 @@ func _waitFormMain()
 		Case $_GMHelp_About
 			openAboutWindow()
 
+		Case $_GMHelp_Keylist
+			openSPKeyList()
 
 	EndSwitch
 
 
 	for $i=1 to ubound ($_aOptionsText) -1
-		if $_aOptionsText[$i][2] <> "" and 	$_aOptionsText[$i][1] = $msg then onClickOptionsAll($i)
+		if $_aOptionsText[$i][2] <> "" and 	$_aOptionsText[$i][1] = $mmsg then onClickOptionsAll($i)
 	next
 
 endfunc
@@ -719,8 +727,6 @@ func _exit($iReturn = 0, $bLoadingError = False)
 
 	endif
 
-
-
 	exit ($iReturn)
 
 
@@ -742,6 +748,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 	local $iRunEnd
 	local $sErrorMsgAll
 	local $bResult = False
+	local $bFailOnlyALARM
 	local $aTestLogInfo[1]
 	local $sNewBrowserType
 	local $hNewBrowser
@@ -836,15 +843,12 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 		$_runXMLPath = $_runWorkReportPath
 	endif
 
+    addSetVar ("$GUITAR_RecentResult=True", $_aRunVar)
 	addSetVar ("$GUITAR_AdjustXPos=0", $_aRunVar)
 	addSetVar ("$GUITAR_AdjustYPos=0", $_aRunVar)
 	addSetVar ("$GUITAR_BrowserSize=" & $_runBrowserWidth & "," & $_runBrowserHeight , $_aRunVar)
 
 	_FileReadToArray($sScriptName,$aRowScript)
-
-
-
-
 
 	;if $_runCmdRunning = True then
 
@@ -876,9 +880,6 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 	_UpdateFolderFileInfo(False)
 
-
-
-
 	$_runCommadLintTimeInit = _TimerInit()
 	$_runCommadLintTimeStart = _Nowcalc()
 
@@ -902,12 +903,9 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 			$_runRetryRun =  True
 			$_runWaitTimeOut = getReadINI("environment","DebugTimeOut")
 
-
 			_getLastBrowserInfo ()
 
-
 			; 최근 수행한 웹드라이버 세션이 있을 경우 자동으로 셋팅
-
 
 ;~ 			if $_webdriver_connection_host <> "" and $_runWebdriver = False then
 ;~ 				$sNewBrowserCreate = _ProgramQuestionYN(("이전 사용한 웹드라이버 세션을 사용하시겠습니까?" & @crlf & @crlf & $_webdriver_connection_host))
@@ -922,7 +920,14 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 ;~ 				endif
 ;~ 			endif
 
-
+			;if _getNewestWebdriverSessionINIInfo() <> "" and $_webdriver_current_sessionid = "" Then
+ 			;	$sNewBrowserCreate = _ProgramQuestionYN(("이전 사용한 웹드라이버 세션을 사용하시겠습니까?" & @crlf & @crlf & _getNewestWebdriverSessionINIInfo()))
+ 			;	if $sNewBrowserCreate ="Y" then
+			;		commandWDSessionAttach(_getNewestWebdriverSessionINIInfo)
+ 			;		$_runBrowser = ""
+ 			;		$_hBrowser = ""
+			;	endif
+			;endif
 
 			; 프로세스가 존재할 경우 브라우저 이름이  동일한지 확인
 			if WinExists($_hBrowser) <> 0 then
@@ -931,8 +936,6 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 					$_hBrowser = ""
 				endif
 			endif
-
-
 
 			if ($_runBrowser = "" or WinExists($_hBrowser) = 0) and $_runWebdriver = False  Then
 
@@ -1129,7 +1132,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 					$sAreaCaptureViewType = "V"
 				endif
 
-				_ArrayAdd($aTestLogInfo , _getLanguageMsg("report_capturereport") & " : " & "<a  target='_blank'  href='" & ".\" & $sUserCaptureSubPath & "\" & $sUserCaptureReportFile & "'>" & $sUserCaptureReportFile & "</a>" )
+				_ArrayAdd($aTestLogInfo , _getLanguageMsg("report_capturereport") & " : " & "<a target='_blank'  href='" & "./" & $sUserCaptureSubPath & "/" & $sUserCaptureReportFile & "'>" & $sUserCaptureReportFile & "</a>" )
 				_createUserCaptureReport($_runUserCapturePath & "\" & $sUserCaptureReportFile, $_runUserCapturePath,_GetFileName($sScriptName) & " " & _getLanguageMsg("report_capturereport"), $sAreaCaptureViewType)
 			endif
 
@@ -1155,7 +1158,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 			endif
 
 			writeDebugTimeLog("report 파일 생성 전 ")
-			_createHtmlReport($sTestStartTime, $sReportFile , FileRead($_sReportLogFile),_GetFileName($sScriptName) & " " & _getLanguageMsg("report_detail") ,$aTestLogInfo, $sReportPath, _GetFileName($sScriptName), $_aRunReportInfo[$_sResultSkipList], $_aRunReportInfo[$_sResultNorRunList], $_runXMLReport , $sXML, $sDashBoardReport, $bCreateErrorSumarry)
+			_createHtmlReport($sTestStartTime, $sReportFile , FileRead($_sReportLogFile), _GetFileName($sScriptName) & " " & _getLanguageMsg("report_detail") ,$aTestLogInfo, $sReportPath, StringLower(_GetFileName($sScriptName)), $_aRunReportInfo[$_sResultSkipList], $_aRunReportInfo[$_sResultNorRunList], $_runXMLReport , $sXML, $sDashBoardReport, $bCreateErrorSumarry)
 			writeDebugTimeLog("report 파일 생성 후 ")
 			if $_runXMLReport then
 
@@ -1210,13 +1213,15 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 				endif
 			endif
 
+		   $bFailOnlyALARM = getIniBoolean(getReadINI("ALARM","FailOnly"))
+
 			writeDebugTimeLog("report 저장 전 ")
-			saveTotalReport($sSummryReportFile, _GetFileName($sScriptName), $sReportDateTimeFolder, $sTestStartTime, $sTestingTime, $bResult, $aRunCountInfo[1], $aRunCountInfo[2], $aRunCountInfo[3], stringreplace(stringreplace($sReportFile, $_runReportPath & "\",""), "\","/" ), $_aRunReportInfo, False)
-			saveTotalReport($_runReportPath & "\" & _GetFileName(FileGetLongName(_GetPathName($sReportPath))) & "\report.htm", _GetFileName($sScriptName), $sReportDateTimeFolder,  $sTestStartTime, $sTestingTime, $bResult, $aRunCountInfo[1], $aRunCountInfo[2], $aRunCountInfo[3], stringreplace(stringreplace($sReportFile, $_runReportPath & "\",""), "\","/" ), $_aRunReportInfo, True)
+			saveTotalReport($sSummryReportFile, StringLower(_GetFileName($sScriptName)), $sReportDateTimeFolder, $sTestStartTime, $sTestingTime, $bResult, $aRunCountInfo[1], $aRunCountInfo[2], $aRunCountInfo[3], stringreplace(stringreplace($sReportFile, $_runReportPath & "\",""), "\","/" ), $_aRunReportInfo, False)
+			saveTotalReport($_runReportPath & "\" & StringLower(_GetFileName(FileGetLongName(_GetPathName($sReportPath)))) & "\report.htm", StringLower(_GetFileName($sScriptName)), $sReportDateTimeFolder,  $sTestStartTime, $sTestingTime, $bResult, $aRunCountInfo[1], $aRunCountInfo[2], $aRunCountInfo[3], stringreplace(stringreplace($sReportFile, $_runReportPath & "\",""), "\","/" ), $_aRunReportInfo, True)
 
 			; 누적에러 확인하고 메일 및 SMS 발송
 			if $bCreateErrorSumarry  then
-				if $bResult = False then
+				if ($bResult = False)   then
 					; 에러 카운트 정보 확인
 					$aErrorReport = _getErrorSumarry(getReadINI("ErrorAccumulate", "Count"), _GetFileName($sScriptName), $sTestStartTime)
 					; SMS 보내기
@@ -1243,6 +1248,7 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 
 				endif
 			endif
+			;debug($sReportPath)
 
 			writeDebugTimeLog("report 저장 경로 : " & $_runReportPath & "\" & _GetFileName(FileGetLongName(_GetPathName($sReportPath))) & "\report.htm")
 
@@ -1260,14 +1266,18 @@ func runRichScript($bIsRetry, $bAutoSave = False)
 			;saveTotalReport($iTSScriptName, $iTSDate, $iTSResult, $iTSAllCount, $iTSErrorCount, $iTSLink )
 
 			;SMS 발송
-			if getIniBoolean(getReadINI("ALARM","SMS")) and ($_runCmdRunning = True or ($_runCmdRunning = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False )) then
+
+
+			if   (($bFailOnlyALARM= False) or ( $bFailOnlyALARM= True and $bResult = False))   and    getIniBoolean(getReadINI("ALARM","SMS")) and ($_runCmdRunning = True or ($_runCmdRunning = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False )) then
 				writeRunLog(_getLanguageMsg("report_sendsms"))
-				if $bResult = False then sendTestReportSMS(_GetFileName($sScriptName), $bResult, getReadINI("ALARM","SMSList"))
+				writeDebugTimeLog("sms 발송 전 ")
+				sendTestReportSMS(_GetFileName($sScriptName), $bResult, getReadINI("ALARM","SMSList"))
+				writeDebugTimeLog("sms 발송 후 ")
 			endif
 
 			;Email 발송
 			;debug ("메일보내기 :" & $_runCmdRemote & " " &  ($_runCmdRemote = True or ($_runCmdRemote = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False )))
-			if getIniBoolean(getReadINI("ALARM","EMAIL")) and ($_runCmdRunning = True or ($_runCmdRunning = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False ))  then
+			if   (($bFailOnlyALARM= False) or ( $bFailOnlyALARM= True and $bResult = False))  and getIniBoolean(getReadINI("ALARM","EMAIL")) and ($_runCmdRunning = True or ($_runCmdRunning = False and getIniBoolean(getReadINI("ALARM","CommandlineModeOnly")) = False ))  then
 				writeRunLog(_getLanguageMsg("report_sendemail"))
 				writeDebugTimeLog("email 발송 전 ")
 				if sendTestReportEmail(_GetFileName($sScriptName), $bResult ,$sReportFile, $sReportPath, $sDashBoardReport, getReadINI("ALARM","EmailList")) = False then
@@ -1396,7 +1406,7 @@ func sendTestReportEmail($sScriptName, $bResult, $sReportFile, $sReportPath, $sD
 	local $bFullContents = not(getIniBoolean(getReadINI("ALARM","EmailSummary")))
 	local $bRet
 	local $bErrorSummaryEmail = False
-
+	local $sNewHostcid = "cid:"
 
 
 
@@ -1421,14 +1431,17 @@ func sendTestReportEmail($sScriptName, $bResult, $sReportFile, $sReportPath, $sD
 	endif
 	;debug ($sDashboardHost)
 
+
+	$sNewHost = $sDashboardHost & "/" & stringreplace(stringreplace($sReportPath, $_runReportPath & "\",""),"\","/") & "/"
+
 	if $bAttachImage then
-		$sNewHost = "cid:"
+		$sContents = StringReplace($sContents, "src='./" , "src='" & $sNewHostcid)
 	else
-		$sNewHost = $sDashboardHost & "/" & stringreplace(stringreplace($sReportPath, $_runReportPath & "\",""),"\","/") & "/"
+		$sContents = StringReplace($sContents, "src='./" , "src='" & $sNewHost)
 	endif
 
 
-	$sContents = StringReplace($sContents, "src='./" , "src='" & $sNewHost)
+	; 2017-8-31 부분캡쳐 리포트가 email 발송시 대시보드로 되지 않아 수정
 	$sContents = StringReplace($sContents, "href='./" , "href='" & $sNewHost)
 	$sContents = StringReplace($sContents, "href='#" , "href='" & $sDashBoardReport & "#")
 	$sContents = StringReplace($sContents, "../../" , $sDashboardHost & "/")
@@ -1454,7 +1467,7 @@ func sendTestReportEmail($sScriptName, $bResult, $sReportFile, $sReportPath, $sD
 
 	;msg("email list : " & $sList)
 	if IsArray($aAttachFile) then
-		if ubound($aAttachFile) > 1 then $sAttachList = _ArrayToString($aAttachFile,";",1,0)
+		if ubound($aAttachFile) > 1 then $sAttachList = _ArrayToString($aAttachFile,";",1)
 	endif
 
 	if $bFullContents = False and $sExContents = "" then
@@ -1488,7 +1501,7 @@ func getReportPath($sScriptName, $sTestStartTime)
 	local $sPath
 
 	;$sPath  =  $_runReportPath & "\" & $sScriptName & "\" & StringReplace(_DateTimeFormat( $sTestStartTime,2),"-","_") & "_" & stringreplace(_DateTimeFormat( $sTestStartTime,5), ":","_")
-	$sPath  =  $_runReportPath & "\" & $sScriptName & "\" & StringReplace(Stringleft( $sTestStartTime,10),"/","-") & "_" & stringreplace(stringright( $sTestStartTime,8), ":","-")
+	$sPath  =  $_runReportPath & "\" & StringLower($sScriptName) & "\" & StringReplace(Stringleft( $sTestStartTime,10),"/","-") & "_" & stringreplace(stringright( $sTestStartTime,8), ":","-")
 
 	if FileExists($sPath) then DirRemove ( $sPath,1)
 	if FileExists($sPath) = False then DirCreate (StringLower($sPath))
@@ -1564,6 +1577,10 @@ func loadScript($sFileName, $bScroll=True, $bNewTab = True)
 	; 초기화
 
 	_GuiCtrlRichEdit_SetText ($_gEditScript, FileRead($sFileName))
+	_GUICtrlRichEdit_SetSel($_gEditScript, 0, -1)
+	_GUICtrlRichEdit_SetFont($_gEditScript, $_EditFontSize, $_EditFontName)
+	_GUICtrlRichEdit_SetSel($_gEditScript, 0, 0)
+
 	;_GuiCtrlRichEdit_SetSel ($_gEditScript, 1, -1)
 	;_GUICtrlRichEdit_SetFont($_gEditScript, $_EditFontSize, $_EditFontName)
 	;_GUICtrlRichEdit_Deselect($_gEditScript)
@@ -1923,7 +1940,7 @@ func ConvertRichText($oRichText, $bImageCheck, $bIncludeCheck,  $aScritAnalysisI
 	for $i= 1 to ubound($aRichScript) -1
 
 		if $bImageCheck then
-			if ($i >= $iScriptStartLine and $i <= $iScriptEndLine) or  ($iScriptStartLine <= 0)then
+			if ($i >= $iScriptStartLine and $i <= $iScriptEndLine) or  ($iScriptStartLine <= 0) then
 				$bImageCheckLine = $bImageCheck
 			Else
 				$bImageCheckLine = False
@@ -1996,11 +2013,17 @@ func ConvertRichText($oRichText, $bImageCheck, $bIncludeCheck,  $aScritAnalysisI
 	next
 
 	writeConsoleDebug("반복 후")
+	;_msg($_aPreAllScriptFile)
 
-	$_aPreAllScriptFile = _ArrayUnique($_aPreAllScriptFile , 1,1)
+	if IsArray($_aPreAllScriptFile) then
+		if ubound($_aPreAllScriptFile) > 1 then $_aPreAllScriptFile = _ArrayUnique($_aPreAllScriptFile, 0,1)
+	endif
 
+
+	;_msg($_aPreAllScriptFile)
 	if IsArray($_aPreAllScriptFile) = 0 then $_aPreAllScriptFile = $aTemp
 
+	;msg($_aPreAllScriptFile)
 	return $bSuccess
 
 endfunc
@@ -2085,7 +2108,7 @@ func _checkRichTextModified()
 endfunc
 
 
-func getScriptSelectRange(byref $iStart,byref  $iEnd, $bFullSelect)
+func getScriptSelectRange(byref $iStart, byref  $iEnd, $bFullSelect)
 ; 부분 실행을 위해 블럭이 설정된 범위를 파악하여 시작과 끝을 리턴
 
 	local $sTempRichText
@@ -2324,6 +2347,7 @@ endfunc
 func ClearLoglist()
 
 	_GUICtrlRichEdit_SetText  ($_gRichLog, "")
+	_GUICtrlRichEdit_SetFont($_gRichLog, $_LogFontSize, $_LogFontName)
 
 endfunc
 
@@ -2351,7 +2375,7 @@ func WriteLoglist($sText)
 
 	; 에러인 경우 빨간색으로 표시
 
-	_GUICtrlRichEdit_SetFont ($_gRichLog, 9, _getLanguageMsg("font_default"))
+	_GUICtrlRichEdit_SetFont($_gRichLog, $_LogFontSize, $_LogFontName)
 	_GUICtrlRichEdit_AppendText($_gRichLog, $sText)
 
 	if checkErrorLog($sText) then
@@ -2368,7 +2392,7 @@ func WriteLoglist($sText)
 
 	_GuiCtrlRichEdit_SetCharColor($_gRichLog, $iColor)
 
-	_GUICtrlRichEdit_SetFont ($_gRichLog, 9, _getLanguageMsg("font_default"))
+	_GUICtrlRichEdit_SetFont($_gRichLog, $_LogFontSize, $_LogFontName)
 
 	_GuiCtrlRichEdit_SetSel($_gRichLog, _GUICtrlRichEdit_GetFirstCharPosOnLine($_gRichLog), _GUICtrlRichEdit_GetFirstCharPosOnLine($_gRichLog) )
 
@@ -2731,11 +2755,8 @@ func getTargetFormRichEdit($oRichEdit, $sCheckType , $bPosCheck, byref $iStartPo
 				exitloop
 			endif
 		next
-
 		;debug($iIndexTargetSearch, $iStartPos, $iEndPos)
-
 	endif
-
 
 	return $sStarget
 
@@ -2829,7 +2850,7 @@ func saveTotalReport($sSummryReportFile, $iTSScriptName, $iTSID, $iTSDate, $ITST
 	$aTestSummry [$_iTSLink] = $iTSLink
 
 	;debug($aTestSummry[$_iTSAllCount] )
-
+	;'msg($sSummryReportFile)
 	_addNewTestResult($sSummryReportFile, $aTestSummry,  getReadINI("Report","LimitCount"), $bSimple)
 
 endfunc
@@ -3065,7 +3086,7 @@ func _ScriptCommentSet()
 
 	next
 
-	$sText = _ArrayToString($aText,@cr,1,0)
+	$sText = _ArrayToString($aText,@cr,1)
 
 	_GUICtrlRichEdit_ReplaceText($_gEditScript, $sText,true )
 
