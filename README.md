@@ -1,6 +1,6 @@
 #GUITAR
 ## 업데이트 공지
-Selenium 2.0을 지원하는 최신 버전이 업데이트 되었습니다. 릴리즈 메뉴를 참조하세요.
+Selenium 2.0.0.38 버전이 업데이트 되었습니다.  릴리즈 메뉴를 참조하세요.
 * https://github.com/naver/guitar/releases
 
 ## 소개
