@@ -9,7 +9,7 @@ Global $_oEmailErrorRet[2]
 Global $_oEmailError
 
 
-func _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles = "", $bIsUseCID = False, $SmtpServer = "smtp.naver.com", $FromAddress = "ssmmhh_mail@naver.com", $Username = "ssmmhh_mail", $Password = "mail_ssmmhh" , $IPPort = 465, $ssl = True)
+func _SendNaverMail($sFrom, $sToEmail, $sTitle, $sBody, $AttachFiles = "", $bIsUseCID = False, $SmtpServer = "", $FromAddress = "", $Username = "", $Password = "" , $IPPort = 465, $ssl = True)
 
 	local $bReturn = True
 	Local $FromName = $sFrom                      ; name from who the email was sent
